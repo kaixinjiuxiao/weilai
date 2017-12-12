@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+                android:background="@color/main_bg"
+    >
+<TextView
+    android:id="@+id/txtNo"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:text="您当前没有正在参与的团购"
+    android:gravity="center"
+    android:visibility="gone"
+    />
+    <com.wlyilai.weilaibao.view.PullLoadMoreRecyclerView
+        android:id="@+id/pullLoadMore"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:layout_marginTop="2dp"
+        />
+</RelativeLayout>
