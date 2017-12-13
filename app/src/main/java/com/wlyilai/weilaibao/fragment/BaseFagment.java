@@ -1,4 +1,4 @@
-package com.wlyilai.weilaibao.activity;
+package com.wlyilai.weilaibao.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

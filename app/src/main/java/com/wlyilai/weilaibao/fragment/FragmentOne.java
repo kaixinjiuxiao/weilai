@@ -1,4 +1,4 @@
-package com.wlyilai.weilaibao.activity;
+package com.wlyilai.weilaibao.fragment;
 
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -19,7 +19,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.Unbinder;
 
 /**
@@ -28,10 +27,8 @@ import butterknife.Unbinder;
  * Describe:
  */
 public class FragmentOne extends BaseFagment {
-    @BindView(R.id.tabLayout)
-    TabLayout mTabLayout;
-    @BindView(R.id.viewpager)
-    ViewPager mViewpager;
+    private TabLayout mTabLayout;
+    private ViewPager mViewpager;
     private View mView;
     private Unbinder mUnbinder;
     private HomeAdapter mAdapter;

@@ -1,6 +1,7 @@
 package com.wlyilai.weilaibao.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,8 +16,6 @@ import com.wlyilai.weilaibao.view.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 
 /**
  * @author: captain
@@ -62,6 +61,7 @@ public class GroupPurchaseDetailsActivity extends BaseActivity implements PullLo
             mList.add(new JoinInfo("150xxxx5678","2017-12-12 20:20:20参团"));
         }
         mList.add(new JoinInfo("150xxxx5678","2017-12-12 20:20:20开团"));
+        mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
     }
 
     @Override
@@ -71,8 +71,19 @@ public class GroupPurchaseDetailsActivity extends BaseActivity implements PullLo
 
     @Override
     public void onLoadMore() {
-        mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
+        getData();
     }
 
-
+    private void getData() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 10; i++) {
+                    mList.add(new JoinInfo("150xxxx5678","2017-12-12 20:20:20参团"));
+                }
+                mAdapter.notifyDataSetChanged();
+                mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
+            }
+        },2000);
+    }
 }

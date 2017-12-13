@@ -3,12 +3,8 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-<TextView
+<com.wlyilai.weilaibao.view.PullLoadMoreRecyclerView
+    android:id="@+id/pullLoadMore"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:text="会员中心"
-    android:gravity="center"
-    android:textSize="24sp"
-    android:textColor="@color/ping_gou"
-    />
+    android:layout_height="match_parent"/>
 </LinearLayout>

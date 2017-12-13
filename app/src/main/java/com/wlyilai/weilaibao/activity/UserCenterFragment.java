@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.wlyilai.weilaibao.R;
+import com.wlyilai.weilaibao.fragment.BaseFagment;
 
 /**
  * @author: captain

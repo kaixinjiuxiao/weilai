@@ -1,15 +1,16 @@
 package com.wlyilai.weilaibao.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.view.View;
 import android.widget.TextView;
 
 import com.wlyilai.weilaibao.R;
@@ -19,7 +20,7 @@ import com.wlyilai.weilaibao.R;
  * Time:  2017/12/9 0009
  * Describe:
  */
-public class GroupDetailsActivity extends BaseActivity{
+public class GroupDetailsActivity extends BaseActivity implements View.OnClickListener {
     private PopupWindow popupWindow;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class GroupDetailsActivity extends BaseActivity{
         popupWindow = new PopupWindow(layout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         popupWindow.setFocusable(true); // 点击空白处时，隐藏掉POP窗口
         popupWindow.setOutsideTouchable(true); // 点击外部时，隐藏掉POP窗口
+        setBackgroundAlpha(0.5f);//设置屏幕透明度
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.showAtLocation(GroupDetailsActivity.this.findViewById(R.id.main), Gravity.BOTTOM, 20, 0);
         ImageView img = (ImageView) layout.findViewById(R.id.goodsImg);
@@ -53,11 +55,31 @@ public class GroupDetailsActivity extends BaseActivity{
         TextView number = (TextView) layout.findViewById(R.id.number);
         TextView add = (TextView) layout.findViewById(R.id.add);
         Button sure = (Button) layout.findViewById(R.id.btnSure);
+        sure.setOnClickListener(this);
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
+                setBackgroundAlpha(1.0f);
                 popupWindow.dismiss();
             }
         });
+    }
+
+
+    public void setBackgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = GroupDetailsActivity.this.getWindow()
+                .getAttributes();
+        lp.alpha = bgAlpha;
+        GroupDetailsActivity.this.getWindow().setAttributes(lp);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btnSure:
+                Intent intent = new Intent(this,SureOrderActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 }

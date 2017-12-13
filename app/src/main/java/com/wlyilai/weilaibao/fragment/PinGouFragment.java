@@ -1,4 +1,4 @@
-package com.wlyilai.weilaibao.activity;
+package com.wlyilai.weilaibao.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.wlyilai.weilaibao.R;
+import com.wlyilai.weilaibao.activity.GroupDetailsActivity;
+import com.wlyilai.weilaibao.activity.MyGroupActivity;
 import com.wlyilai.weilaibao.adapter.PinGouAdapter;
 import com.wlyilai.weilaibao.entry.FirstEvent;
 import com.wlyilai.weilaibao.entry.Goods;

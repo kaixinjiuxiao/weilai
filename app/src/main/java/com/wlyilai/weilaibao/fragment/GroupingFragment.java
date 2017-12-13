@@ -1,4 +1,4 @@
-package com.wlyilai.weilaibao.activity;
+package com.wlyilai.weilaibao.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.wlyilai.weilaibao.R;
+import com.wlyilai.weilaibao.activity.GroupPurchaseDetailsActivity;
 import com.wlyilai.weilaibao.adapter.GroupingAdapter;
 import com.wlyilai.weilaibao.entry.MyGroup;
 import com.wlyilai.weilaibao.view.PullLoadMoreRecyclerView;

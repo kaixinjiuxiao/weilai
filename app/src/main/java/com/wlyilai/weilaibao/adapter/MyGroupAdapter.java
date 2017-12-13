@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.wlyilai.weilaibao.activity.GroupingFragment;
+import com.wlyilai.weilaibao.fragment.GroupingFragment;
 
 import java.util.ArrayList;
 import java.util.List;

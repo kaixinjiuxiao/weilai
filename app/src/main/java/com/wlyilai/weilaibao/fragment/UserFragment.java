@@ -1,4 +1,4 @@
-package com.wlyilai.weilaibao.activity;
+package com.wlyilai.weilaibao.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,16 +10,16 @@ import com.wlyilai.weilaibao.R;
 
 /**
  * @author: captain
- * Time:  2017/12/11 0011
+ * Time:  2017/12/12 0012
  * Describe:
  */
-public class FragmentFour extends BaseFagment {
+public class UserFragment extends BaseFagment {
     private View mView;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(mView==null){
-            mView =inflater.inflate(R.layout.fragment_user_center,container,false);
+            mView = inflater.inflate(R.layout.fragment_user_center,container,false);
         }
         return mView;
     }
