@@ -194,6 +194,11 @@
                         </LinearLayout>
                     </RelativeLayout>
                 </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/main_bg"
+                    />
             </LinearLayout>
         </android.support.design.widget.AppBarLayout>
 

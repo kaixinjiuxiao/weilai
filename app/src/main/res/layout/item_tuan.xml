@@ -1,81 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-    android:background="@color/white"
+              android:background="@color/white"
+              android:orientation="vertical"
     >
-<ImageView
-    android:id="@+id/img"
-    android:layout_width="match_parent"
-    android:layout_height="160dp"
-    android:src="@mipmap/nature"
-    android:scaleType="fitXY"
-    />
-    <TextView
-        android:id="@+id/name"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:textSize="16sp"
-        android:text="佛撒酒疯对发动机是广东省将看风景的斯洛伐克警笛声考虑风刀霜剑咖啡萨拉"
-        />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
         >
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/nature"
+            />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
             >
-        <TextView
-            android:id="@+id/oldPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_marginLeft="10dp"
-            android:text="￥22.4"
-            />
+
             <TextView
-                android:id="@+id/number"
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:textColor="@color/ping_gou"
-                android:text="10人团"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="佛撒酒疯对发动机是广东省将看风景的斯洛伐克警笛声考虑风刀霜剑咖啡萨拉"
+                android:textColor="@color/black"
+                android:textSize="16sp"
                 />
-        <TextView
-            android:id="@+id/newPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_marginLeft="10dp"
-            android:text="￥18.9/件"
-            android:textColor="@color/ping_gou"
-            />
-        </LinearLayout>
-        <TextView
-            android:id="@+id/pingtuan"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_centerVertical="true"
-            android:minWidth="100dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:gravity="center"
-            android:background="@drawable/text_sure"
-            android:textColor="@color/white"
-            android:text="去拼团"
-            />
-    </RelativeLayout>
-    <View
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+
+                >
+
+                <TextView
+                    android:id="@+id/newPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="￥18.9/件"
+                    android:textColor="@color/ping_gou"
+                    />
+
+                <TextView
+                    android:id="@+id/oldPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="￥22.4"
+                    />
+
+                <TextView
+                    android:id="@+id/number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="10人团"
+                    android:textColor="@color/ping_gou"
+                    android:visibility="gone"
+                    />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="10dp"
+                >
+
+                <TextView
+                    android:id="@+id/pingtuan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/text_sure"
+                    android:gravity="center"
+                    android:minWidth="100dp"
+                    android:text="去拼团"
+                    android:textColor="@color/white"
+                    />
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/main_bg"
-        />
+        android:layout_height="20dp"
+        android:background="@color/white"
+        >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="170dp"
+            android:background="@color/main_bg"
+            />
+    </LinearLayout>
 </LinearLayout>

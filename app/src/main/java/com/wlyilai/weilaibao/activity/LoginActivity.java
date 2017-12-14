@@ -1,6 +1,5 @@
 package com.wlyilai.weilaibao.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -18,6 +17,9 @@ import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,6 +50,8 @@ public class LoginActivity extends BaseActivity {
     private boolean canClick = true;
     private AlertDialog mDialog;
     private EditText mEdtName;
+    private String code;
+    private String firstInputName,firstInputPhone;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,16 +74,17 @@ public class LoginActivity extends BaseActivity {
             case R.id.btnNext:
 
                // displayDialog();
-                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+               //startActivity(new Intent(LoginActivity.this,MainActivity.class));
                // startActivity(new Intent(this, RegisterActivity.class));
-//                aa();
-//                bb();
+                aa();
+               bb();
                 break;
         }
     }
 
     private void aa() {
-        OkHttpUtils.get().url("http://test.mgbh.wlylai.com/AppLogin/send_sms").addParams("a","a").build().execute(new StringCallback() {
+        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppLogin/user_login")
+                .addParams("mobile","15580993896").build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
                 Log.e("tag","错五"+e.toString());
@@ -93,7 +98,10 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void bb() {
-        OkHttpUtils.get().url("http://test.mgbh.wlylai.com/AppLogin/user_login").addParams("a","a").build().execute(new StringCallback() {
+        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppLogin/user_register_cds")
+                .addParams("mobile","18573180570")
+                .addParams("realname","苏嗣武")
+                .build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
                 Log.e("tag","错五"+e.toString());
@@ -101,7 +109,7 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onResponse(String response, int id) {
-                Log.e("tag","sjkfhsjf"+response);
+                Log.e("tag","ffgccf"+response);
             }
         });
     }
@@ -129,7 +137,8 @@ public class LoginActivity extends BaseActivity {
             ToastUtils.showShort(LoginActivity.this,"请输入姓名");
             return;
         }
-        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+        //startActivity(new Intent(LoginActivity.this,MainActivity.class));
+        bb();
     }
 
     /**
@@ -142,9 +151,39 @@ public class LoginActivity extends BaseActivity {
         }
         if (canClick) {
             startTime();
-
+            firstInputPhone = mEdtPhone.getText().toString();
+            getSMSCode(firstInputPhone);
         }
 
+    }
+
+    private void getSMSCode(String phone) {
+                OkHttpUtils.post()
+                .url("http://test.mgbh.wlylai.com/AppLogin/send_sms")
+                .addParams("mobile","15580993896").addParams("state","2")
+                .build().execute(new StringCallback() {
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if(jsonObject.getInt("status")==1){
+                        ToastUtils.showShort(LoginActivity.this,jsonObject.getString("msg"));
+                        JSONObject info = jsonObject.getJSONObject("data");
+                        code = info.getString("verify");
+                    }else{
+                        ToastUtils.showShort(LoginActivity.this,jsonObject.getString("msg"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void startTime() {
