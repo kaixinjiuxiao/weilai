@@ -36,7 +36,7 @@
                     android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@mipmap/add"
                     />
 
                 <LinearLayout
@@ -50,7 +50,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@mipmap/icon_add"
                         />
 
                     <TextView
@@ -70,7 +70,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@mipmap/icon_right_arrows"
                     />
             </RelativeLayout>
 
@@ -327,14 +327,31 @@
                             >
 
                             <TextView
+                                android:id="@+id/jiage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:text="￥"
+                                android:textSize="@dimen/text_small"
+                                />
+                            <TextView
                                 android:id="@+id/goodsPrice"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentBottom="true"
-                                android:text="￥16.99/1件"
+                                android:layout_toRightOf="@+id/jiage"
+                                android:textColor="@color/ping_gou"
+                                android:text="16.99"
                                 android:textSize="@dimen/text_small"
                                 />
-
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_toRightOf="@+id/goodsPrice"
+                                android:text="/1件"
+                                android:textSize="@dimen/text_small"
+                                />
                             <TextView
                                 android:id="@+id/goodsNumber"
                                 android:layout_width="wrap_content"
@@ -381,7 +398,15 @@
                             android:text="共2个商品"
                             android:textSize="@dimen/text_normal"
                             />
-
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:gravity="center"
+                            android:text="合计￥"
+                            android:textSize="@dimen/text_normal"
+                            />
                         <TextView
                             android:id="@+id/goodsTotalPrice"
                             android:layout_width="wrap_content"
@@ -389,8 +414,9 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="5dp"
                             android:gravity="center"
-                            android:text="总额：￥34.98元"
-                            android:textSize="@dimen/text_normal"
+                            android:text="34.98"
+                            android:textColor="@color/ping_gou"
+                            android:textSize="20sp"
                             />
                     </LinearLayout>
                 </RelativeLayout>
@@ -403,16 +429,26 @@
         android:layout_height="45dp"
         android:background="@color/white"
         >
-
         <TextView
-            android:id="@+id/totalPrice"
+            android:id="@+id/heji"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:gravity="center"
-            android:text="合计￥19.88"
+            android:text="合计￥"
             android:textColor="@color/black"
             android:textSize="@dimen/text_large"
+            />
+        <TextView
+            android:id="@+id/totalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/heji"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="19.88"
+            android:textColor="@color/ping_gou"
+            android:textSize="20sp"
             />
 
         <TextView

@@ -10,10 +10,13 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.wlyilai.weilaibao.R;
+import com.wlyilai.weilaibao.utils.ToastUtils;
 
 /**
  * @author: captain
@@ -22,22 +25,53 @@ import com.wlyilai.weilaibao.R;
  */
 public class GroupDetailsActivity extends BaseActivity implements View.OnClickListener {
     private PopupWindow popupWindow;
+    private ImageView mBack, mShare, mGoodsImg;
+    private TextView mTitle, goodName, newPrice, oldPrice, goodsPeriods, goodsAllNumber, goodsSingle, goodsSurplus, shopAddress, rightNow;
+    private ProgressBar goodsProgress;
+    private LinearLayout linearKefu, linearShop, linearEnter;
+    private TextView mBuyNumber;
+    private int n = 2;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_details);
-        init();
+        initView();
+        initEvent();
     }
 
-    private void init(){
-        TextView rightNow= (TextView)findViewById(R.id.rightNow);
-        rightNow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPoprpWindow();
-            }
-        });
+    private void initView() {
+        mBack = (ImageView) findViewById(R.id.imgBack);
+        mBack.setVisibility(View.VISIBLE);
+        mShare = (ImageView) findViewById(R.id.imgMore);
+        mShare.setVisibility(View.VISIBLE);
+        mTitle = (TextView) findViewById(R.id.txtTitle);
+        mTitle.setText("团购详情");
+        mGoodsImg = (ImageView) findViewById(R.id.goodsImg);
+        goodName = (TextView) findViewById(R.id.goodName);
+        newPrice = (TextView) findViewById(R.id.newPrice);
+        oldPrice = (TextView) findViewById(R.id.oldPrice);
+        goodsPeriods = (TextView) findViewById(R.id.goodsPeriods);
+        goodsAllNumber = (TextView) findViewById(R.id.goodsAllNumber);
+        goodsSingle = (TextView) findViewById(R.id.goodsSingle);
+        goodsSurplus = (TextView) findViewById(R.id.goodsSurplus);
+        shopAddress = (TextView) findViewById(R.id.shopAddress);
+        rightNow = (TextView) findViewById(R.id.rightNow);
+        goodsProgress = (ProgressBar) findViewById(R.id.goodsProgress);
+        linearKefu = (LinearLayout) findViewById(R.id.linearKefu);
+        linearShop = (LinearLayout) findViewById(R.id.linearShop);
+        linearEnter = (LinearLayout) findViewById(R.id.linearEnter);
     }
+
+    private void initEvent() {
+        mBack.setOnClickListener(this);
+        mShare.setOnClickListener(this);
+        linearKefu.setOnClickListener(this);
+        linearShop.setOnClickListener(this);
+        linearEnter.setOnClickListener(this);
+        rightNow.setOnClickListener(this);
+    }
+
     private void showPoprpWindow() {
         View layout = View.inflate(GroupDetailsActivity.this, R.layout.layout_sure_buy, null);
         popupWindow = new PopupWindow(layout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -52,10 +86,13 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
         TextView danjia = (TextView) layout.findViewById(R.id.danjia);
         TextView oldPrice = (TextView) layout.findViewById(R.id.oldPrice);
         TextView reduce = (TextView) layout.findViewById(R.id.reduce);
-        TextView number = (TextView) layout.findViewById(R.id.number);
+        mBuyNumber = (TextView) layout.findViewById(R.id.number);
         TextView add = (TextView) layout.findViewById(R.id.add);
         Button sure = (Button) layout.findViewById(R.id.btnSure);
+        imgCancel.setOnClickListener(this);
         sure.setOnClickListener(this);
+        add.setOnClickListener(this);
+        reduce.setOnClickListener(this);
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -75,10 +112,46 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
+            case R.id.imgBack:
+                finish();
+                break;
+            case R.id.imgMore:
+                break;
+            case R.id.linearEnter:
+                break;
+            case R.id.linearKefu:
+                break;
+            case R.id.linearShop:
+                finish();
+                break;
+            case R.id.rightNow:
+                showPoprpWindow();
+                setBackgroundAlpha(0.5f);
+                break;
+            case R.id.add:
+                n++;
+                mBuyNumber.setText(n + "");
+                break;
+            case R.id.reduce:
+                n = Integer.parseInt(mBuyNumber.getText().toString());
+                if (n > 2) {
+                    n--;
+                    mBuyNumber.setText(n + "");
+                }else{
+                    ToastUtils.showShort(GroupDetailsActivity.this,"起购量为两件");
+                }
+                break;
+            case R.id.imgCancel:
+                popupWindow.dismiss();
+                setBackgroundAlpha(1.0f);
+                break;
             case R.id.btnSure:
-                Intent intent = new Intent(this,SureOrderActivity.class);
+                Intent intent = new Intent(this, SureOrderActivity.class);
                 startActivity(intent);
+                popupWindow.dismiss();
+                break;
+            default:
                 break;
         }
     }

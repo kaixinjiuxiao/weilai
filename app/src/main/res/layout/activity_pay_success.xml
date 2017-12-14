@@ -18,7 +18,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="12dp"
                 android:scaleType="centerInside"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/icon_success" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -37,9 +37,9 @@
             android:layout_height="150dp"
             android:background="#ffffff"
             android:gravity="center"
-            android:text="￥2000.0"
-            android:textColor="@color/black"
-            android:textSize="26sp" />
+            android:text="￥200.0"
+            android:textColor="#37363b"
+            android:textSize="48sp" />
 
         <View
             android:layout_width="match_parent"

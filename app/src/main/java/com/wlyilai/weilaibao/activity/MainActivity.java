@@ -51,6 +51,8 @@ public class MainActivity extends BaseActivity {
     private void init() {
         mController = FragmentController.getInstance(this, R.id.content, true);
         mController.showFragment(0);
+        mTxtPG.setSelected(true);
+        mImgPG.setSelected(true);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -71,14 +73,32 @@ public class MainActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.linearMain:
+                selected();
+                mTxtPG.setSelected(true);
+                mImgPG.setSelected(true);
                 mController.showFragment(0);
                 break;
             case R.id.linearOrder:
+                selected();
+                mTxtOrder.setSelected(true);
+                mImgOrder.setSelected(true);
                 mController.showFragment(1);
                 break;
             case R.id.lineaUser:
+                selected();
+                mTxtMy.setSelected(true);
+                mImgMy.setSelected(true);
                 mController.showFragment(2);
                 break;
         }
+    }
+
+    public void selected(){
+        mTxtPG.setSelected(false);
+        mImgPG.setSelected(false);
+        mTxtOrder.setSelected(false);
+        mImgOrder.setSelected(false);
+        mTxtMy.setSelected(false);
+        mImgMy.setSelected(false);
     }
 }

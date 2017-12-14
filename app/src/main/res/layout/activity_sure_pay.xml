@@ -4,6 +4,7 @@
               android:layout_height="match_parent"
               android:background="@color/main_bg"
               android:orientation="vertical"
+              android:id="@+id/main"
     >
 
     <include layout="@layout/head_title"/>
@@ -61,7 +62,7 @@
             />
 
         <TextView
-            android:id="@+id/price"
+            android:id="@+id/orderPrice"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
@@ -74,6 +75,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/linearALi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -86,7 +88,7 @@
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/icon_zhb"
             />
         <View
             android:layout_width="2dp"
@@ -124,11 +126,11 @@
                 />
         </LinearLayout>
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="10dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/icon_right_arrows"
             />
     </LinearLayout>
     <View
@@ -139,6 +141,7 @@
         android:background="@color/main_bg"
         />
     <LinearLayout
+        android:id="@+id/linearBalance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -150,7 +153,8 @@
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/wallet"
+            android:background="#e2ca08"
             />
         <View
             android:layout_width="2dp"
@@ -188,11 +192,11 @@
                 android:textSize="@dimen/text_normal"/>
         </LinearLayout>
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="10dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/icon_right_arrows"
             />
     </LinearLayout>
 </LinearLayout>

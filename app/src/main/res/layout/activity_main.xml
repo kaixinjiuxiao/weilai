@@ -30,7 +30,7 @@
                 android:layout_height="20dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:src="@mipmap/ic_launcher"
+                android:src="@drawable/pin_selected"
                 />
             <TextView
                 android:id="@+id/txtPG"
@@ -39,6 +39,7 @@
                 android:layout_marginTop="3dp"
                 android:gravity="center"
                 android:text="拼采廉"
+                android:textColor="@drawable/text_color_selector"
                 android:textSize="12sp"
                 />
         </LinearLayout>
@@ -55,7 +56,7 @@
                 android:layout_height="20dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:src="@mipmap/ic_launcher"
+                android:src="@drawable/order_selected"
                 />
             <TextView
                 android:id="@+id/txtOrder"
@@ -64,6 +65,7 @@
                 android:layout_marginTop="3dp"
                 android:gravity="center"
                 android:text="查订单"
+                android:textColor="@drawable/text_color_selector"
                 android:textSize="12sp"
                 />
         </LinearLayout>
@@ -80,7 +82,7 @@
                 android:layout_height="20dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:src="@mipmap/ic_launcher"
+                android:src="@drawable/user_selected"
                 />
 
             <TextView
@@ -90,6 +92,7 @@
                 android:layout_marginTop="3dp"
                 android:gravity="center"
                 android:text="会员中心"
+                android:textColor="@drawable/text_color_selector"
                 android:textSize="12sp"
                 />
         </LinearLayout>

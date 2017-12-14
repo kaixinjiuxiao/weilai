@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-            android:background="@color/white"
+              android:background="@color/white"
+              android:orientation="vertical"
     >
+
     <ImageView
+        android:id="@+id/goodsImg"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:scaleType="fitXY"
@@ -18,169 +20,248 @@
         android:layout_weight="1"
         android:orientation="vertical"
         >
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@color/white"
             >
+
             <TextView
                 android:id="@+id/goodName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
                 android:layout_marginLeft="15dp"
-                android:textSize="@dimen/text_normal"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
                 android:text="【52度浓香型白酒公司宴典高度酒 500ml】"
+                android:textSize="@dimen/text_big"
                 />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:orientation="horizontal"
             android:background="@color/white"
+            android:orientation="horizontal"
             >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical"
+                android:text="拼团价￥"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_normal"
+                />
+
             <TextView
                 android:id="@+id/newPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
                 android:gravity="center_vertical"
-                android:layout_marginLeft="15dp"
-                android:textSize="@dimen/text_normal"
-                android:text="拼团价￥98.00/件"
+                android:text="98.00"
+                android:textColor="@color/ping_gou"
+                android:textSize="22sp"
                 />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="/件"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_normal"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical"
+                android:text="￥"
+                android:textSize="@dimen/text_normal"
+                />
+
             <TextView
                 android:id="@+id/oldPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:layout_marginLeft="15dp"
+                android:text="128"
                 android:textSize="@dimen/text_normal"
-                android:text="￥128"
                 />
         </LinearLayout>
-        <LinearLayout
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@color/white"
-            android:orientation="vertical"
             >
+
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:orientation="vertical"
                 >
+
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:layout_weight="1"
                     android:orientation="horizontal"
                     >
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/icon_qishu"
+                        />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:drawableLeft="@mipmap/qishu"
-                        android:textSize="@dimen/text_large"
-                        android:gravity="center"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center"
                         android:text="期数"
                         android:textColor="#00d8c9"
+                        android:textSize="@dimen/text_normal"
                         />
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0dp"
+
+                <TextView
+                    android:id="@+id/goodsPeriods"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:text="第0001期"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="15dp"
+                android:orientation="vertical"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
                     >
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/icon_mantuan"
+                        />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:drawableLeft="@mipmap/qishu"
-                        android:textSize="@dimen/text_large"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
                         android:gravity="center"
-                        android:layout_gravity="center_horizontal"
                         android:text="满团数"
                         android:textColor="#00d8c9"
+                        android:textSize="@dimen/text_normal"
                         />
                 </LinearLayout>
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
 
+                <TextView
+                    android:id="@+id/goodsAllNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_vertical"
+                    android:text="18件"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:orientation="vertical"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
                     >
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/icon_single"
+                        />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:drawableLeft="@mipmap/qishu"
-                        android:textSize="@dimen/text_large"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
                         android:gravity="center"
-                        android:layout_centerInParent="true"
-                        android:text="单次最低量"
+                        android:text="起订量"
                         android:textColor="#00d8c9"
+                        android:textSize="@dimen/text_normal"
                         />
-                </RelativeLayout>
+                </LinearLayout>
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal"
-                >
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="15dp"
+                    android:id="@+id/goodsSingle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
                     android:gravity="center_vertical"
-                    android:text="第10001期"
-                    />
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="第10001期"
-                    />
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_marginRight="15dp"
-                    android:gravity="center"
-                    android:text="2"
+                    android:text="2件"
                     />
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:background="@drawable/dotted_bg"
-                android:layerType="software"
-                />
-            </LinearLayout>
-        </LinearLayout>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/dotted_bg"
+            android:layerType="software"
+            />
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal"
         android:background="@color/white"
+        android:orientation="horizontal"
         >
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/icon_shalou"
             />
 
         <TextView
+            android:id="@+id/goodsSurplus"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"

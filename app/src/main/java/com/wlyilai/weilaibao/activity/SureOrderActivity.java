@@ -87,6 +87,8 @@ public class SureOrderActivity extends BaseActivity {
     }
 
     private void init() {
+        mImgBack.setVisibility(View.VISIBLE);
+        mTxtTitle.setText("确认订单");
         initData();
         mAdapter = new MyAddressAdapter(this,mList);
         mAddress.setAdapter(mAdapter);

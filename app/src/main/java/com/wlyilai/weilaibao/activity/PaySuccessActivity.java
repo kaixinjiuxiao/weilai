@@ -2,6 +2,7 @@ package com.wlyilai.weilaibao.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,10 +33,15 @@ public class PaySuccessActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_pay_success);
+        ButterKnife.bind(this);
+        init();
     }
 
-    private void initData() {
+    private void init() {
+        mImgBack.setVisibility(View.VISIBLE);
+        mTxtTitle.setText("交易详情");
     }
 
     @OnClick(R.id.imgBack)
