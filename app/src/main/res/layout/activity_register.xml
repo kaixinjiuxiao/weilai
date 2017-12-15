@@ -58,16 +58,13 @@
                     android:layout_weight="17"
                     >
 
-                    <EditText
-
+                    <TextView
+                        android:id="@+id/txtPhone"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
                         android:gravity="center_vertical"
-                        android:hint="请输入手机号"
                         android:paddingLeft="20dp"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/input_bg"
                         android:textSize="14sp"
                         />
                 </LinearLayout>
@@ -153,6 +150,7 @@
                         android:hint="请输入密码"
                         android:paddingLeft="20dp"
                         android:textColor="@color/black"
+                        android:inputType="numberPassword"
                         android:textColorHint="@color/input_bg"
                         android:textSize="14sp"
                         />
@@ -196,6 +194,7 @@
                         android:hint="请再次输入密码"
                         android:paddingLeft="20dp"
                         android:textColor="@color/black"
+                        android:inputType="numberPassword"
                         android:textColorHint="@color/input_bg"
                         android:textSize="14sp"
                         />
@@ -288,8 +287,6 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:paddingLeft="20dp"
-                        android:text="sfdfdfdfdfd"
-                        android:textColor="@color/black"
                         android:textSize="14sp"
                         />
                 </LinearLayout>
@@ -320,10 +317,10 @@
                     android:id="@+id/txtAggrement"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
+                    android:paddingLeft="20dp"
                     android:layout_weight="17"
                     android:gravity="center_vertical"
-                    android:text="用户协议"
+                    android:text="用户使用协议"
                     android:textColor="@color/main"
                     />
             </LinearLayout>

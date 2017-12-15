@@ -1,5 +1,6 @@
 package com.wlyilai.weilaibao.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wlyilai.weilaibao.R;
+import com.wlyilai.weilaibao.utils.Constant;
 import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -47,11 +49,14 @@ public class LoginActivity extends BaseActivity {
     public static int UPDATE = 60;
     private static Runnable mRun;
     private static Handler mHandler = new Handler();
+    @BindView(R.id.edtCode)
+    EditText mEdtCode;
     private boolean canClick = true;
     private AlertDialog mDialog;
     private EditText mEdtName;
-    private String code;
-    private String firstInputName,firstInputPhone;
+    private String code,mPhone;
+    private String firstInputName, firstInputPhone;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,56 +77,59 @@ public class LoginActivity extends BaseActivity {
                 getVerificationCode();
                 break;
             case R.id.btnNext:
-
-               // displayDialog();
-               //startActivity(new Intent(LoginActivity.this,MainActivity.class));
-               // startActivity(new Intent(this, RegisterActivity.class));
-                aa();
-               bb();
+                startNext(mEdtPhone.getText().toString());
                 break;
         }
     }
 
-    private void aa() {
-        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppLogin/user_login")
-                .addParams("mobile","15580993896").build().execute(new StringCallback() {
+    /**
+     *点击下一步
+     * @param phone 手机号
+     */
+    private void startNext(String phone) {
+        if(!mPhone.equals(mEdtPhone.getText().toString())){
+            ToastUtils.showShort(LoginActivity.this,"手机号码不一致");
+            return;
+        }
+        if (!code.equals(mEdtCode.getText().toString())) {
+            ToastUtils.showShort(LoginActivity.this,"验证码错误");
+            return;
+        }
+        OkHttpUtils.post().url(Constant.LOGIN)
+                .addParams("mobile", phone).build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-                Log.e("tag","错五"+e.toString());
             }
 
             @Override
             public void onResponse(String response, int id) {
-                Log.e("tag","sjkfhsjf"+response);
+                Log.e("tag", "下一步信息：" + response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.getInt("status") == 0) {
+                        if (jsonObject.getInt("code") == 2) {
+                            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                            intent.putExtra("phone", mEdtPhone.getText().toString());
+                            startActivity(intent);
+                        } else if (jsonObject.getInt("code") == 3) {
+                            displayDialog();
+                        }
+                    } else if (jsonObject.getInt("status") == 1) {
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
-
-    private void bb() {
-        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppLogin/user_register_cds")
-                .addParams("mobile","18573180570")
-                .addParams("realname","苏嗣武")
-                .build().execute(new StringCallback() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                Log.e("tag","错五"+e.toString());
-            }
-
-            @Override
-            public void onResponse(String response, int id) {
-                Log.e("tag","ffgccf"+response);
-            }
-        });
-    }
-
 
     private void displayDialog() {
-        final AlertDialog.Builder builder =new AlertDialog.Builder(this);
-        View view = LayoutInflater.from(this).inflate(R.layout.layout_verification_name,null);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.layout_verification_name, null);
         builder.setView(view);
-        mEdtName = (EditText)view.findViewById(R.id.edtName);
-       Button btn = (Button) view.findViewById(R.id.btnLogin);
-
+        mEdtName = (EditText) view.findViewById(R.id.edtName);
+        Button btn = (Button) view.findViewById(R.id.btnLogin);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,13 +140,32 @@ public class LoginActivity extends BaseActivity {
         mDialog.show();
     }
 
+    /**
+     * 验证数钜宝用户
+     */
     private void verificationName() {
-        if(TextUtils.isEmpty(mEdtName.getText().toString())){
-            ToastUtils.showShort(LoginActivity.this,"请输入姓名");
+        if (TextUtils.isEmpty(mEdtName.getText().toString())) {
+            ToastUtils.showShort(LoginActivity.this, "请输入姓名");
             return;
         }
-        //startActivity(new Intent(LoginActivity.this,MainActivity.class));
-        bb();
+        verificationCDS(mEdtPhone.getText().toString(),mEdtName.getText().toString());
+    }
+
+    private void verificationCDS(String phone,String name) {
+        OkHttpUtils.post().url(Constant.VER_NAME)
+                .addParams("mobile", phone)
+                .addParams("realname", name)
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                Log.e("tag", "ffgccf" + response);
+            }
+        });
     }
 
     /**
@@ -157,10 +184,14 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    private void getSMSCode(String phone) {
-                OkHttpUtils.post()
-                .url("http://test.mgbh.wlylai.com/AppLogin/send_sms")
-                .addParams("mobile","15580993896").addParams("state","2")
+    /**
+     * 获取验证码
+     * @param phone
+     */
+    private void getSMSCode(final String phone) {
+        OkHttpUtils.post()
+                .url(Constant.GET_CODE)
+                .addParams("mobile", phone).addParams("state", "2")
                 .build().execute(new StringCallback() {
 
             @Override
@@ -172,12 +203,13 @@ public class LoginActivity extends BaseActivity {
             public void onResponse(String response, int id) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    if(jsonObject.getInt("status")==1){
-                        ToastUtils.showShort(LoginActivity.this,jsonObject.getString("msg"));
-                        JSONObject info = jsonObject.getJSONObject("data");
-                        code = info.getString("verify");
-                    }else{
-                        ToastUtils.showShort(LoginActivity.this,jsonObject.getString("msg"));
+                    if (jsonObject.getInt("status") == 1) {
+                        ToastUtils.showShort(LoginActivity.this, jsonObject.getString("msg"));
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        code = data.getString("code");
+                        mPhone = data.getString("mobile");
+                    } else {
+                        ToastUtils.showShort(LoginActivity.this, jsonObject.getString("msg"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

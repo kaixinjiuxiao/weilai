@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.entry.Goods;
 
@@ -20,12 +21,12 @@ import java.util.List;
  */
 public class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.PinGouViewHolder> {
     private Context mContext;
-    private List<Goods> mList;
+    private List<Goods.DataBean> mList;
     private OnBuyListener mBuyListener;
     public interface OnBuyListener{
         void onBuy(int position);
     }
-    public GoodsAdapter(Context context, List<Goods> list) {
+    public GoodsAdapter(Context context, List<Goods.DataBean> list) {
         mContext = context;
         mList = list;
     }
@@ -46,9 +47,10 @@ public class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.PinGouViewHo
 
     @Override
     public void onBindViewHolder(PinGouViewHolder holder, final int position) {
-        holder.name.setText(mList.get(position).getName());
-        holder.old.setText(mList.get(position).getOldPrice());
-        holder.newPrice.setText(mList.get(position).getNewPrice());
+        Glide.with(mContext).load(mList.get(position).getGimg()).into(holder.img);
+        holder.name.setText(mList.get(position).getGname());
+        holder.old.setText(mList.get(position).getGprice());
+        holder.newPrice.setText(mList.get(position).getGteam_price());
         holder.go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +76,7 @@ public class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.PinGouViewHo
             go = (TextView)itemView.findViewById(R.id.go);
         }
     }
-    public void setData(List<Goods>data){
+    public void setData(List<Goods.DataBean>data){
         mList.clear();
         mList=data;
     }

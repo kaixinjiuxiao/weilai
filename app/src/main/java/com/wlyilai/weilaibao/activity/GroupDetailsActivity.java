@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,16 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.wlyilai.weilaibao.R;
+import com.wlyilai.weilaibao.entry.GoodsDetails;
+import com.wlyilai.weilaibao.utils.Constant;
 import com.wlyilai.weilaibao.utils.ToastUtils;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import okhttp3.Call;
 
 /**
  * @author: captain
@@ -61,6 +70,28 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
         linearKefu = (LinearLayout) findViewById(R.id.linearKefu);
         linearShop = (LinearLayout) findViewById(R.id.linearShop);
         linearEnter = (LinearLayout) findViewById(R.id.linearEnter);
+        String id = getIntent().getStringExtra("id");
+        getDetails(id);
+    }
+
+    private void getDetails(String id) {
+        OkHttpUtils.post().url(Constant.GOODS_DETAILS)
+                .addParams("id",id).addParams("access_token","02c8b29f1b09833e43a37c770a87db23")
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                GoodsDetails details = new Gson().fromJson(response,GoodsDetails.class);
+                if(details.getStatus()==1){
+                    Glide.with(GroupDetailsActivity.this).load(details.getData().getGimg()).into(mGoodsImg);
+                }
+                Log.e("tag","商品详情"+response);
+            }
+        });
     }
 
     private void initEvent() {

@@ -3,28 +3,34 @@ package com.wlyilai.weilaibao.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.activity.GroupDetailsActivity;
 import com.wlyilai.weilaibao.activity.MyGroupActivity;
 import com.wlyilai.weilaibao.adapter.PinGouAdapter;
 import com.wlyilai.weilaibao.entry.FirstEvent;
 import com.wlyilai.weilaibao.entry.Goods;
+import com.wlyilai.weilaibao.entry.TypeAndBanner;
+import com.wlyilai.weilaibao.utils.Constant;
 import com.wlyilai.weilaibao.view.PullLoadMoreRecyclerView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -35,6 +41,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import okhttp3.Call;
 
 /**
  * @author: captain
@@ -57,11 +64,11 @@ public class PinGouFragment extends BaseFagment implements PullLoadMoreRecyclerV
     private Unbinder mUnbinder;
     private PinGouAdapter mAdapter;
     private RecyclerView mRecyclerView;
-    private List<Goods> mList = new ArrayList<>();
+    private List<Goods.DataBean> mList = new ArrayList<>();
     private AlertDialog mDialog;
     private Banner mMZBannerView;
-    private List<String >mListString = new ArrayList<>();
-
+    private List<TypeAndBanner.DataBean.BannerBean>mListString = new ArrayList<>();
+    private int page = 1;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,36 +91,28 @@ public class PinGouFragment extends BaseFagment implements PullLoadMoreRecyclerV
         mPullLoadMore.setLinearLayout();
         mPullLoadMore.setOnPullLoadMoreListener(this);
         mPullLoadMore.setPullLoadMoreCompleted();
-        initData();
-        mAdapter = new PinGouAdapter(getActivity(), mList);
-        mPullLoadMore.setAdapter(mAdapter);
         mMZBannerView = (Banner) mView.findViewById(R.id.banber);
-        mListString.add("http://img1.3lian.com/2015/a1/95/d/105.jpg");
-        mListString.add("http://img.taopic.com/uploads/allimg/130331/240460-13033106243430.jpg");
-        mListString.add("http://img1.3lian.com/2015/a1/46/d/198.jpg");
-       // setPages(mListString);
-        //设置banner样式
-        //设置图片加载器
-        mMZBannerView.setImageLoader(new GlideImageLoader());
-        //设置图片集合
-        mMZBannerView.setImages(mListString);
-        mMZBannerView.setIndicatorGravity(BannerConfig.RIGHT);
-        //banner设置方法全部调用完毕时最后调用
-        mMZBannerView.start();
+        mAdapter = new PinGouAdapter(getActivity(), mList);
+        getBanner();
+        getGoods(page);
     }
 
     public class GlideImageLoader extends ImageLoader {
+
         @Override
         public void displayImage(Context context, Object path, ImageView imageView) {
-            Glide.with(context).load(path).into(imageView);
+           TypeAndBanner.DataBean.BannerBean banner = (TypeAndBanner.DataBean.BannerBean) path;
+            Glide.with(context).load(banner.getImg()).into(imageView);
         }
     }
-
     private void initEvent() {
         mAdapter.setBuyListener(new PinGouAdapter.OnBuyListener() {
             @Override
             public void onBuy(int position) {
-                displayDialog();
+               // displayDialog();
+                Intent intent = new Intent(getActivity(),GroupDetailsActivity.class);
+                intent.putExtra("id",mList.get(position).getId());
+                startActivity(intent);
             }
         });
     }
@@ -142,26 +141,97 @@ public class PinGouFragment extends BaseFagment implements PullLoadMoreRecyclerV
         mDialog = builder.create();
         mDialog.show();
     }
-    private void initData() {
-        for (int i = 0; i < 10; i++) {
-            mList.add(new Goods("", "52度浓香型白酒公司宴典高度酒 500ml", "￥22.4", "10人团", "￥18.9/件"));
-        }
+
+    private void getGoods(final int page) {
+        OkHttpUtils.post().url(Constant.HOME_GOODS)
+                .addParams("access_token","02c8b29f1b09833e43a37c770a87db23")
+                .addParams("page",String.valueOf(page))
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                Goods goods = new Gson().fromJson(response,Goods.class);
+                if(goods.getStatus()==1){
+                    if (page == 1) {
+                        for (int i = 0; i < goods.getData().size(); i++) {
+                            mList.add(goods.getData().get(i));
+                        }
+                        mPullLoadMore.setAdapter(mAdapter);
+                        mPullLoadMore.setPullLoadMoreCompleted();
+                    } else {
+                        for (int i = 0; i < goods.getData().size(); i++) {
+                            mList.add(goods.getData().get(i));
+                        }
+                        mAdapter.notifyDataSetChanged();
+                        mPullLoadMore.setPullLoadMoreCompleted();
+                    }
+                    mAdapter.notifyDataSetChanged();
+                } else if (goods.getStatus() == 0) {
+                    mPullLoadMore.setPullLoadMoreCompleted();
+                    Toast.makeText(getActivity(), "无更多数据加载！", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+
+    private void getBanner(){
+        OkHttpUtils.post().url(Constant.TYPE_BANNER)
+                .addParams("access_token","02c8b29f1b09833e43a37c770a87db23")
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                TypeAndBanner banner = new Gson().fromJson(response,TypeAndBanner.class);
+                if(banner.getStatus()==1){
+                    mListString = banner.getData().getBanner();
+                    mMZBannerView.setImageLoader(new GlideImageLoader());
+                    mMZBannerView.setIndicatorGravity(BannerConfig.RIGHT);
+                    mMZBannerView.setImages(mListString);
+                    mMZBannerView.start();
+                }
+            }
+        });
     }
 
     @Override
     public void onRefresh() {
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                page = 1;
+                mList.clear();
+                if (mAdapter != null) {
+                    mAdapter.notifyDataSetChanged();
+                }
+                getGoods(1);
+            }
+        }, 2000);
     }
 
     @Override
     public void onLoadMore() {
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                page++;
+                getGoods(page);
+                mPullLoadMore.setPullLoadMoreCompleted();
+            }
+        }, 2000);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.e("tag","这里执行了？");
        // mUnbinder.unbind();
     }
 

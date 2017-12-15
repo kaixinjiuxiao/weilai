@@ -6,13 +6,13 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StrikethroughSpan;
-import android.text.style.SuperscriptSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.entry.Goods;
 
@@ -25,12 +25,12 @@ import java.util.List;
  */
 public class PinGouAdapter extends RecyclerView.Adapter<PinGouAdapter.PinGouViewHolder> {
     private Context mContext;
-    private List<Goods> mList;
+    private List<Goods.DataBean> mList;
     private OnBuyListener mBuyListener;
     public interface OnBuyListener{
         void onBuy(int position);
     }
-    public PinGouAdapter(Context context, List<Goods> list) {
+    public PinGouAdapter(Context context, List<Goods.DataBean> list) {
         mContext = context;
         mList = list;
     }
@@ -51,13 +51,14 @@ public class PinGouAdapter extends RecyclerView.Adapter<PinGouAdapter.PinGouView
 
     @Override
     public void onBindViewHolder(PinGouViewHolder holder, final int position) {
-        holder.name.setText(mList.get(position).getName());
-        SpannableString  spanned1 = new SpannableString(mList.get(position).getOldPrice());
+        Glide.with(mContext).load(mList.get(position).getGimg()).into(holder.img);
+        holder.name.setText(mList.get(position).getGname());
+        SpannableString  spanned1 = new SpannableString("￥"+mList.get(position).getGprice());
         StrikethroughSpan strike = new StrikethroughSpan();
         spanned1.setSpan(strike,0,spanned1.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         holder.old.setText(spanned1);
-        holder.numer.setText(mList.get(position).getNumber());
-        SpannableString  spanned2 = new SpannableString(mList.get(position).getNewPrice());
+        holder.numer.setText(mList.get(position).getGuser_limit());
+        SpannableString  spanned2 = new SpannableString("￥"+mList.get(position).getGteam_price()+"/件");
         RelativeSizeSpan relative = new RelativeSizeSpan(1.5f);
         spanned2.setSpan(relative,1,spanned2.toString().indexOf("/"), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         holder.newPrice.setText(spanned2);

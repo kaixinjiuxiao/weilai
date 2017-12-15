@@ -33,7 +33,7 @@ public class FragmentTwo extends BaseFagment implements PullLoadMoreRecyclerView
    private PullLoadMoreRecyclerView mPullLoadMore;
     private GoodsAdapter mGoodsAdapter;
     private RecyclerView mRecyclerViewGoods;
-    private List<Goods> mListGoods = new ArrayList<>();
+    private List<Goods.DataBean> mListGoods = new ArrayList<>();
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -92,9 +92,7 @@ public class FragmentTwo extends BaseFagment implements PullLoadMoreRecyclerView
         }else{
             mAdapter = new TypeAdapter(getActivity(),mList);
         }
-        for (int i = 0; i < 10; i++) {
-            mListGoods.add(new Goods("", "52度浓香型白酒公司宴典高度酒 500ml", "￥22.4", "10人团", "￥18.9/件"));
-        }
+
     }
 
     @Override

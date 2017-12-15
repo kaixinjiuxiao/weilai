@@ -24,12 +24,12 @@ import java.util.List;
  */
 public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder> {
     private Context mContext;
-    private List<Goods> mList;
+    private List<Goods.DataBean> mList;
     private OnBuyListener mBuyListener;
     public interface OnBuyListener{
         void onBuy(int position);
     }
-    public ShopAdapter(Context context, List<Goods> list) {
+    public ShopAdapter(Context context, List<Goods.DataBean> list) {
         mContext = context;
         mList = list;
     }
@@ -50,16 +50,16 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
 
     @Override
     public void onBindViewHolder(ShopViewHolder holder, final int position) {
-        Glide.with(mContext).load(mList.get(position).getImg()).into(holder.img);
+        Glide.with(mContext).load(mList.get(position).getGimg()).into(holder.img);
 
-        holder.name.setText(mList.get(position).getName());
+        holder.name.setText(mList.get(position).getGname());
 
-        SpannableString spanned1 = new SpannableString(mList.get(position).getOldPrice());
+        SpannableString spanned1 = new SpannableString(mList.get(position).getGprice());
         StrikethroughSpan strike = new StrikethroughSpan();
         spanned1.setSpan(strike,0,spanned1.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         holder.old.setText(spanned1);
 //        holder.old.setText(mList.get(position).getOldPrice());
-        holder.newPrice.setText(mList.get(position).getNewPrice());
+        holder.newPrice.setText(mList.get(position).getGteam_price());
         holder.go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +85,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
             go = (TextView)itemView.findViewById(R.id.buy);
         }
     }
-    public void setData(List<Goods>data){
+    public void setData(List<Goods.DataBean>data){
         mList.clear();
         mList=data;
     }

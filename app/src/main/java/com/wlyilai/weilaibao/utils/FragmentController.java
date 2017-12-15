@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.wlyilai.weilaibao.activity.UserCenterFragment;
-import com.wlyilai.weilaibao.fragment.FragmentOne;
+import com.wlyilai.weilaibao.fragment.FragmentHome;
 import com.wlyilai.weilaibao.fragment.FragmentOrder;
 
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public class FragmentController {
     private void initFragment() {
         fragments = new ArrayList<>();
         if (isReload) {
-            fragments.add(new FragmentOne());
+            fragments.add(new FragmentHome());
             fragments.add(new FragmentOrder());
             fragments.add(new UserCenterFragment());
             FragmentTransaction ft = fm.beginTransaction();

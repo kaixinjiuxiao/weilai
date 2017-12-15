@@ -35,7 +35,7 @@ public class ShopGoodsActivity extends BaseActivity implements PullLoadMoreRecyc
     PullLoadMoreRecyclerView mPullLoadMore;
     private RecyclerView mRecyclerView;
     private ShopAdapter mAdapter;
-    private List<Goods> mList = new ArrayList<>();
+    private List<Goods.DataBean> mList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class ShopGoodsActivity extends BaseActivity implements PullLoadMoreRecyc
         mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2,15,true));
         mPullLoadMore.setOnPullLoadMoreListener(this);
         mPullLoadMore.setPullLoadMoreCompleted();
-        initData();
+
         mAdapter = new ShopAdapter(ShopGoodsActivity.this, mList);
         mPullLoadMore.setAdapter(mAdapter);
     }
@@ -70,11 +70,7 @@ public class ShopGoodsActivity extends BaseActivity implements PullLoadMoreRecyc
         });
     }
 
-    private void initData() {
-        for (int i = 0; i < 10; i++) {
-            mList.add(new Goods("http://img1.3lian.com/2015/a1/95/d/105.jpg", "柠檬红茶小青", "￥22.4", "10人团", "18.9"));
-        }
-    }
+
 
     @OnClick(R.id.imgBack)
     public void onClick() {

@@ -26,7 +26,7 @@ import butterknife.Unbinder;
  * Time:  2017/12/11 0011
  * Describe:
  */
-public class FragmentOne extends BaseFagment {
+public class FragmentHome extends BaseFagment {
     private TabLayout mTabLayout;
     private ViewPager mViewpager;
     private View mView;
