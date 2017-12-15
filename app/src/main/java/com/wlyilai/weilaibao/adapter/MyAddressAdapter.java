@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wlyilai.weilaibao.R;
-import com.wlyilai.weilaibao.entry.Address;
+import com.wlyilai.weilaibao.entry.ReceivingAddress;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class MyAddressAdapter extends BaseAdapter {
     private Context mContext;
-    private List<Address> mList;
+    private List<ReceivingAddress.DataBean.AddressBean> mList;
     private int selectPosition = -1;//用于记录用户选择的变量
     private OnChooiseListener mChooiseListener;
     private OnDeleteListener mDeleteListener;
@@ -39,7 +39,7 @@ public class MyAddressAdapter extends BaseAdapter {
     public interface OnDeleteListener{
         void onDelete(int position);
     }
-    public MyAddressAdapter(Context context, List<Address> list) {
+    public MyAddressAdapter(Context context, List<ReceivingAddress.DataBean.AddressBean> list) {
         mContext = context;
         mList = list;
     }
@@ -75,9 +75,11 @@ public class MyAddressAdapter extends BaseAdapter {
         }else{
             viewHolder = (ViewHolder)convertView.getTag();
         }
-        viewHolder.name.setText(mList.get(position).getName());
-        viewHolder.phone.setText(mList.get(position).getPhone());
-        viewHolder.address.setText(mList.get(position).getAddress());
+        viewHolder.name.setText(mList.get(position).getRealname());
+        viewHolder.phone.setText(mList.get(position).getMobile());
+        String address = mList.get(position).getProvince()+mList.get(position).getCity()+mList.get(position).getCountry()
+                +mList.get(position).getDetail();
+        viewHolder.address.setText(address);
         viewHolder.select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

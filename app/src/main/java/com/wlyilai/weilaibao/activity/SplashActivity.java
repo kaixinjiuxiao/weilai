@@ -64,9 +64,9 @@ public class SplashActivity extends BaseActivity {
 
     }
     private void getBanner(){
-        OkHttpUtils.post().url(HOME_GOODS)
+        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/get_cate_info")
                 .addParams("access_token","02c8b29f1b09833e43a37c770a87db23")
-                .addParams("page","0")
+                .addParams("page","137")
                 .build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
@@ -75,7 +75,7 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void onResponse(String response, int id) {
-                Log.e("tag","一级分类和录播图"+response);
+                Log.e("tag","分类信息"+response);
             }
         });
     }

@@ -12,10 +12,16 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.wlyilai.weilaibao.R;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
 
 /**
  * Author : Captain
@@ -40,6 +46,7 @@ public class SurePayActivity extends BaseActivity {
     LinearLayout mLinearBalance;
     private PopupWindow popupWindow;
     private AlertDialog mDialog;
+    private String orderCode;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +67,7 @@ public class SurePayActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.linearALi:
+                startPay("1");
                 break;
             case R.id.linearBalance:
                 displayDialog();
@@ -76,6 +84,7 @@ public class SurePayActivity extends BaseActivity {
         sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startPay("2");
                 Intent intent = new Intent(SurePayActivity.this,PaySuccessActivity.class);
                 startActivity(intent);
                 mDialog.dismiss();
@@ -90,4 +99,25 @@ public class SurePayActivity extends BaseActivity {
         mDialog = builder.create();
         mDialog.show();
     }
+
+
+   private void startPay(String type){
+       Map<String ,String > parmas = new HashMap<>();
+       parmas.put("access_token", "02c8b29f1b09833e43a37c770a87db23");
+       parmas.put("osn", orderCode);
+       parmas.put("out_trade_type", type);
+       parmas.put("pay_source", "APP");
+       OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/pay_order").params(parmas)
+               .build().execute(new StringCallback() {
+           @Override
+           public void onError(Call call, Exception e, int id) {
+
+           }
+
+           @Override
+           public void onResponse(String response, int id) {
+
+           }
+       });
+   }
 }

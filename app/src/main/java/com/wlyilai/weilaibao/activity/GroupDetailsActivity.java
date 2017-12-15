@@ -27,6 +27,8 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import okhttp3.Call;
 
+import static android.R.attr.id;
+
 /**
  * @author: captain
  * Time:  2017/12/9 0009
@@ -40,6 +42,7 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
     private LinearLayout linearKefu, linearShop, linearEnter;
     private TextView mBuyNumber;
     private int n = 2;
+    private String mGoodsId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,8 +73,8 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
         linearKefu = (LinearLayout) findViewById(R.id.linearKefu);
         linearShop = (LinearLayout) findViewById(R.id.linearShop);
         linearEnter = (LinearLayout) findViewById(R.id.linearEnter);
-        String id = getIntent().getStringExtra("id");
-        getDetails(id);
+        mGoodsId = getIntent().getStringExtra("id");
+        getDetails(mGoodsId);
     }
 
     private void getDetails(String id) {
@@ -88,8 +91,19 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
                 GoodsDetails details = new Gson().fromJson(response,GoodsDetails.class);
                 if(details.getStatus()==1){
                     Glide.with(GroupDetailsActivity.this).load(details.getData().getGimg()).into(mGoodsImg);
+
+                    goodName.setText(details.getData().getGname());
+                    newPrice.setText(details.getData().getGteam_price());
+                    oldPrice.setText(details.getData().getGprice());
+                    goodsPeriods.setText(details.getData().getSid());
+                    goodsAllNumber.setText(details.getData().getGnum());
+                    goodsSingle.setText(details.getData().getGpay_limit());
+                    int shengyu = Integer.parseInt(details.getData().getGnum())-Integer.parseInt(details.getData().getGpay_num());
+                    goodsSurplus.setText("已团"+details.getData().getGpay_num()+"件，还差"+String.valueOf(shengyu));
+                    goodsProgress.setMax(Integer.parseInt(details.getData().getGnum()));
+                    goodsProgress.setProgress(Integer.parseInt(details.getData().getGpay_num()));
+                    shopAddress.setText(details.getData().getSname());
                 }
-                Log.e("tag","商品详情"+response);
             }
         });
     }
@@ -178,12 +192,33 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
                 setBackgroundAlpha(1.0f);
                 break;
             case R.id.btnSure:
+                buyGoods();
                 Intent intent = new Intent(this, SureOrderActivity.class);
+                intent.putExtra("id",mGoodsId);
+                intent.putExtra("buy_num",mBuyNumber.getText().toString());
                 startActivity(intent);
                 popupWindow.dismiss();
                 break;
             default:
                 break;
         }
+    }
+
+    private void buyGoods() {
+        OkHttpUtils.post().url(Constant.BUY_GOODS)
+                .addParams("access_token","02c8b29f1b09833e43a37c770a87db23")
+                .addParams("id",mGoodsId)
+                .addParams("buy_num",mBuyNumber.getText().toString())
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                Log.e("tag","错误"+e.toString());
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                Log.e("tag","购买"+response);
+            }
+        });
     }
 }
