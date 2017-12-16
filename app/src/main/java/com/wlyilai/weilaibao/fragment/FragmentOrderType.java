@@ -33,7 +33,7 @@ public class FragmentOrderType extends BaseFagment implements PullLoadMoreRecycl
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(mView==null){
-            mView =inflater.inflate(R.layout.fragment_user_center,container,false);
+            mView =inflater.inflate(R.layout.fragment_common_order,container,false);
             initView();
             initEvent();
         }
