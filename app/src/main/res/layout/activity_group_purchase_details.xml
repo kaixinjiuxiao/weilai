@@ -53,10 +53,11 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@mipmap/icon_shalou"
                     />
 
                 <TextView
+                    android:id="@+id/state"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
@@ -170,8 +171,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
-                    android:orientation="horizontal"
                     android:layout_marginLeft="10dp"
+                    android:orientation="horizontal"
                     >
 
                     <TextView
@@ -186,10 +187,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
                         android:gravity="center"
                         android:text="选择心仪商品"
                         android:textSize="@dimen/text_small"
-                        android:layout_marginLeft="5dp"
                         />
                 </LinearLayout>
             </RelativeLayout>
@@ -205,8 +206,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
-                    android:orientation="horizontal"
                     android:layout_marginLeft="10dp"
+                    android:orientation="horizontal"
                     >
 
                     <TextView
@@ -221,10 +222,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
                         android:gravity="center"
                         android:text="支付开团或参团"
                         android:textSize="@dimen/text_small"
-                        android:layout_marginLeft="5dp"
                         />
                 </LinearLayout>
             </RelativeLayout>
@@ -240,8 +241,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
-                    android:orientation="horizontal"
                     android:layout_marginLeft="10dp"
+                    android:orientation="horizontal"
                     >
 
                     <TextView
@@ -256,10 +257,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
                         android:gravity="center"
                         android:text="邀请好友参团支付"
                         android:textSize="@dimen/text_small"
-                        android:layout_marginLeft="5dp"
                         />
                 </LinearLayout>
             </RelativeLayout>
@@ -267,17 +268,17 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:layout_marginRight="10dp"
                 >
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
-                    android:orientation="horizontal"
                     android:layout_marginLeft="10dp"
+                    android:orientation="horizontal"
                     >
 
                     <TextView
@@ -292,10 +293,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
                         android:gravity="center"
                         android:text="达到件数参团成功"
                         android:textSize="@dimen/text_small"
-                        android:layout_marginLeft="5dp"
                         />
                 </LinearLayout>
             </RelativeLayout>
@@ -309,6 +310,7 @@
             >
 
             <TextView
+                android:id="@+id/txtShare"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
@@ -333,7 +335,7 @@
                     android:layout_height="20dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="8dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@drawable/icon_pin_press"
                     />
 
                 <TextView

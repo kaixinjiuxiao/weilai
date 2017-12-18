@@ -3,6 +3,7 @@ package com.wlyilai.weilaibao.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,13 +15,17 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.adapter.MyAddressAdapter;
 import com.wlyilai.weilaibao.adapter.PCAreaAdapter;
-import com.wlyilai.weilaibao.entry.ReceivingAddress;
 import com.wlyilai.weilaibao.entry.ProvinceCityArea;
+import com.wlyilai.weilaibao.entry.ReceivingAddress;
+import com.wlyilai.weilaibao.entry.SureBuy;
+import com.wlyilai.weilaibao.entry.SureOrder;
 import com.wlyilai.weilaibao.utils.Constant;
+import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.wlyilai.weilaibao.view.ListViewForScrollView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -96,6 +101,8 @@ public class SureOrderActivity extends BaseActivity {
     private PCAreaAdapter mSpinnerAdapter;
     private String province, city, area;
     private String addressId,goodsId,goodNumber;
+    private SureBuy mSureBuy;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,10 +115,19 @@ public class SureOrderActivity extends BaseActivity {
     private void init() {
         mImgBack.setVisibility(View.VISIBLE);
         mTxtTitle.setText("确认订单");
-        goodsId = getIntent().getStringExtra("id");
-        Log.e("tag","商品ID"+goodsId);
-        goodNumber = getIntent().getStringExtra("buy_num");
-        Log.e("tag","商品数量"+goodNumber);
+        Bundle bundle = getIntent().getBundleExtra("goods");
+        mSureBuy = (SureBuy) bundle.getSerializable("data");
+        goodsId = mSureBuy.getData().getId();
+        goodNumber = mSureBuy.getData().getBuy_num();
+        Glide.with(SureOrderActivity.this).load(mSureBuy.getData().getGimg()).into(mImgGoods);
+        mGoodsName.setText(mSureBuy.getData().getGname());
+        mGoodsPrice.setText(mSureBuy.getData().getGteam_price());
+        mGoodsPrice.setText(mSureBuy.getData().getGteam_price());
+        mGoodsNumber.setText("x"+mSureBuy.getData().getBuy_num());
+        mGoodsTotalNumber.setTag("共"+mSureBuy.getData().getBuy_num()+"件商品");
+        mGoodsTotalPrice.setText(mSureBuy.getData().getTotal_price()+"");
+        mTotalPrice.setText(mSureBuy.getData().getTotal_price()+"");
+
         mAdapter = new MyAddressAdapter(this, mList);
         mAddress.setAdapter(mAdapter);
         getAddress();
@@ -246,8 +262,8 @@ public class SureOrderActivity extends BaseActivity {
                 break;
             case R.id.commitOrder:
                 commitOrder();
-                Intent intent = new Intent(this, SurePayActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(this, SurePayActivity.class);
+//                startActivity(intent);
                 break;
         }
     }
@@ -256,10 +272,13 @@ public class SureOrderActivity extends BaseActivity {
      * 提交订单
      */
     private void commitOrder() {
+        if(TextUtils.isEmpty(addressId)){
+            ToastUtils.showShort(SureOrderActivity.this,"请选择收货地址");
+            return;
+        }
          Map<String, String> parmas = new HashMap<>();
         parmas.put("access_token", "02c8b29f1b09833e43a37c770a87db23");
         parmas.put("aid", addressId);
-        Log.e("tag","addressId"+addressId);
         parmas.put("id", goodsId);
         parmas.put("buy_num", goodNumber);
         OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/create_order")
@@ -271,7 +290,23 @@ public class SureOrderActivity extends BaseActivity {
 
             @Override
             public void onResponse(String response, int id) {
-                Log.e("tag","提交订单返回"+response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if(jsonObject.getInt("status")==1){
+                        SureOrder order = new Gson().fromJson(response,SureOrder.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("order",order);
+
+                        Intent intent  =new Intent(SureOrderActivity.this,SurePayActivity.class);
+                        intent.putExtra("sure",bundle);
+                        Log.e("tag","???nini"+order.toString());
+                        startActivity(intent);
+                   }else if(jsonObject.getInt("status")==0){
+                        ToastUtils.showShort(SureOrderActivity.this,jsonObject.getString("msg"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

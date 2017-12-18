@@ -5,7 +5,6 @@ import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
@@ -27,14 +26,14 @@ import java.util.List;
  */
 public class GroupingAdapter extends RecyclerView.Adapter<GroupingAdapter.GroupingViewHolder> {
     private Context mContext;
-    private List<MyGroup> mList;
+    private List<MyGroup.DataBean> mList;
     private OnLookDetailsListener mLookDetailsListener;
 
     public interface OnLookDetailsListener {
         void lookDetails(int position);
     }
 
-    public GroupingAdapter(Context context, List<MyGroup> list) {
+    public GroupingAdapter(Context context, List<MyGroup.DataBean> list) {
         mContext = context;
         mList = list;
     }
@@ -51,31 +50,36 @@ public class GroupingAdapter extends RecyclerView.Adapter<GroupingAdapter.Groupi
 
     @Override
     public void onBindViewHolder(GroupingViewHolder holder, final int position) {
-        Glide.with(mContext).load(mList.get(position).getImg()).into(holder.img);
-        holder.orderCode.setText(mList.get(position).getOrderCode());
-        holder.orderStatus.setText(mList.get(position).getOrderStatus());
-        SpannableString span1 = new SpannableString(mList.get(position).getGoodsName());
+        Glide.with(mContext).load(mList.get(position).getGimg()).into(holder.img);
+        holder.orderCode.setText(mList.get(position).getOsn());
+        if(mList.get(position).getState().equals("0")){
+            holder.orderStatus.setText("组团中");
+        }else if(mList.get(position).getState().equals("1")){
+            holder.orderStatus.setText("组团成功");
+        }else{
+            holder.orderStatus.setText("组团失败");
+        }
+        SpannableString span1 = new SpannableString(mList.get(position).getGname());
         StyleSpan style = new StyleSpan(Typeface.BOLD);
         span1.setSpan(style,0,span1.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         holder.goodsName.setText(span1);
 
-        SpannableString span2 = new SpannableString(mList.get(position).getGoodsPrice());
+        SpannableString span2 = new SpannableString("￥"+mList.get(position).getGteam_price()+"/1件");
         ForegroundColorSpan bg1 = new ForegroundColorSpan(0XFFe02e24);
         span2.setSpan(bg1,0,span2.toString().indexOf("/"),Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         holder.goodsPrice.setText(span2);
 
-        holder.goodsNumber.setText(mList.get(position).getGoodsNumber());
+        holder.goodsNumber.setText(mList.get(position).getPay_num());
 
-        SpannableString span3 = new SpannableString(mList.get(position).getGoodsTotalNumber());
+        SpannableString span3 = new SpannableString("共"+mList.get(position).getPay_num()+"个商品");
         span3.setSpan(bg1,1,span3.toString().indexOf("个"),Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
         holder.goodsTotalNumber.setText(span3);
-       // holder.goodsTotalNumber.setText(mList.get(position).getGoodsTotalNumber());
 
-        SpannableString span4 = new SpannableString(mList.get(position).getGoodsTotalPrice());
+        SpannableString span4 = new SpannableString("总额："+mList.get(position).getTotal_price()+"元");
         span4.setSpan(bg1,3,span4.length()-1,Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         holder.goodsTotalPrice.setText(span4);
-        //holder.goodsTotalPrice.setText(mList.get(position).getGoodsTotalPrice());
+
         holder.details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

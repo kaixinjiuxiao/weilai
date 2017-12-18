@@ -20,14 +20,16 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.entry.GoodsDetails;
+import com.wlyilai.weilaibao.entry.SureBuy;
 import com.wlyilai.weilaibao.utils.Constant;
 import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
-import okhttp3.Call;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import static android.R.attr.id;
+import okhttp3.Call;
 
 /**
  * @author: captain
@@ -41,8 +43,11 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
     private ProgressBar goodsProgress;
     private LinearLayout linearKefu, linearShop, linearEnter;
     private TextView mBuyNumber;
-    private int n = 2;
-    private String mGoodsId;
+    private int n ;
+    private String mGoodsId,mOldPrice,mNewPrice,mImgUrl;
+    private TextView mYuanjia;
+    private TextView mDanjia;
+    private TextView mTotalPrice;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,16 +93,20 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
 
             @Override
             public void onResponse(String response, int id) {
+                Log.e("tag","团"+response);
                 GoodsDetails details = new Gson().fromJson(response,GoodsDetails.class);
                 if(details.getStatus()==1){
                     Glide.with(GroupDetailsActivity.this).load(details.getData().getGimg()).into(mGoodsImg);
-
+                    mImgUrl = details.getData().getGimg();
                     goodName.setText(details.getData().getGname());
                     newPrice.setText(details.getData().getGteam_price());
+                    mNewPrice = details.getData().getGteam_price();
                     oldPrice.setText(details.getData().getGprice());
+                    mOldPrice= details.getData().getGprice();
                     goodsPeriods.setText(details.getData().getSid());
                     goodsAllNumber.setText(details.getData().getGnum());
                     goodsSingle.setText(details.getData().getGpay_limit());
+                    n = Integer.parseInt(details.getData().getGpay_limit());
                     int shengyu = Integer.parseInt(details.getData().getGnum())-Integer.parseInt(details.getData().getGpay_num());
                     goodsSurplus.setText("已团"+details.getData().getGpay_num()+"件，还差"+String.valueOf(shengyu));
                     goodsProgress.setMax(Integer.parseInt(details.getData().getGnum()));
@@ -126,12 +135,18 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.showAtLocation(GroupDetailsActivity.this.findViewById(R.id.main), Gravity.BOTTOM, 20, 0);
         ImageView img = (ImageView) layout.findViewById(R.id.goodsImg);
+        Glide.with(GroupDetailsActivity.this).load(mImgUrl).into(img);
         ImageView imgCancel = (ImageView) layout.findViewById(R.id.imgCancel);
-        TextView price = (TextView) layout.findViewById(R.id.price);
-        TextView danjia = (TextView) layout.findViewById(R.id.danjia);
-        TextView oldPrice = (TextView) layout.findViewById(R.id.oldPrice);
+        mTotalPrice = (TextView) layout.findViewById(R.id.price);
+        Double total = n*(Double.parseDouble(mNewPrice));
+        mTotalPrice.setText("￥"+total);
+        mDanjia = (TextView) layout.findViewById(R.id.danjia);
+        mDanjia.setText("￥"+mNewPrice+"/件");
+        mYuanjia = (TextView) layout.findViewById(R.id.oldPrice);
+        mYuanjia.setText("￥"+mOldPrice);
         TextView reduce = (TextView) layout.findViewById(R.id.reduce);
         mBuyNumber = (TextView) layout.findViewById(R.id.number);
+        mBuyNumber.setText(n+"");
         TextView add = (TextView) layout.findViewById(R.id.add);
         Button sure = (Button) layout.findViewById(R.id.btnSure);
         imgCancel.setOnClickListener(this);
@@ -177,12 +192,13 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
             case R.id.add:
                 n++;
                 mBuyNumber.setText(n + "");
+                mTotalPrice.setText("￥"+n*(Double.parseDouble(mNewPrice)));
                 break;
             case R.id.reduce:
-                n = Integer.parseInt(mBuyNumber.getText().toString());
                 if (n > 2) {
                     n--;
                     mBuyNumber.setText(n + "");
+                    mTotalPrice.setText("￥"+n*(Double.parseDouble(mNewPrice)));
                 }else{
                     ToastUtils.showShort(GroupDetailsActivity.this,"起购量为两件");
                 }
@@ -193,10 +209,10 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.btnSure:
                 buyGoods();
-                Intent intent = new Intent(this, SureOrderActivity.class);
-                intent.putExtra("id",mGoodsId);
-                intent.putExtra("buy_num",mBuyNumber.getText().toString());
-                startActivity(intent);
+//                Intent intent = new Intent(this, SureOrderActivity.class);
+//                intent.putExtra("id",mGoodsId);
+//                intent.putExtra("buy_num",mBuyNumber.getText().toString());
+//                startActivity(intent);
                 popupWindow.dismiss();
                 break;
             default:
@@ -218,6 +234,23 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onResponse(String response, int id) {
                 Log.e("tag","购买"+response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if(jsonObject.getInt("status")==1){
+                        SureBuy data= new Gson().fromJson(response,SureBuy.class);
+                        Intent intent = new Intent(GroupDetailsActivity.this, SureOrderActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("data",data);
+                        intent.putExtra("goods",bundle);
+                        startActivity(intent);
+                    }else if(jsonObject.getInt("status")==0){
+                        ToastUtils.showShort(GroupDetailsActivity.this,jsonObject.getString("msg"));
+                        setBackgroundAlpha(1.0f);
+                        //popupWindow.dismiss();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

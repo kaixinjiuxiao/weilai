@@ -42,6 +42,10 @@ public class PaySuccessActivity extends BaseActivity {
     private void init() {
         mImgBack.setVisibility(View.VISIBLE);
         mTxtTitle.setText("交易详情");
+//        Bundle bundle = getIntent().getBundleExtra("pay");
+//        PayResult result = (PayResult) bundle.getSerializable("result");
+//        mMoney.setText(result.getData().getPay_price());
+
     }
 
     @OnClick(R.id.imgBack)

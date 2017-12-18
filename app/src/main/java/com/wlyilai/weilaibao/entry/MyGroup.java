@@ -1,108 +1,120 @@
 package com.wlyilai.weilaibao.entry;
 
+import java.util.List;
+
 /**
  * @author: captain
  * Time:  2017/12/12 0012
  * Describe:
  */
 public class MyGroup {
-    private String img;
-    private String orderCode;
-    private String orderStatus;
-    private String goodsName;
-    private String goodsPrice;
-    private String goodsNumber;
-    private String goodsTotalNumber;
-    private String goodsTotalPrice;
 
+    /**
+     * status : 1
+     * data : [{"osn":"62017121816012423680","total_price":"0.20","pay_num":"2","grid":"11","gname":"商品-4","gteam_price":"0.10","gimg":"http://test.mgbh.wlylai.com./Uploads/GoodsSupply/2017-12-15/df52a97c3afd6b918960.jpeg"},{"osn":"62017121816010787604","total_price":"0.40","pay_num":"4","grid":"11","gname":"商品-4","gteam_price":"0.10","gimg":"http://test.mgbh.wlylai.com./Uploads/GoodsSupply/2017-12-15/df52a97c3afd6b918960.jpeg"},{"osn":"62017121815561848526","total_price":"0.20","pay_num":"2","grid":"11","gname":"商品-4","gteam_price":"0.10","gimg":"http://test.mgbh.wlylai.com./Uploads/GoodsSupply/2017-12-15/df52a97c3afd6b918960.jpeg"}]
+     */
 
-    public MyGroup(String img, String orderCode, String orderStatus, String goodsName,
-                   String goodsPrice, String goodsNumber, String goodsTotalNumber, String goodsTotalPrice) {
-        this.img = img;
-        this.orderCode = orderCode;
-        this.orderStatus = orderStatus;
-        this.goodsName = goodsName;
-        this.goodsPrice = goodsPrice;
-        this.goodsNumber = goodsNumber;
-        this.goodsTotalNumber = goodsTotalNumber;
-        this.goodsTotalPrice = goodsTotalPrice;
+    private int status;
+    private List<DataBean> data;
+
+    public int getStatus() {
+        return status;
     }
 
-    public String getImg() {
-        return img;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public List<DataBean> getData() {
+        return data;
     }
 
-    public String getOrderCode() {
-        return orderCode;
+    public void setData(List<DataBean> data) {
+        this.data = data;
     }
 
-    public void setOrderCode(String orderCode) {
-        this.orderCode = orderCode;
-    }
+    public static class DataBean {
+        /**
+         * osn : 62017121816012423680
+         * total_price : 0.20
+         * pay_num : 2
+         * grid : 11
+         * gname : 商品-4
+         * gteam_price : 0.10
+         * gimg : http://test.mgbh.wlylai.com./Uploads/GoodsSupply/2017-12-15/df52a97c3afd6b918960.jpeg
+         */
 
-    public String getOrderStatus() {
-        return orderStatus;
-    }
+        private String osn;
+        private String total_price;
+        private String pay_num;
+        private String grid;
+        private String gname;
+        private String gteam_price;
+        private String gimg;
+        private String state;
 
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
-    }
+        public String getState() {
+            return state;
+        }
 
-    public String getGoodsName() {
-        return goodsName;
-    }
+        public void setState(String state) {
+            this.state = state;
+        }
 
-    public void setGoodsName(String goodsName) {
-        this.goodsName = goodsName;
-    }
+        public String getOsn() {
+            return osn;
+        }
 
-    public String getGoodsPrice() {
-        return goodsPrice;
-    }
+        public void setOsn(String osn) {
+            this.osn = osn;
+        }
 
-    public void setGoodsPrice(String goodsPrice) {
-        this.goodsPrice = goodsPrice;
-    }
+        public String getTotal_price() {
+            return total_price;
+        }
 
-    public String getGoodsNumber() {
-        return goodsNumber;
-    }
+        public void setTotal_price(String total_price) {
+            this.total_price = total_price;
+        }
 
-    public void setGoodsNumber(String goodsNumber) {
-        this.goodsNumber = goodsNumber;
-    }
+        public String getPay_num() {
+            return pay_num;
+        }
 
-    public String getGoodsTotalNumber() {
-        return goodsTotalNumber;
-    }
+        public void setPay_num(String pay_num) {
+            this.pay_num = pay_num;
+        }
 
-    public void setGoodsTotalNumber(String goodsTotalNumber) {
-        this.goodsTotalNumber = goodsTotalNumber;
-    }
+        public String getGrid() {
+            return grid;
+        }
 
-    public String getGoodsTotalPrice() {
-        return goodsTotalPrice;
-    }
+        public void setGrid(String grid) {
+            this.grid = grid;
+        }
 
-    public void setGoodsTotalPrice(String goodsTotalPrice) {
-        this.goodsTotalPrice = goodsTotalPrice;
-    }
+        public String getGname() {
+            return gname;
+        }
 
-    @Override
-    public String toString() {
-        return "MyGroup{" +
-                "img='" + img + '\'' +
-                ", orderCode='" + orderCode + '\'' +
-                ", orderStatus='" + orderStatus + '\'' +
-                ", goodsName='" + goodsName + '\'' +
-                ", goodsPrice='" + goodsPrice + '\'' +
-                ", goodsNumber='" + goodsNumber + '\'' +
-                ", goodsTotalNumber='" + goodsTotalNumber + '\'' +
-                ", goodsTotalPrice='" + goodsTotalPrice + '\'' +
-                '}';
+        public void setGname(String gname) {
+            this.gname = gname;
+        }
+
+        public String getGteam_price() {
+            return gteam_price;
+        }
+
+        public void setGteam_price(String gteam_price) {
+            this.gteam_price = gteam_price;
+        }
+
+        public String getGimg() {
+            return gimg;
+        }
+
+        public void setGimg(String gimg) {
+            this.gimg = gimg;
+        }
     }
 }

@@ -2,7 +2,6 @@ package com.wlyilai.weilaibao.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,7 +27,7 @@ public class FragmentOrderType extends BaseFagment implements PullLoadMoreRecycl
     private GroupingAdapter mAdapter;
     private PullLoadMoreRecyclerView mPullLoadMore;
     private RecyclerView mRecyclerView;
-    private List<MyGroup> mList = new ArrayList<>();
+    private List<MyGroup.DataBean> mList = new ArrayList<>();
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,10 +62,10 @@ public class FragmentOrderType extends BaseFagment implements PullLoadMoreRecycl
     }
 
     private void initData() {
-        for (int i = 0; i <10 ; i++) {
+      /*  for (int i = 0; i <10 ; i++) {
             mList.add(new MyGroup("http://img1.3lian.com/2015/a1/95/d/105.jpg","订单号：PT20171212140909123456778",
                     "团购进行中","【VIP价16.99】新疆核桃500","￥16.99/1件","x2","共2个商品","总额：￥34.98元"));
-        }
+        }*/
     }
 
     @Override
@@ -76,7 +75,7 @@ public class FragmentOrderType extends BaseFagment implements PullLoadMoreRecycl
 
     @Override
     public void onLoadMore() {
-        new Handler().postDelayed(new Runnable() {
+       /* new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 mList.add(new MyGroup("http://img1.3lian.com/2015/a1/95/d/105.jpg","订单号：PT20171212140909123456778",
@@ -84,7 +83,7 @@ public class FragmentOrderType extends BaseFagment implements PullLoadMoreRecycl
                 mAdapter.notifyDataSetChanged();
                 mPullLoadMore.setPullLoadMoreCompleted();
             }
-        },2000);
+        },2000);*/
 
     }
 }

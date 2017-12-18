@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.wlyilai.weilaibao.R;
-import com.wlyilai.weilaibao.entry.Goods;
-import com.wlyilai.weilaibao.entry.JoinInfo;
+import com.wlyilai.weilaibao.entry.GroupDetails;
 
 import java.util.List;
 
@@ -20,9 +19,9 @@ import java.util.List;
  */
 public class JoinGroupAdapter extends RecyclerView.Adapter<JoinGroupAdapter.JoinViewHolder> {
     private Context mContext;
-    private List<JoinInfo> mList;
+    private List<GroupDetails.DataBean.OrderDetailBean> mList;
 
-    public JoinGroupAdapter(Context context, List<JoinInfo> list) {
+    public JoinGroupAdapter(Context context, List<GroupDetails.DataBean.OrderDetailBean> list) {
         mContext = context;
         mList = list;
     }
@@ -36,8 +35,8 @@ public class JoinGroupAdapter extends RecyclerView.Adapter<JoinGroupAdapter.Join
 
     @Override
     public void onBindViewHolder(JoinViewHolder holder, final int position) {
-        holder.phone.setText(mList.get(position).getPhone());
-        holder.time.setText(mList.get(position).getTime());
+        holder.phone.setText(mList.get(position).getMobile());
+        holder.time.setText(mList.get(position).getPaytime());
     }
 
     @Override
