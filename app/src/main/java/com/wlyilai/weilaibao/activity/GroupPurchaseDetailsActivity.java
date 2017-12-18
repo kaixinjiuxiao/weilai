@@ -1,10 +1,16 @@
 package com.wlyilai.weilaibao.activity;
 
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -31,6 +37,11 @@ import okhttp3.Call;
  * Describe:
  */
 public class GroupPurchaseDetailsActivity extends BaseActivity implements PullLoadMoreRecyclerView.PullLoadMoreListener, View.OnClickListener {
+    private static final String QQ_APP_ID = "1106264324";
+    private static final String WX_APP_ID_ONE = "wx3e2d7f17fdf2c8f2";
+    public static final int SHARE_FRIEND = 1;
+    public static final int SHARE_FRIEND_CIRCLE = 2;
+    private static final int THUMB_SIZE = 150;
     private ProgressBar progress;
     private ImageView mBack;
     private TextView mTitle, mState, mShare;
@@ -40,7 +51,7 @@ public class GroupPurchaseDetailsActivity extends BaseActivity implements PullLo
     private List<GroupDetails.DataBean.OrderDetailBean> mList = new ArrayList<>();
     private int page = 1;
     private String mGrid;
-
+    private PopupWindow popupWindow;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +75,11 @@ public class GroupPurchaseDetailsActivity extends BaseActivity implements PullLo
         mPullLoadMoreRecyclerView = (PullLoadMoreRecyclerView) findViewById(R.id.pullLoadMore);
         mRecyclerView = mPullLoadMoreRecyclerView.getRecyclerView();
         mRecyclerView.setVerticalScrollBarEnabled(true);
-        mPullLoadMoreRecyclerView.setRefreshing(true);
+      //  mPullLoadMoreRecyclerView.setRefreshing(true);
         mPullLoadMoreRecyclerView.setLinearLayout();
+        mPullLoadMoreRecyclerView.setSwipeRefreshEnable(false);
+        mPullLoadMoreRecyclerView.setPullRefreshEnable(false);
+        mPullLoadMoreRecyclerView.setPushRefreshEnable(false);
         mPullLoadMoreRecyclerView.setOnPullLoadMoreListener(this);
         mAdapter = new JoinGroupAdapter(this, mList);
     }
@@ -86,6 +100,7 @@ public class GroupPurchaseDetailsActivity extends BaseActivity implements PullLo
 
             @Override
             public void onResponse(String response, int id) {
+                Log.e("tag","团详情"+response);
                 try {
                     JSONObject json = new JSONObject(response);
                     if (json.getInt("status") == 1) {
@@ -116,6 +131,7 @@ public class GroupPurchaseDetailsActivity extends BaseActivity implements PullLo
 
     @Override
     public void onLoadMore() {
+        mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
     }
 
     @Override
@@ -125,11 +141,44 @@ public class GroupPurchaseDetailsActivity extends BaseActivity implements PullLo
                 finish();
                 break;
             case R.id.txtShare:
-                finish();
+                showPoprpWindow();
+                break;
+            case R.id.share_qq:
+                //shareToQQ();
+                break;
+            case R.id.share_weixin:
+               // shareToWX(SHARE_FRIEND);
+                break;
+            case R.id.share_pyquan:
+                //shareToWX(SHARE_FRIEND_CIRCLE);
+                break;
+            case R.id.linear_cancel:
+                popupWindow.dismiss();
                 break;
             default:
                 break;
         }
     }
-
+    private void showPoprpWindow() {
+        View layout = View.inflate(GroupPurchaseDetailsActivity.this, R.layout.share_bottom, null);
+        popupWindow = new PopupWindow(layout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setFocusable(true); // 点击空白处时，隐藏掉POP窗口
+        popupWindow.setOutsideTouchable(true); // 点击外部时，隐藏掉POP窗口
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.showAtLocation(GroupPurchaseDetailsActivity.this.findViewById(R.id.main), Gravity.BOTTOM, 20, 0);
+        LinearLayout qqShare = (LinearLayout) layout.findViewById(R.id.share_qq);
+        LinearLayout wxShare = (LinearLayout) layout.findViewById(R.id.share_weixin);
+        LinearLayout pyqShare = (LinearLayout) layout.findViewById(R.id.share_pyquan);
+        LinearLayout cancel = (LinearLayout) layout.findViewById(R.id.linear_cancel);
+        qqShare.setOnClickListener(this);
+        wxShare.setOnClickListener(this);
+        pyqShare.setOnClickListener(this);
+        cancel.setOnClickListener(this);
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                popupWindow.dismiss();
+            }
+        });
+    }
 }

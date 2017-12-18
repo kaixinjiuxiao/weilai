@@ -2,15 +2,19 @@ package com.wlyilai.weilaibao.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wlyilai.weilaibao.R;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
 
 /**
  * @author: captain
@@ -45,11 +49,28 @@ public class PaySuccessActivity extends BaseActivity {
 //        Bundle bundle = getIntent().getBundleExtra("pay");
 //        PayResult result = (PayResult) bundle.getSerializable("result");
 //        mMoney.setText(result.getData().getPay_price());
-
+         getData();
     }
 
     @OnClick(R.id.imgBack)
     public void onClick() {
         finish();
+    }
+
+    private void getData(){
+        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/get_order_success")
+                .addParams("access_token", "02c8b29f1b09833e43a37c770a87db23")
+                .addParams("osn","62017121811471271828")
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                Log.e("tag","支付成功"+e.toString());
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                Log.e("tag","支付成功"+response);
+            }
+        });
     }
 }

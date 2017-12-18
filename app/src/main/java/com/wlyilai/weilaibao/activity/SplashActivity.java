@@ -41,7 +41,7 @@ public class SplashActivity extends BaseActivity {
         animation.setDuration(2000);
         animation.setFillAfter(true);
         mImgSplash.startAnimation(animation);
-        getBanner();
+       // getBanner();
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,13 @@ import com.wlyilai.weilaibao.activity.OrderDetailsActivity;
 import com.wlyilai.weilaibao.adapter.GroupingAdapter;
 import com.wlyilai.weilaibao.entry.MyGroup;
 import com.wlyilai.weilaibao.view.PullLoadMoreRecyclerView;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
 
 /**
  * @author: captain
@@ -47,7 +52,7 @@ public class FragmentOrderType extends BaseFagment implements PullLoadMoreRecycl
         mPullLoadMore.setLinearLayout();
         mPullLoadMore.setOnPullLoadMoreListener(this);
         mPullLoadMore.setPullLoadMoreCompleted();
-        initData();
+        initData("1",1);
         mAdapter = new GroupingAdapter(getActivity(), mList);
         mPullLoadMore.setAdapter(mAdapter);
     }
@@ -61,11 +66,21 @@ public class FragmentOrderType extends BaseFagment implements PullLoadMoreRecycl
         });
     }
 
-    private void initData() {
-      /*  for (int i = 0; i <10 ; i++) {
-            mList.add(new MyGroup("http://img1.3lian.com/2015/a1/95/d/105.jpg","订单号：PT20171212140909123456778",
-                    "团购进行中","【VIP价16.99】新疆核桃500","￥16.99/1件","x2","共2个商品","总额：￥34.98元"));
-        }*/
+    private void initData(String state,int page) {
+        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/get_user_order")
+                .addParams("access_token", "02c8b29f1b09833e43a37c770a87db23")
+                .addParams("state", state)
+                .addParams("page", String.valueOf(page)).build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+            Log.e("tag","订单错误"+e.toString());
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                Log.e("tag","所有订单"+response);
+            }
+        });
     }
 
     @Override
@@ -75,15 +90,7 @@ public class FragmentOrderType extends BaseFagment implements PullLoadMoreRecycl
 
     @Override
     public void onLoadMore() {
-       /* new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mList.add(new MyGroup("http://img1.3lian.com/2015/a1/95/d/105.jpg","订单号：PT20171212140909123456778",
-                        "团购进行中","【VIP价16.99】新疆核桃500","￥16.99/1件","x2","共2个商品","总额：￥34.98元"));
-                mAdapter.notifyDataSetChanged();
-                mPullLoadMore.setPullLoadMoreCompleted();
-            }
-        },2000);*/
+
 
     }
 }
