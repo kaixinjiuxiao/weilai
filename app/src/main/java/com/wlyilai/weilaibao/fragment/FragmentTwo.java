@@ -25,6 +25,8 @@ import java.util.List;
  * Describe:
  */
 public class FragmentTwo extends BaseFagment implements PullLoadMoreRecyclerView.PullLoadMoreListener {
+    private String id;
+
     private View mView;
     private RecyclerView mRecyclerView;
     private TypeAdapter mAdapter;
@@ -34,6 +36,11 @@ public class FragmentTwo extends BaseFagment implements PullLoadMoreRecyclerView
     private GoodsAdapter mGoodsAdapter;
     private RecyclerView mRecyclerViewGoods;
     private List<Goods.DataBean> mListGoods = new ArrayList<>();
+
+    public FragmentTwo(String id) {
+        this.id = id;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,6 +53,7 @@ public class FragmentTwo extends BaseFagment implements PullLoadMoreRecyclerView
     }
 
     private void initView() {
+        Log.e("tag","id==="+id);
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.recyclerTwo);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),5));
         mRecyclerView.addItemDecoration(new DividerGridItemDecoration(getActivity(),2,0XFFD2d2d2));

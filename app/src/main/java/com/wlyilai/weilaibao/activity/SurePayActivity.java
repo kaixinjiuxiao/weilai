@@ -135,6 +135,15 @@ public class SurePayActivity extends BaseActivity {
             @Override
             public void onResponse(String response, int id) {
                 Log.e("tag","用户信息"+response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if(jsonObject.getInt("status")==1){
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        mTextBanlance.setText("￥"+data.getString("balance"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

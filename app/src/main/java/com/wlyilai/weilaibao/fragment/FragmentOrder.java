@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.wlyilai.weilaibao.R;
-import com.wlyilai.weilaibao.adapter.HomeAdapter;
+import com.wlyilai.weilaibao.adapter.LookOrderAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class FragmentOrder extends BaseFagment {
    private View mView;
     private TabLayout mTabLayout;
     private ViewPager mViewpager;
-    private HomeAdapter mAdapter;
+    private LookOrderAdapter mAdapter;
     private List<String> mStringList = new ArrayList<>();
     private List<Fragment> mlist = new ArrayList<>();
     @Override
@@ -45,14 +45,21 @@ public class FragmentOrder extends BaseFagment {
         mStringList.add("待发货");
         mStringList.add("待收货");
         mStringList.add("已完成");
-        for (int i = 0; i < 5; i++) {
-            FragmentOrderType all = new FragmentOrderType();
-            mlist.add(all);
-        }
+        FragmentOrderAll all = new FragmentOrderAll();
+        FragmentOrderWaitPay waitPay = new FragmentOrderWaitPay();
+        FragmentOrderWaitSend waitSend = new FragmentOrderWaitSend();
+        FragmentOrderWaitReceive waitReceive = new FragmentOrderWaitReceive();
+        FragmentOrderSuccess success = new FragmentOrderSuccess();
+        mlist.add(all);
+        mlist.add(waitPay);
+        mlist.add(waitSend);
+        mlist.add(waitReceive);
+        mlist.add(success);
+
     }
 
     private void initData() {
-        mAdapter = new HomeAdapter(getChildFragmentManager(),mlist,mStringList);
+        mAdapter = new LookOrderAdapter(getChildFragmentManager(),mlist,mStringList);
         mViewpager.setAdapter(mAdapter);
         //   mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mTabLayout.setupWithViewPager(mViewpager);

@@ -16,8 +16,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.Call;
 
-import static com.wlyilai.weilaibao.utils.Constant.HOME_GOODS;
-
 /**
  * @author: captain
  * Time:  2017/12/9 0009

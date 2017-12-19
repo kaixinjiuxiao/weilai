@@ -37,14 +37,14 @@ import okhttp3.Call;
  * Describe:
  */
 public class GroupDetailsActivity extends BaseActivity implements View.OnClickListener {
-    private PopupWindow popupWindow;
+    private PopupWindow popupWindow,shareWindow;
     private ImageView mBack, mShare, mGoodsImg;
     private TextView mTitle, goodName, newPrice, oldPrice, goodsPeriods, goodsAllNumber, goodsSingle, goodsSurplus, shopAddress, rightNow;
     private ProgressBar goodsProgress;
     private LinearLayout linearKefu, linearShop, linearEnter;
     private TextView mBuyNumber;
     private int n ;
-    private String mGoodsId,mOldPrice,mNewPrice,mImgUrl;
+    private String mGoodsId,mOldPrice,mNewPrice,mImgUrl,mShopId,mShopName;
     private TextView mYuanjia;
     private TextView mDanjia;
     private TextView mTotalPrice;
@@ -102,6 +102,8 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
                     newPrice.setText(details.getData().getGteam_price());
                     mNewPrice = details.getData().getGteam_price();
                     oldPrice.setText(details.getData().getGprice());
+                    mShopId = details.getData().getSid();
+                    mShopName=details.getData().getGname();
                     mOldPrice= details.getData().getGprice();
                     goodsPeriods.setText(details.getData().getSid());
                     goodsAllNumber.setText(details.getData().getGnum());
@@ -177,8 +179,13 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.imgMore:
+                showSharePopupWindow();
                 break;
             case R.id.linearEnter:
+                Intent intent = new Intent(GroupDetailsActivity.this,ShopGoodsActivity.class);
+                intent.putExtra("sid",mShopId);
+                intent.putExtra("shopName",mShopName);
+                startActivity(intent);
                 break;
             case R.id.linearKefu:
                 break;
@@ -209,15 +216,46 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.btnSure:
                 buyGoods();
-//                Intent intent = new Intent(this, SureOrderActivity.class);
-//                intent.putExtra("id",mGoodsId);
-//                intent.putExtra("buy_num",mBuyNumber.getText().toString());
-//                startActivity(intent);
                 popupWindow.dismiss();
+                break;
+            case R.id.share_qq:
+                //shareToQQ();
+                break;
+            case R.id.share_weixin:
+                // shareToWX(SHARE_FRIEND);
+                break;
+            case R.id.share_pyquan:
+                //shareToWX(SHARE_FRIEND_CIRCLE);
+                break;
+            case R.id.linear_cancel:
+                shareWindow.dismiss();
                 break;
             default:
                 break;
         }
+    }
+
+    private void showSharePopupWindow() {
+        View layout = View.inflate(GroupDetailsActivity.this, R.layout.share_bottom, null);
+        shareWindow = new PopupWindow(layout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        shareWindow.setFocusable(true); // 点击空白处时，隐藏掉POP窗口
+        shareWindow.setOutsideTouchable(true); // 点击外部时，隐藏掉POP窗口
+        shareWindow.setBackgroundDrawable(new BitmapDrawable());
+        shareWindow.showAtLocation(GroupDetailsActivity.this.findViewById(R.id.main), Gravity.BOTTOM, 20, 0);
+        LinearLayout qqShare = (LinearLayout) layout.findViewById(R.id.share_qq);
+        LinearLayout wxShare = (LinearLayout) layout.findViewById(R.id.share_weixin);
+        LinearLayout pyqShare = (LinearLayout) layout.findViewById(R.id.share_pyquan);
+        LinearLayout cancel = (LinearLayout) layout.findViewById(R.id.linear_cancel);
+        qqShare.setOnClickListener(this);
+        wxShare.setOnClickListener(this);
+        pyqShare.setOnClickListener(this);
+        cancel.setOnClickListener(this);
+        shareWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                shareWindow.dismiss();
+            }
+        });
     }
 
     private void buyGoods() {

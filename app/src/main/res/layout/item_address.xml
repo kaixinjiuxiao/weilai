@@ -62,6 +62,7 @@
             android:orientation="horizontal"
             android:layout_marginLeft="15dp"
             >
+
             <ImageView
                 android:id="@+id/checkbox"
                 android:layout_width="20dp"
@@ -69,6 +70,7 @@
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/pay_selected"
                 />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -89,7 +91,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center_vertical"
-                android:src="@mipmap/ic_launcher"
+                android:src="@mipmap/delete"
                 />
             <TextView
                 android:id="@+id/delete"

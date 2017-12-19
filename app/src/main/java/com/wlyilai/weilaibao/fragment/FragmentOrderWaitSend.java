@@ -1,20 +1,22 @@
-package com.wlyilai.weilaibao.activity;
+package com.wlyilai.weilaibao.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.wlyilai.weilaibao.R;
-import com.wlyilai.weilaibao.adapter.ShopAdapter;
-import com.wlyilai.weilaibao.entry.Goods;
+import com.wlyilai.weilaibao.activity.OrderDetailsActivity;
+import com.wlyilai.weilaibao.adapter.OrderAdapter;
+import com.wlyilai.weilaibao.entry.Order;
 import com.wlyilai.weilaibao.utils.ToastUtils;
-import com.wlyilai.weilaibao.view.GridSpacingItemDecoration;
 import com.wlyilai.weilaibao.view.PullLoadMoreRecyclerView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -25,92 +27,87 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import okhttp3.Call;
 
 /**
  * @author: captain
- * Time:  2017/12/14 0014
+ * Time:  2017/12/11 0011
  * Describe:
  */
-public class ShopGoodsActivity extends BaseActivity implements PullLoadMoreRecyclerView.PullLoadMoreListener {
-    @BindView(R.id.imgBack)
-    ImageView mImgBack;
-    @BindView(R.id.txtTitle)
-    TextView mTxtTitle;
-    @BindView(R.id.pullLoadMore)
-    PullLoadMoreRecyclerView mPullLoadMore;
+public class FragmentOrderWaitSend extends BaseFagment implements PullLoadMoreRecyclerView.PullLoadMoreListener {
+    private static final String type = "1";
+    private View mView;
+    private OrderAdapter mAdapter;
+    private PullLoadMoreRecyclerView mPullLoadMore;
     private RecyclerView mRecyclerView;
-    private ShopAdapter mAdapter;
-    private List<Goods.DataBean> mList = new ArrayList<>();
-    private String mSid;
+    private List<Order.DataBean> mList = new ArrayList<>();
     private int page = 1;
+    private TextView mTxt;
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shop_goods);
-        ButterKnife.bind(this);
-        init();
-        initEvent();
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if(mView==null){
+            mView =inflater.inflate(R.layout.fragment_common_order,container,false);
+            initView();
+            initEvent();
+        }
+        return mView;
     }
 
-    private void init() {
-        mImgBack.setVisibility(View.VISIBLE);
-        mTxtTitle.setText(getIntent().getStringExtra("shopName"));
+    private void initView() {
+        mTxt = (TextView) mView.findViewById(R.id.noMore);
+        mPullLoadMore = (PullLoadMoreRecyclerView)mView.findViewById(R.id.pullLoadMore);
         mRecyclerView = mPullLoadMore.getRecyclerView();
-        mSid = getIntent().getStringExtra("sid");
         mRecyclerView.setVerticalScrollBarEnabled(true);
         mPullLoadMore.setRefreshing(true);
-        mPullLoadMore.setGridLayout(2);
-        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2,15,true));
+        mPullLoadMore.setLinearLayout();
         mPullLoadMore.setOnPullLoadMoreListener(this);
         mPullLoadMore.setPullLoadMoreCompleted();
-
-        mAdapter = new ShopAdapter(ShopGoodsActivity.this, mList);
-        //mPullLoadMore.setAdapter(mAdapter);
-        getData(page);
+        getOrder(type,page);
+        mAdapter = new OrderAdapter(getActivity(), mList);
     }
 
     private void initEvent() {
-        mAdapter.setBuyListener(new ShopAdapter.OnBuyListener() {
+        mAdapter.setLookDetailsListener(new OrderAdapter.OnLookDetailsListener() {
             @Override
-            public void onBuy(int position) {
-                startActivity(new Intent(ShopGoodsActivity.this,GroupDetailsActivity.class));
+            public void lookDetails(int position) {
+                Intent intent = new Intent(getActivity(),OrderDetailsActivity.class);
+                intent.putExtra("osn",mList.get(position).getOsn());
+                startActivity(intent);
             }
         });
     }
 
-    private void getData(final int page){
-        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/get_goods_list")
+    private void getOrder(String state, final int page) {
+        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/get_user_order")
                 .addParams("access_token", "02c8b29f1b09833e43a37c770a87db23")
-                .addParams("sid", mSid)
+                .addParams("state", state)
                 .addParams("page", String.valueOf(page)).build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-
+                Log.e("tag", "订单错误" + e.toString());
             }
 
             @Override
             public void onResponse(String response, int id) {
+                Log.e("tag", "所有订单---all" + response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getInt("status") == 1) {
-                        Goods goods = new Gson().fromJson(response, Goods.class);
-                        if (goods.getData().size() == 0) {
+                        Order order = new Gson().fromJson(response, Order.class);
+                        if (order.getData().size() == 0) {
                             mPullLoadMore.setPullLoadMoreCompleted();
-                           // mTxt.setVisibility(View.VISIBLE);
+                            mTxt.setVisibility(View.VISIBLE);
                         } else {
                             if (page == 1) {
-                                for (int i = 0; i < goods.getData().size(); i++) {
-                                    mList.add(goods.getData().get(i));
+                                for (int i = 0; i < order.getData().size(); i++) {
+                                    mList.add(order.getData().get(i));
                                 }
                                 mPullLoadMore.setAdapter(mAdapter);
                                 mPullLoadMore.setPullLoadMoreCompleted();
                             } else {
-                                for (int i = 0; i < goods.getData().size(); i++) {
-                                    mList.add(goods.getData().get(i));
+                                for (int i = 0; i < order.getData().size(); i++) {
+                                    mList.add(order.getData().get(i));
                                 }
                                 mAdapter.notifyDataSetChanged();
                                 mPullLoadMore.setPullLoadMoreCompleted();
@@ -118,19 +115,13 @@ public class ShopGoodsActivity extends BaseActivity implements PullLoadMoreRecyc
                             mAdapter.notifyDataSetChanged();
                         }
                     } else {
-                        ToastUtils.showShort(ShopGoodsActivity.this, jsonObject.getString("msg"));
+                        ToastUtils.showShort(getActivity(), jsonObject.getString("msg"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
-    }
-
-
-    @OnClick(R.id.imgBack)
-    public void onClick() {
-        finish();
     }
 
     @Override
@@ -143,7 +134,7 @@ public class ShopGoodsActivity extends BaseActivity implements PullLoadMoreRecyc
                 if (mAdapter != null) {
                     mAdapter.notifyDataSetChanged();
                 }
-                getData(1);
+                getOrder(type,1);
                 // mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
             }
         }, 2000);
@@ -155,7 +146,7 @@ public class ShopGoodsActivity extends BaseActivity implements PullLoadMoreRecyc
             @Override
             public void run() {
                 page++;
-                getData(page);
+                getOrder(type,page);
                 mPullLoadMore.setPullLoadMoreCompleted();
             }
         }, 2000);

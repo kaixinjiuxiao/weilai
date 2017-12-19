@@ -38,7 +38,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="买家已付款"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_large"
                         />
@@ -49,7 +48,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
-                        android:text="订单金额（含运费）：￥19.88"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_normal"
                         />
@@ -95,8 +93,6 @@
                         android:id="@+id/info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
-                        android:text="张三 1500000000"
                         android:textSize="@dimen/text_large"
                         />
 
@@ -105,7 +101,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="湖南省长沙市雨花区华亚财富707"
                         android:textSize="@dimen/text_normal"
                         />
                 </LinearLayout>
@@ -135,7 +130,6 @@
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_margin="10dp"
-                            android:src="@mipmap/nature"
                             android:scaleType="fitXY"
                             />
 
@@ -145,7 +139,8 @@
                             android:layout_height="match_parent"
                             android:layout_marginBottom="10dp"
                             android:layout_marginTop="10dp"
-                            android:text="【VIP价16.99】新疆核桃500"
+                            android:maxLines="2"
+                            android:ellipsize="end"
                             android:textColor="@color/black"
                             android:textSize="@dimen/text_normal"
                             />
@@ -169,7 +164,6 @@
                                 android:id="@+id/goodsPrice"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="￥16.99/1件"
                                 android:textSize="@dimen/text_small"
                                 />
 
@@ -179,13 +173,16 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="right"
                                 android:layout_marginTop="5dp"
-                                android:text="x2"
                                 android:textSize="@dimen/text_small"
                                 />
                         </LinearLayout>
                     </RelativeLayout>
                 </LinearLayout>
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/main_bg"
+                    />
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -199,22 +196,44 @@
                         android:orientation="horizontal"
                         >
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center"
+                            android:text="共"
+                            android:textSize="@dimen/text_normal"
+                            />
+                        <TextView
                             android:id="@+id/goodsTotalNumber"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             android:gravity="center"
-                            android:text="共2个商品"
+                            android:textSize="@dimen/text_normal"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center"
+                            android:text="件商品  总额：￥"
                             android:textSize="@dimen/text_normal"
                             />
                         <TextView
                             android:id="@+id/goodsTotalPrice"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="5dp"
                             android:gravity="center"
                             android:layout_gravity="center_vertical"
-                            android:text="总额：￥34.98元"
+                            android:textColor="@color/ping_gou"
+                            android:textSize="@dimen/text_big"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_gravity="center_vertical"
+                            android:text="元"
                             android:textSize="@dimen/text_normal"
                             />
                     </LinearLayout>
@@ -246,8 +265,6 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:layout_marginLeft="10dp"
-
-                        android:text="PT201712131800123456"
                         />
                 </LinearLayout>
                 <LinearLayout
@@ -270,7 +287,6 @@
                         android:gravity="center_vertical"
                         android:layout_marginLeft="10dp"
 
-                        android:text="2017-12-13 18:00:12"
                         />
                 </LinearLayout>
                 <LinearLayout
@@ -293,7 +309,6 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:layout_marginLeft="10dp"
-                        android:text="2017-12-13 18:00:12"
                         />
                 </LinearLayout>
             </LinearLayout>

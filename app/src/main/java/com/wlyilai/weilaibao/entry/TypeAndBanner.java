@@ -60,6 +60,11 @@ public class TypeAndBanner {
             private String id;
             private String name;
 
+            public CateBean(String id, String name) {
+                this.id = id;
+                this.name = name;
+            }
+
             public String getId() {
                 return id;
             }

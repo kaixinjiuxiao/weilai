@@ -4,8 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.wlyilai.weilaibao.entry.TypeAndBanner;
-
 import java.util.List;
 
 /**
@@ -13,14 +11,14 @@ import java.util.List;
  * Time:  2017/12/5 0005
  * Describe:
  */
-public class HomeAdapter extends FragmentStatePagerAdapter {
+public class LookOrderAdapter extends FragmentStatePagerAdapter {
     private final FragmentManager mFm;
     private List<Fragment> fragments;
-    private List<TypeAndBanner.DataBean.CateBean> mChannels;
+    private List<String> mChannels;
     private int mChildCount;
     private boolean[] fragmentsUpdateFlag;
 
-    public HomeAdapter(FragmentManager fm, List<Fragment> fragments, List<TypeAndBanner.DataBean.CateBean> channels) {
+    public LookOrderAdapter(FragmentManager fm, List<Fragment> fragments, List<String> channels) {
         super(fm);
         mFm = fm;
         this.fragments = fragments;
@@ -35,7 +33,7 @@ public class HomeAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mChannels == null ? "" : mChannels.get(position).getName();
+        return mChannels == null ? "" : mChannels.get(position);
     }
 
 
