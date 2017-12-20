@@ -16,5 +16,6 @@ public class Constant {
     public static final String HOME_GOODS =BASE+"AppApi/get_index_goods";
     public static final String GOODS_DETAILS =BASE+"AppApi/get_goods_detail";
     public static final String BUY_GOODS =BASE+"AppApi/buy_goods";
+    public static final String GET_GOODS =BASE+"AppApi/get_goods_list";
 
 }

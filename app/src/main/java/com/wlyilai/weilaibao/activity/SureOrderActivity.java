@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,12 +18,9 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.adapter.MyAddressAdapter;
-import com.wlyilai.weilaibao.adapter.PCAreaAdapter;
-import com.wlyilai.weilaibao.entry.ProvinceCityArea;
 import com.wlyilai.weilaibao.entry.ReceivingAddress;
 import com.wlyilai.weilaibao.entry.SureBuy;
 import com.wlyilai.weilaibao.entry.SureOrder;
-import com.wlyilai.weilaibao.utils.Constant;
 import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.wlyilai.weilaibao.view.ListViewForScrollView;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -95,11 +91,11 @@ public class SureOrderActivity extends BaseActivity {
     private MyAddressAdapter mAdapter;
     private List<ReceivingAddress.DataBean.AddressBean> mList = new ArrayList<>();
     private HashMap<Integer, Boolean> map = new HashMap<>();
-    private List<ProvinceCityArea.DataBean> mListProvice;
-    private List<ProvinceCityArea.DataBean> mListCity;
-    private List<ProvinceCityArea.DataBean> mListArea;
-    private PCAreaAdapter mSpinnerAdapter;
-    private String province, city, area;
+//    private List<ProvinceCityArea.DataBean> mListProvice;
+//    private List<ProvinceCityArea.DataBean> mListCity;
+//    private List<ProvinceCityArea.DataBean> mListArea;
+//    private PCAreaAdapter mSpinnerAdapter;
+//    private String province, city, area;
     private String addressId,goodsId,goodNumber;
     private SureBuy mSureBuy;
 
@@ -131,7 +127,7 @@ public class SureOrderActivity extends BaseActivity {
         mAdapter = new MyAddressAdapter(this, mList);
         mAddress.setAdapter(mAdapter);
         getAddress();
-        getCity(0, mSpnCountry, 0);
+     //   getCity(0, mSpnCountry, 0);
     }
 
     private void initEvent() {
@@ -148,44 +144,44 @@ public class SureOrderActivity extends BaseActivity {
                 mAdapter.notifyDataSetChanged();
             }
         });
-        mSpnCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int pid = Integer.parseInt(mListProvice.get(position).getId());
-                province = mListProvice.get(position).getName();
-                getCity(pid, mSpnCity, 1);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        mSpnCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int pid = Integer.parseInt(mListCity.get(position).getId());
-                city = mListCity.get(position).getName();
-                getCity(pid, mSpnCounty, 2);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        mSpnCounty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                area = mListArea.get(position).getName();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//        mSpnCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                int pid = Integer.parseInt(mListProvice.get(position).getId());
+//                province = mListProvice.get(position).getName();
+//                getCity(pid, mSpnCity, 1);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+//
+//        mSpnCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                int pid = Integer.parseInt(mListCity.get(position).getId());
+//                city = mListCity.get(position).getName();
+//                getCity(pid, mSpnCounty, 2);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+//        mSpnCounty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                area = mListArea.get(position).getName();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
     }
 
     /**
@@ -213,39 +209,39 @@ public class SureOrderActivity extends BaseActivity {
             }
         });
     }
-
-    /**
-     * 获取省市区
-     *
-     * @param pid
-     * @param spinner
-     * @param type
-     */
-    private void getCity(int pid, final Spinner spinner, final int type) {
-        OkHttpUtils.post().url(Constant.GET_CCC).addParams("pid", String.valueOf(pid))
-                .build().execute(new StringCallback() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-
-            }
-
-            @Override
-            public void onResponse(String response, int id) {
-                ProvinceCityArea pca = new Gson().fromJson(response, ProvinceCityArea.class);
-                if (type == 0) {
-                    mListProvice = pca.getData();
-                    mSpinnerAdapter = new PCAreaAdapter(SureOrderActivity.this, mListProvice);
-                } else if (type == 1) {
-                    mListCity = pca.getData();
-                    mSpinnerAdapter = new PCAreaAdapter(SureOrderActivity.this, mListCity);
-                } else if (type == 2) {
-                    mListArea = pca.getData();
-                    mSpinnerAdapter = new PCAreaAdapter(SureOrderActivity.this, mListArea);
-                }
-                spinner.setAdapter(mSpinnerAdapter);
-            }
-        });
-    }
+//
+//    /**
+//     * 获取省市区
+//     *
+//     * @param pid
+//     * @param spinner
+//     * @param type
+//     */
+//    private void getCity(int pid, final Spinner spinner, final int type) {
+//        OkHttpUtils.post().url(Constant.GET_CCC).addParams("pid", String.valueOf(pid))
+//                .build().execute(new StringCallback() {
+//            @Override
+//            public void onError(Call call, Exception e, int id) {
+//
+//            }
+//
+//            @Override
+//            public void onResponse(String response, int id) {
+//                ProvinceCityArea pca = new Gson().fromJson(response, ProvinceCityArea.class);
+//                if (type == 0) {
+//                    mListProvice = pca.getData();
+//                    mSpinnerAdapter = new PCAreaAdapter(SureOrderActivity.this, mListProvice);
+//                } else if (type == 1) {
+//                    mListCity = pca.getData();
+//                    mSpinnerAdapter = new PCAreaAdapter(SureOrderActivity.this, mListCity);
+//                } else if (type == 2) {
+//                    mListArea = pca.getData();
+//                    mSpinnerAdapter = new PCAreaAdapter(SureOrderActivity.this, mListArea);
+//                }
+//                spinner.setAdapter(mSpinnerAdapter);
+//            }
+//        });
+//    }
 
     @OnClick({R.id.imgBack, R.id.relativeAdd, R.id.sureAdd, R.id.commitOrder})
     public void onClick(View view) {
@@ -254,11 +250,13 @@ public class SureOrderActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.relativeAdd:
-                mLinearAdd.setVisibility(View.VISIBLE);
+                Intent intent  =new Intent(SureOrderActivity.this,AddManagerActivity.class);
+                startActivityForResult(intent,1);
+               // mLinearAdd.setVisibility(View.VISIBLE);
                 break;
             case R.id.sureAdd:
-                addAddress();
-                mLinearAdd.setVisibility(View.GONE);
+              //  addAddress();
+               // mLinearAdd.setVisibility(View.GONE);
                 break;
             case R.id.commitOrder:
                 commitOrder();
@@ -296,10 +294,8 @@ public class SureOrderActivity extends BaseActivity {
                         SureOrder order = new Gson().fromJson(response,SureOrder.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("order",order);
-
                         Intent intent  =new Intent(SureOrderActivity.this,SurePayActivity.class);
                         intent.putExtra("sure",bundle);
-                        Log.e("tag","???nini"+order.toString());
                         startActivity(intent);
                    }else if(jsonObject.getInt("status")==0){
                         ToastUtils.showShort(SureOrderActivity.this,jsonObject.getString("msg"));
@@ -311,51 +307,51 @@ public class SureOrderActivity extends BaseActivity {
         });
     }
 
-    /**
-     * 添加收货地址
-     */
-    private void addAddress() {
-        final Map<String, String> parmas = new HashMap<>();
-        parmas.put("access_token", "02c8b29f1b09833e43a37c770a87db23");
-        parmas.put("mobile", mEdtPhone.getText().toString());
-        parmas.put("realname", mEdtName.getText().toString());
-        parmas.put("province", province);
-        parmas.put("city", city);
-        parmas.put("country", area);
-        parmas.put("detail", mEdtAddress.getText().toString());
-        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/add_address")
-                .params(parmas).build().execute(new StringCallback() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                Log.e("tag", "地址错误" + e.toString());
-            }
-
-            @Override
-            public void onResponse(String response, int id) {
-                Log.e("tag", "地址" + response);
-                try {
-                    JSONObject object = new JSONObject(response);
-                    if(object.getInt("status")==1){
-//                        JSONObject data = object.getJSONObject("data");
-//                        String addressId = data.getString("id");
-//                        ReceivingAddress.DataBean.AddressBean address = new ReceivingAddress.DataBean.AddressBean();
-//                        address.setId(addressId);
-//                        address.setCity(city);
-//                        address.setCountry(area);
-//                        address.setProvince(province);
-//                        address.setDetail(mEdtAddress.getText().toString());
-//                        address.setMobile(mEdtPhone.getText().toString());
-//                        address.setRealname(mEdtName.getText().toString());
-//                        address.setUid(mEdtName.getText().toString());
-
-                        getAddress();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+//    /**
+//     * 添加收货地址
+//     */
+//    private void addAddress() {
+//        final Map<String, String> parmas = new HashMap<>();
+//        parmas.put("access_token", "02c8b29f1b09833e43a37c770a87db23");
+//        parmas.put("mobile", mEdtPhone.getText().toString());
+//        parmas.put("realname", mEdtName.getText().toString());
+//        parmas.put("province", province);
+//        parmas.put("city", city);
+//        parmas.put("country", area);
+//        parmas.put("detail", mEdtAddress.getText().toString());
+//        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/add_address")
+//                .params(parmas).build().execute(new StringCallback() {
+//            @Override
+//            public void onError(Call call, Exception e, int id) {
+//                Log.e("tag", "地址错误" + e.toString());
+//            }
+//
+//            @Override
+//            public void onResponse(String response, int id) {
+//                Log.e("tag", "地址" + response);
+//                try {
+//                    JSONObject object = new JSONObject(response);
+//                    if(object.getInt("status")==1){
+////                        JSONObject data = object.getJSONObject("data");
+////                        String addressId = data.getString("id");
+////                        ReceivingAddress.DataBean.AddressBean address = new ReceivingAddress.DataBean.AddressBean();
+////                        address.setId(addressId);
+////                        address.setCity(city);
+////                        address.setCountry(area);
+////                        address.setProvince(province);
+////                        address.setDetail(mEdtAddress.getText().toString());
+////                        address.setMobile(mEdtPhone.getText().toString());
+////                        address.setRealname(mEdtName.getText().toString());
+////                        address.setUid(mEdtName.getText().toString());
+//
+//                        getAddress();
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//    }
 
     private void deleteAddress(String id, final int position) {
         OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/del_address")
@@ -378,5 +374,14 @@ public class SureOrderActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1){
+          getAddress();
+        }
     }
 }

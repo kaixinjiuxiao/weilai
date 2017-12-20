@@ -1,6 +1,7 @@
 package com.wlyilai.weilaibao.activity;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -43,7 +44,7 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
     private ProgressBar goodsProgress;
     private LinearLayout linearKefu, linearShop, linearEnter;
     private TextView mBuyNumber;
-    private int n ;
+    private int n, singleNumber;
     private String mGoodsId,mOldPrice,mNewPrice,mImgUrl,mShopId,mShopName;
     private TextView mYuanjia;
     private TextView mDanjia;
@@ -102,17 +103,19 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
                     newPrice.setText(details.getData().getGteam_price());
                     mNewPrice = details.getData().getGteam_price();
                     oldPrice.setText(details.getData().getGprice());
+                    oldPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);
                     mShopId = details.getData().getSid();
                     mShopName=details.getData().getGname();
                     mOldPrice= details.getData().getGprice();
                     goodsPeriods.setText(details.getData().getSid());
-                    goodsAllNumber.setText(details.getData().getGnum());
-                    goodsSingle.setText(details.getData().getGpay_limit());
+                    goodsAllNumber.setText(details.getData().getGnum()+"件");
+                    goodsSingle.setText(details.getData().getGpay_limit()+"件");
                     n = Integer.parseInt(details.getData().getGpay_limit());
+                    singleNumber = Integer.parseInt(details.getData().getGpay_limit());
                     int shengyu = Integer.parseInt(details.getData().getGnum())-Integer.parseInt(details.getData().getGpay_num());
-                    goodsSurplus.setText("已团"+details.getData().getGpay_num()+"件，还差"+String.valueOf(shengyu));
+                    goodsSurplus.setText("已团"+details.getData().getGpay_num()+"件，还差"+String.valueOf(shengyu)+"件。");
                     goodsProgress.setMax(Integer.parseInt(details.getData().getGnum()));
-                    goodsProgress.setProgress(Integer.parseInt(details.getData().getGpay_num()));
+                    goodsProgress.setSecondaryProgress(Integer.parseInt(details.getData().getGpay_num()));
                     shopAddress.setText(details.getData().getSname());
                 }
             }
@@ -202,12 +205,12 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
                 mTotalPrice.setText("￥"+n*(Double.parseDouble(mNewPrice)));
                 break;
             case R.id.reduce:
-                if (n > 2) {
+                if (n > singleNumber) {
                     n--;
                     mBuyNumber.setText(n + "");
                     mTotalPrice.setText("￥"+n*(Double.parseDouble(mNewPrice)));
                 }else{
-                    ToastUtils.showShort(GroupDetailsActivity.this,"起购量为两件");
+                    ToastUtils.showShort(GroupDetailsActivity.this,"起购量为"+singleNumber+"件");
                 }
                 break;
             case R.id.imgCancel:

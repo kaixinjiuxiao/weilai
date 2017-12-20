@@ -33,7 +33,7 @@ public class PayResult implements Serializable{
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * uid : 198
          * out_trade_type : 2
@@ -42,13 +42,21 @@ public class PayResult implements Serializable{
          * pay_num : 2
          * grid : 11
          */
-
+        private String osn;
         private String uid;
         private String out_trade_type;
         private String pay_price;
         private String id;
         private String pay_num;
         private String grid;
+
+        public String getOsn() {
+            return osn;
+        }
+
+        public void setOsn(String osn) {
+            this.osn = osn;
+        }
 
         public String getUid() {
             return uid;

@@ -1,6 +1,7 @@
 package com.wlyilai.weilaibao.activity;
 
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,6 +12,9 @@ import android.widget.ImageView;
 import com.wlyilai.weilaibao.R;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,13 +28,15 @@ import okhttp3.Call;
 public class SplashActivity extends BaseActivity {
     @BindView(R.id.imgSplash)
     ImageView mImgSplash;
-
+    private List<ResolveInfo> apps = new ArrayList<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
         initView();
+       // loadApps();
+        getBanner();
     }
 
 
@@ -60,6 +66,22 @@ public class SplashActivity extends BaseActivity {
             }
         });
 
+    }
+
+
+
+    private void loadApps() {
+        Intent intent = new Intent(Intent.ACTION_MAIN, null);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        apps = getPackageManager().queryIntentActivities(intent, 0);
+        //for循环遍历ResolveInfo对象获取包名和类名
+        for (int i = 0; i < apps.size(); i++) {
+            ResolveInfo info = apps.get(i);
+            String packageName = info.activityInfo.packageName;
+            CharSequence cls = info.activityInfo.name;
+            CharSequence name = info.activityInfo.loadLabel(getPackageManager());
+            Log.e("tag",name+"----"+packageName+"----"+cls);
+        }
     }
     private void getBanner(){
         OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/get_cate_info")

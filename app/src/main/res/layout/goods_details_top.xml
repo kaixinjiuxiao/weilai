@@ -35,7 +35,6 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:text="【52度浓香型白酒公司宴典高度酒 500ml】"
                 android:textSize="@dimen/text_big"
                 />
         </LinearLayout>
@@ -63,7 +62,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:gravity="center_vertical"
-                android:text="98.00"
                 android:textColor="@color/ping_gou"
                 android:textSize="22sp"
                 />
@@ -91,7 +89,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="128"
                 android:textSize="@dimen/text_normal"
                 />
         </LinearLayout>
@@ -141,7 +138,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
-                    android:text="第0001期"
+
                     />
             </LinearLayout>
 
@@ -184,7 +181,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_vertical"
-                    android:text="18件"
+
                     />
             </LinearLayout>
 
@@ -228,7 +225,6 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_vertical"
-                    android:text="2件"
                     />
             </LinearLayout>
         </RelativeLayout>
@@ -266,7 +262,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:text="已团八件，还差两件"
+
             />
     </LinearLayout>
 

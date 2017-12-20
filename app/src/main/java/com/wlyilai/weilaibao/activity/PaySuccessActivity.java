@@ -2,14 +2,19 @@ package com.wlyilai.weilaibao.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wlyilai.weilaibao.R;
+import com.wlyilai.weilaibao.utils.PreferenceUtil;
+import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +39,7 @@ public class PaySuccessActivity extends BaseActivity {
     TextView mMode;
     @BindView(R.id.numberin)
     TextView mNumberin;
-
+    private String mOrderCode;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +49,14 @@ public class PaySuccessActivity extends BaseActivity {
     }
 
     private void init() {
+        PreferenceUtil.init(this);
         mImgBack.setVisibility(View.VISIBLE);
         mTxtTitle.setText("交易详情");
-//        Bundle bundle = getIntent().getBundleExtra("pay");
-//        PayResult result = (PayResult) bundle.getSerializable("result");
-//        mMoney.setText(result.getData().getPay_price());
-         getData();
+        mOrderCode =getIntent().getStringExtra("order");
+        if(TextUtils.isEmpty(mOrderCode)){
+            PreferenceUtil.getString("order","null");
+        }
+         getData(mOrderCode);
     }
 
     @OnClick(R.id.imgBack)
@@ -57,19 +64,32 @@ public class PaySuccessActivity extends BaseActivity {
         finish();
     }
 
-    private void getData(){
+    private void getData(String orderCode){
         OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/get_order_success")
                 .addParams("access_token", "02c8b29f1b09833e43a37c770a87db23")
-                .addParams("osn","62017121811471271828")
+                .addParams("osn",orderCode)
                 .build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-                Log.e("tag","支付成功"+e.toString());
             }
 
             @Override
             public void onResponse(String response, int id) {
-                Log.e("tag","支付成功"+response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if(jsonObject.getInt("status")==1){
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        mMoney.setText("￥"+data.getString("pay_price"));
+                        mTime.setText(data.getString("paytime"));
+                        mMode.setText(data.getString("out_trade_type"));
+                        mNumberin.setText(data.getString("osn"));
+                    }else{
+                        ToastUtils.showShort(PaySuccessActivity.this,jsonObject.getString("msg"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
     }

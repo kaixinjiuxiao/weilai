@@ -13,6 +13,6 @@
         android:text="女装"
         android:textSize="14sp"
         android:layout_margin="1dp"
-        android:background="@color/white"
+        android:background="@drawable/sele_selected"
         />
 </LinearLayout>

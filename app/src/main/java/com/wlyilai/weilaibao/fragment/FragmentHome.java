@@ -95,7 +95,10 @@ public class FragmentHome extends BaseFagment {
                 if(banner.getStatus()==1){
                     for (int i = 0; i <banner.getData().getCate().size() ; i++) {
                         mStringList.add(banner.getData().getCate().get(i));
-                        FragmentTwo two = new FragmentTwo(mStringList.get(i).getId());
+                        FragmentTwo two = new FragmentTwo();
+                        Bundle bundle=new Bundle();
+                        bundle.putString("id",mStringList.get(i+1).getId());
+                        two.setArguments(bundle);
                         mlist.add(two);
                         mTabLayout.addTab(mTabLayout.newTab().setText(mStringList.get(i).getName()));
                     }

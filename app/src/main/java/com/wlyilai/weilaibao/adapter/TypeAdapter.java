@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.wlyilai.weilaibao.R;
-import com.wlyilai.weilaibao.entry.Goods;
+import com.wlyilai.weilaibao.entry.CateInfo;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.TypeViewHolder> {
     private Context mContext;
-    private List<String> mList;
+    private List<CateInfo.DataBean> mList;
     private OnItemClickListener mItemClickListener;
 
     public void setItemClickListener(OnItemClickListener itemClickListener) {
@@ -29,7 +29,7 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.TypeViewHolder
     public interface OnItemClickListener{
         void onIntemClick(int position);
     }
-    public TypeAdapter(Context context, List<String> list) {
+    public TypeAdapter(Context context, List<CateInfo.DataBean> list) {
         mContext = context;
         mList = list;
     }
@@ -42,7 +42,7 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.TypeViewHolder
 
     @Override
     public void onBindViewHolder(TypeViewHolder holder, final int position) {
-        holder.type.setText(mList.get(position));
+        holder.type.setText(mList.get(position).getName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +63,7 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.TypeViewHolder
             type =(TextView) itemView.findViewById(R.id.typeName);
         }
     }
-    public void setData(List<String>data){
+    public void setData(List<CateInfo.DataBean>data){
         mList.clear();
         mList=data;
     }

@@ -86,7 +86,6 @@
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:visibility="gone"
-
                 >
 
                 <LinearLayout
