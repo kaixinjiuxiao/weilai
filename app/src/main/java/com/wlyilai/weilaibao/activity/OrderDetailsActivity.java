@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.entry.OrderDetails;
+import com.wlyilai.weilaibao.utils.Constant;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -83,7 +84,7 @@ public class OrderDetailsActivity extends BaseActivity {
     }
 
     private void getData() {
-        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/get_order_detail")
+        OkHttpUtils.post().url(Constant.ORDER_DETAILS)
                 .addParams("access_token", "02c8b29f1b09833e43a37c770a87db23")
                 .addParams("osn", mOSN)
                 .build().execute(new StringCallback() {

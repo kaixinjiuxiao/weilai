@@ -2,6 +2,7 @@ package com.wlyilai.weilaibao.activity;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -24,6 +25,7 @@ import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.entry.PayResult;
 import com.wlyilai.weilaibao.entry.SureOrder;
 import com.wlyilai.weilaibao.utils.AliPayResults;
+import com.wlyilai.weilaibao.utils.Constant;
 import com.wlyilai.weilaibao.utils.PreferenceUtil;
 import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -106,11 +108,25 @@ public class SurePayActivity extends BaseActivity {
                 }
                 break;
             case R.id.linearWX:
-                if (isAppInstalled("com.tencent.mm") == false) {
-                    ToastUtils.showShort(SurePayActivity.this, "很遗憾，您没有安装微信！");
-                } else {
-                    startPay("0");
-                }
+//                if (isAppInstalled("com.tencent.mm") == false) {
+//                    ToastUtils.showShort(SurePayActivity.this, "很遗憾，您没有安装微信！");
+//                } else {
+//                    startPay("0");
+//                }
+                Uri uri=Uri.parse("app://hnyst");
+                Intent intent=new Intent(Intent.ACTION_VIEW,uri);
+                startActivity(intent);
+
+//                if(isAppInstalled("com.hnrryst.hnyst")==true){
+//                    Intent intent = new Intent(Intent.ACTION_MAIN);
+//                    intent.addCategory(Intent.CATEGORY_LAUNCHER);
+//                    ComponentName cn = new ComponentName("com.hnrryst.hnyst", "com.hnrryst.hnyst.activity.SplashActivity");
+//                    intent.setComponent(cn);
+//                    startActivity(intent);
+//                }
+
+
+
                 break;
             case R.id.linearBalance:
                 displayDialog();
@@ -142,7 +158,7 @@ public class SurePayActivity extends BaseActivity {
     }
 
     private void getBanlance() {
-        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/get_user_info")
+        OkHttpUtils.post().url(Constant.USER_INFO)
                 .addParams("access_token", "02c8b29f1b09833e43a37c770a87db23")
                 .build().execute(new StringCallback() {
             @Override
@@ -173,7 +189,7 @@ public class SurePayActivity extends BaseActivity {
         parmas.put("osn", orderCode);
         parmas.put("out_trade_type", type);
         parmas.put("pay_source", "APP");
-        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/pay_order").params(parmas)
+        OkHttpUtils.post().url(Constant.START_PAY).params(parmas)
                 .build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {

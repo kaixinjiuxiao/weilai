@@ -116,7 +116,7 @@
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@color/ping_gou"
+                android:background="@drawable/text_sure"
                 android:gravity="center"
                 android:minWidth="90dp"
                 android:text="立即拼团"

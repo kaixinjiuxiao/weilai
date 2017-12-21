@@ -58,7 +58,7 @@
             android:paddingTop="15dp"
             android:textSize="20sp"
             android:text="当前无更多数据加载!"
-            android:visibility="gone"
+            android:visibility="visible"
             />
     </RelativeLayout>
 </LinearLayout>

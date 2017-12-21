@@ -146,7 +146,7 @@ public class FragmentTwo extends BaseFagment implements PullLoadMoreRecyclerView
 
     private void getCate(){
             Log.e("tag","id=="+id);
-            OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/get_cate_info")
+            OkHttpUtils.post().url(Constant.CATE_INFO)
                     .addParams("access_token","02c8b29f1b09833e43a37c770a87db23")
                     .addParams("gcid",id).build().execute(new StringCallback() {
                 @Override
@@ -215,7 +215,7 @@ public class FragmentTwo extends BaseFagment implements PullLoadMoreRecyclerView
             @Override
             public void run() {
                 page = 1;
-                mList.clear();
+                mListGoods.clear();
                 if (mAdapter != null) {
                     mAdapter.notifyDataSetChanged();
                 }

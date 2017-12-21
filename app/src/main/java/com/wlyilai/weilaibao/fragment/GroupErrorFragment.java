@@ -14,6 +14,7 @@ import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.activity.GroupPurchaseDetailsActivity;
 import com.wlyilai.weilaibao.adapter.GroupingAdapter;
 import com.wlyilai.weilaibao.entry.MyGroup;
+import com.wlyilai.weilaibao.utils.Constant;
 import com.wlyilai.weilaibao.view.PullLoadMoreRecyclerView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -102,7 +103,7 @@ public class GroupErrorFragment extends BaseFagment implements PullLoadMoreRecyc
     }
 
     private void getData(String state, final int page) {
-        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/get_group_order").
+        OkHttpUtils.post().url(Constant.MY_GROUP).
                 addParams("access_token", "02c8b29f1b09833e43a37c770a87db23")
                 .addParams("state", state)
                 .addParams("page", String.valueOf(page))

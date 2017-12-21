@@ -16,6 +16,7 @@ import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.activity.OrderDetailsActivity;
 import com.wlyilai.weilaibao.adapter.OrderAdapter;
 import com.wlyilai.weilaibao.entry.Order;
+import com.wlyilai.weilaibao.utils.Constant;
 import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.wlyilai.weilaibao.view.PullLoadMoreRecyclerView;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -79,7 +80,7 @@ public class FragmentOrderWaitReceive extends BaseFagment implements PullLoadMor
     }
 
     private void getOrder(String state, final int page) {
-        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/get_user_order")
+        OkHttpUtils.post().url(Constant.MY_ORDER)
                 .addParams("access_token", "02c8b29f1b09833e43a37c770a87db23")
                 .addParams("state", state)
                 .addParams("page", String.valueOf(page)).build().execute(new StringCallback() {

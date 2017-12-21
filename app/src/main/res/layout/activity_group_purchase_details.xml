@@ -23,7 +23,6 @@
             android:layout_height="30dp"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="拼团剩余1件"
             android:textColor="@color/black"
             />
 
@@ -31,7 +30,7 @@
             android:id="@+id/progress"
             style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:progressDrawable="@drawable/progressbar_h"
@@ -63,7 +62,6 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:gravity="center"
-                    android:text="已团10件，还剩1件"
                     />
             </LinearLayout>
         </RelativeLayout>
@@ -315,7 +313,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                android:background="@color/ping_gou"
+                android:background="@drawable/text_sure_no_corne"
                 android:gravity="center"
                 android:text="快邀请好友参团吧"
                 android:textColor="@color/white"

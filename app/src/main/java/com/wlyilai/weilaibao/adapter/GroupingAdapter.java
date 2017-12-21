@@ -69,7 +69,7 @@ public class GroupingAdapter extends RecyclerView.Adapter<GroupingAdapter.Groupi
         span2.setSpan(bg1,0,span2.toString().indexOf("/"),Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         holder.goodsPrice.setText(span2);
 
-        holder.goodsNumber.setText(mList.get(position).getPay_num());
+        holder.goodsNumber.setText("x"+mList.get(position).getPay_num());
 
         SpannableString span3 = new SpannableString("共"+mList.get(position).getPay_num()+"个商品");
         span3.setSpan(bg1,1,span3.toString().indexOf("个"),Spanned.SPAN_INCLUSIVE_EXCLUSIVE);

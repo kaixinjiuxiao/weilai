@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wlyilai.weilaibao.R;
+import com.wlyilai.weilaibao.utils.Constant;
 import com.wlyilai.weilaibao.utils.PreferenceUtil;
 import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -65,7 +66,7 @@ public class PaySuccessActivity extends BaseActivity {
     }
 
     private void getData(String orderCode){
-        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/get_order_success")
+        OkHttpUtils.post().url(Constant.ORDER_SUCCESS)
                 .addParams("access_token", "02c8b29f1b09833e43a37c770a87db23")
                 .addParams("osn",orderCode)
                 .build().execute(new StringCallback() {

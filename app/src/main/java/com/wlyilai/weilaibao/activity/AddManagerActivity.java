@@ -224,7 +224,7 @@ public class AddManagerActivity extends BaseActivity {
         parmas.put("city", city);
         parmas.put("country", area);
         parmas.put("detail", mEdtAddress.getText().toString());
-        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/add_address")
+        OkHttpUtils.post().url(Constant.ADD_ADDRESS)
                 .params(parmas).build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {

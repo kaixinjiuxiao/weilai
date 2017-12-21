@@ -83,7 +83,7 @@ public class GroupSuccessFragment extends BaseFagment implements PullLoadMoreRec
                 if (mAdapter != null) {
                     mAdapter.notifyDataSetChanged();
                 }
-                getData("0",1);
+                getData("1",1);
                 // mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
             }
         }, 2000);
@@ -95,7 +95,7 @@ public class GroupSuccessFragment extends BaseFagment implements PullLoadMoreRec
             @Override
             public void run() {
                 page++;
-                getData("0",page);
+                getData("1",page);
                 mPullLoadMore.setPullLoadMoreCompleted();
             }
         }, 2000);

@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.adapter.JoinGroupAdapter;
 import com.wlyilai.weilaibao.entry.GroupDetails;
+import com.wlyilai.weilaibao.utils.Constant;
 import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.wlyilai.weilaibao.view.PullLoadMoreRecyclerView;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -44,7 +45,7 @@ public class GroupPurchaseDetailsActivity extends BaseActivity implements PullLo
     private static final int THUMB_SIZE = 150;
     private ProgressBar progress;
     private ImageView mBack;
-    private TextView mTitle, mState, mShare;
+    private TextView mTitle, mState, mShare,mShenyu;
     private PullLoadMoreRecyclerView mPullLoadMoreRecyclerView;
     private JoinGroupAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -66,12 +67,11 @@ public class GroupPurchaseDetailsActivity extends BaseActivity implements PullLo
         mTitle = (TextView) findViewById(R.id.txtTitle);
         mState = (TextView) findViewById(R.id.state);
         mShare = (TextView) findViewById(R.id.txtShare);
+        mShenyu = (TextView) findViewById(R.id.shenyu);
         mTitle.setText("团详情");
         mGrid = getIntent().getStringExtra("grid");
         getDetails(mGrid);
         progress = (ProgressBar) findViewById(R.id.progress);
-        progress.setMax(10);
-        progress.setSecondaryProgress(8);
         mPullLoadMoreRecyclerView = (PullLoadMoreRecyclerView) findViewById(R.id.pullLoadMore);
         mRecyclerView = mPullLoadMoreRecyclerView.getRecyclerView();
         mRecyclerView.setVerticalScrollBarEnabled(true);
@@ -90,7 +90,7 @@ public class GroupPurchaseDetailsActivity extends BaseActivity implements PullLo
     }
 
     private void getDetails(String grid) {
-        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/get_group_detail").
+        OkHttpUtils.post().url(Constant.GROUP_DETAILS).
                 addParams("access_token", "02c8b29f1b09833e43a37c770a87db23")
                 .addParams("grid", grid).build().execute(new StringCallback() {
             @Override
@@ -105,7 +105,9 @@ public class GroupPurchaseDetailsActivity extends BaseActivity implements PullLo
                     JSONObject json = new JSONObject(response);
                     if (json.getInt("status") == 1) {
                         GroupDetails details = new Gson().fromJson(response, GroupDetails.class);
-                        mState.setText("已团" + details.getData().getGnum() + "件，还剩" + details.getData().getGpay_num() + "件");
+                        int shenyu = Integer.parseInt(details.getData().getGnum())-Integer.parseInt(details.getData().getGpay_num());
+                       mShenyu.setText("拼团剩余"+shenyu+"件");
+                        mState.setText("已团" + details.getData().getGpay_num() + "件，还剩" + shenyu + "件");
                         progress.setMax(Integer.parseInt(details.getData().getGnum()));
                         progress.setProgress(Integer.parseInt(details.getData().getGpay_num()));
                         for (int i = 0; i < details.getData().getOrder_detail().size(); i++) {

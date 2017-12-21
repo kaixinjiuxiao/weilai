@@ -21,6 +21,7 @@ import com.wlyilai.weilaibao.adapter.MyAddressAdapter;
 import com.wlyilai.weilaibao.entry.ReceivingAddress;
 import com.wlyilai.weilaibao.entry.SureBuy;
 import com.wlyilai.weilaibao.entry.SureOrder;
+import com.wlyilai.weilaibao.utils.Constant;
 import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.wlyilai.weilaibao.view.ListViewForScrollView;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -113,6 +114,7 @@ public class SureOrderActivity extends BaseActivity {
         mTxtTitle.setText("确认订单");
         Bundle bundle = getIntent().getBundleExtra("goods");
         mSureBuy = (SureBuy) bundle.getSerializable("data");
+        Log.e("tag",""+mSureBuy.toString());
         goodsId = mSureBuy.getData().getId();
         goodNumber = mSureBuy.getData().getBuy_num();
         Glide.with(SureOrderActivity.this).load(mSureBuy.getData().getGimg()).into(mImgGoods);
@@ -120,7 +122,7 @@ public class SureOrderActivity extends BaseActivity {
         mGoodsPrice.setText(mSureBuy.getData().getGteam_price());
         mGoodsPrice.setText(mSureBuy.getData().getGteam_price());
         mGoodsNumber.setText("x"+mSureBuy.getData().getBuy_num());
-        mGoodsTotalNumber.setTag("共"+mSureBuy.getData().getBuy_num()+"件商品");
+        mGoodsTotalNumber.setText("共"+mSureBuy.getData().getBuy_num()+"件商品");
         mGoodsTotalPrice.setText(mSureBuy.getData().getTotal_price()+"");
         mTotalPrice.setText(mSureBuy.getData().getTotal_price()+"");
 
@@ -188,7 +190,7 @@ public class SureOrderActivity extends BaseActivity {
      * 获取收货地址
      */
     private void getAddress() {
-        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/get_address")
+        OkHttpUtils.post().url(Constant.GET_ADDRESS)
                 .addParams("access_token", "02c8b29f1b09833e43a37c770a87db23")
                 .build().execute(new StringCallback() {
             @Override
@@ -279,7 +281,7 @@ public class SureOrderActivity extends BaseActivity {
         parmas.put("aid", addressId);
         parmas.put("id", goodsId);
         parmas.put("buy_num", goodNumber);
-        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/create_order")
+        OkHttpUtils.post().url(Constant.SURE_ORDER)
                 .params(parmas).build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
@@ -354,7 +356,7 @@ public class SureOrderActivity extends BaseActivity {
 //    }
 
     private void deleteAddress(String id, final int position) {
-        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/del_address")
+        OkHttpUtils.post().url(Constant.DELETE_ADDRESS)
                 .addParams("access_token", "02c8b29f1b09833e43a37c770a87db23")
                 .addParams("id", id).build().execute(new StringCallback() {
             @Override
