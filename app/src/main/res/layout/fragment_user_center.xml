@@ -6,80 +6,97 @@
               android:orientation="vertical"
     >
 
+    <include layout="@layout/head_title"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
+        android:minHeight="160dp"
         android:background="@color/main"
         >
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
             >
+            <RelativeLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/aa"
+                android:layout_gravity="center_horizontal"
+                >
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/logo"
+                    />
 
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@mipmap/logo"
+            </RelativeLayout>
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:textSize="@dimen/text_big"
+                android:text="张三"
+                android:textColor="@color/white"
                 />
 
-            <RelativeLayout
+            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:layout_marginTop="10dp"
-                    android:text="ID:32"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="10dp"
-                    android:text="余额：49.97"
-                    />
-            </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:textSize="@dimen/text_large"
+                android:text="15000000000"
+                android:textColor="@color/white"
+                />
+
         </LinearLayout>
     </RelativeLayout>
+
     <RelativeLayout
-    android:id="@+id/relativeWallet"
-    android:layout_width="match_parent"
-    android:layout_height="45dp"
-    android:background="@drawable/click_selected"
-    >
-    <ImageView
-        android:id="@+id/img1"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="20dp"
-        android:src="@mipmap/ic_launcher"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_toRightOf="@+id/img1"
-        android:layout_marginLeft="10dp"
-        android:gravity="center"
-        android:text="我的钱包"
-        />
-    <ImageView
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="20dp"
-        android:src="@mipmap/icon_right_arrows"
-        />
-</RelativeLayout>
+        android:id="@+id/relativeWallet"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/click_selected"
+        >
+
+        <ImageView
+            android:id="@+id/img1"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/icon_wallet"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/img1"
+            android:gravity="center"
+            android:text="我的钱包"
+            />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/icon_right_arrows"
+            />
+    </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/relativeRP"
         android:layout_width="match_parent"
@@ -87,22 +104,24 @@
         android:layout_marginTop="1dp"
         android:background="@drawable/click_selected"
         >
+
         <ImageView
             android:id="@+id/img6"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
             android:src="@mipmap/ic_launcher"
-            />
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/img6"
             android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/img6"
             android:gravity="center"
             android:text="红包记录"
             />
+
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
@@ -112,29 +131,33 @@
             android:src="@mipmap/icon_right_arrows"
             />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/relativeApply"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@drawable/click_selected"
         android:layout_marginTop="1dp"
+        android:background="@drawable/click_selected"
         >
+
         <ImageView
             android:id="@+id/img2"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:src="@mipmap/ic_launcher"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/icon_apply"
             />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/img2"
             android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/img2"
             android:gravity="center"
             android:text="申请开店"
             />
+
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
@@ -144,29 +167,33 @@
             android:src="@mipmap/icon_right_arrows"
             />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/relativeConsu"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@drawable/click_selected"
         android:layout_marginTop="1dp"
+        android:background="@drawable/click_selected"
         >
+
         <ImageView
             android:id="@+id/img3"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:src="@mipmap/ic_launcher"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/icon_baoxiao"
             />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/img3"
             android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/img3"
             android:gravity="center"
             android:text="消费报销"
             />
+
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
@@ -176,13 +203,15 @@
             android:src="@mipmap/icon_right_arrows"
             />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/relativeInfo"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@drawable/click_selected"
         android:layout_marginTop="1dp"
+        android:background="@drawable/click_selected"
         >
+
         <ImageView
             android:id="@+id/img4"
             android:layout_width="25dp"
@@ -191,14 +220,16 @@
             android:layout_marginLeft="20dp"
             android:src="@mipmap/ic_launcher"
             />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/img4"
             android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/img4"
             android:gravity="center"
             android:text="个人信息"
             />
+
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
@@ -208,13 +239,15 @@
             android:src="@mipmap/icon_right_arrows"
             />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/relativeSetting"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@drawable/click_selected"
         android:layout_marginTop="1dp"
+        android:background="@drawable/click_selected"
         >
+
         <ImageView
             android:id="@+id/img5"
             android:layout_width="25dp"
@@ -223,14 +256,16 @@
             android:layout_marginLeft="20dp"
             android:src="@mipmap/ic_launcher"
             />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/img5"
             android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/img5"
             android:gravity="center"
             android:text="设置"
             />
+
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"

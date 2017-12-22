@@ -64,7 +64,7 @@ public class GroupingAdapter extends RecyclerView.Adapter<GroupingAdapter.Groupi
         span1.setSpan(style,0,span1.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         holder.goodsName.setText(span1);
 
-        SpannableString span2 = new SpannableString("￥"+mList.get(position).getGteam_price()+"/1件");
+        SpannableString span2 = new SpannableString("¥"+mList.get(position).getGteam_price()+"/1件");
         ForegroundColorSpan bg1 = new ForegroundColorSpan(0XFFe02e24);
         span2.setSpan(bg1,0,span2.toString().indexOf("/"),Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         holder.goodsPrice.setText(span2);

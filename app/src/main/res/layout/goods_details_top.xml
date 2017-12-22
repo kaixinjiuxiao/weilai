@@ -51,7 +51,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
                 android:gravity="center_vertical"
-                android:text="拼团价￥"
+                android:text="拼团价¥"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_normal"
                 />
@@ -80,7 +80,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
                 android:gravity="center_vertical"
-                android:text="￥"
+                android:text="¥"
                 android:textSize="@dimen/text_normal"
                 />
 

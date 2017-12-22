@@ -80,7 +80,7 @@ public class PaySuccessActivity extends BaseActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     if(jsonObject.getInt("status")==1){
                         JSONObject data = jsonObject.getJSONObject("data");
-                        mMoney.setText("￥"+data.getString("pay_price"));
+                        mMoney.setText("¥"+data.getString("pay_price"));
                         mTime.setText(data.getString("paytime"));
                         mMode.setText(data.getString("out_trade_type"));
                         mNumberin.setText(data.getString("osn"));

@@ -261,7 +261,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
                     android:gravity="center"
-                    android:text="￥0.00"
+                    android:text="¥0.00"
                     android:textColor="@color/ping_gou"
                     android:textSize="@dimen/text_normal"/>
             </LinearLayout>

@@ -84,7 +84,7 @@
                     android:id="@+id/goodsPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="￥16.99/1件"
+                    android:text="¥16.99/1件"
                     android:textSize="@dimen/text_small"
                     />
 
@@ -129,7 +129,7 @@
                 android:layout_marginLeft="5dp"
                 android:gravity="center"
                 android:layout_gravity="center_vertical"
-                android:text="总额：￥34.98元"
+                android:text="总额：¥34.98元"
                 android:textSize="@dimen/text_normal"
                 />
         </LinearLayout>

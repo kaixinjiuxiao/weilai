@@ -6,109 +6,125 @@
               android:orientation="vertical"
     >
 
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="fitXY"
+        android:src="@mipmap/nature"
+        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical"
         >
 
-        <ImageView
-            android:id="@+id/img"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:scaleType="fitXY"
-            android:src="@mipmap/nature"
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="佛撒酒疯对发动机是广东省将看风景的斯洛伐克警笛声考虑风刀霜剑咖啡萨拉"
+            android:textColor="@color/black"
+            android:textSize="16sp"
             />
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="160dp"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+
             >
 
             <TextView
-                android:id="@+id/name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:text="佛撒酒疯对发动机是广东省将看风景的斯洛伐克警笛声考虑风刀霜剑咖啡萨拉"
-                android:textColor="@color/black"
-                android:textSize="16sp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="¥"
                 />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/newPrice"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:orientation="horizontal"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:text="98.00"
+                android:textColor="@color/ping_gou"
+                android:textSize="20sp"
+                />
 
-                >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:gravity="center_vertical"
+                android:text="/件"
+                />
 
-                <TextView
-                    android:id="@+id/newPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center"
-                    android:text="￥18.9/件"
-                    android:textColor="@color/ping_gou"
-                    />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="¥"
+                />
 
-                <TextView
-                    android:id="@+id/oldPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center"
-                    android:text="￥22.4"
-                    />
+            <TextView
+                android:id="@+id/oldPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:text="¥22.4"
+                />
 
-                <TextView
-                    android:id="@+id/number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center"
-                    android:text="10人团"
-                    android:textColor="@color/ping_gou"
-                    android:visibility="gone"
-                    />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/number"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="10人团"
+                android:textColor="@color/ping_gou"
+                android:visibility="gone"
+                />
+        </LinearLayout>
 
-            <RelativeLayout
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                android:id="@+id/pingtuan"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="10dp"
-                >
-
-                <TextView
-                    android:id="@+id/pingtuan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/text_sure"
-                    android:gravity="center"
-                    android:minWidth="100dp"
-                    android:text="去拼团"
-                    android:textColor="@color/white"
-                    />
-            </RelativeLayout>
+                android:layout_height="35dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/text_sure"
+                android:gravity="center"
+                android:minWidth="100dp"
+                android:text="去拼团"
+                android:textColor="@color/white"
+                />
         </RelativeLayout>
-
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="10dp"
         android:background="@color/white"
         >
 
@@ -116,7 +132,6 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="170dp"
             android:background="@color/main_bg"
             />
     </LinearLayout>

@@ -216,7 +216,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             android:gravity="center"
-                            android:text="件商品  总额：￥"
+                            android:text="件商品  总额：¥"
                             android:textSize="@dimen/text_normal"
                             />
                         <TextView

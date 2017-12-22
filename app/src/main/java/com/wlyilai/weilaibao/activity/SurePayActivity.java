@@ -2,7 +2,6 @@ package com.wlyilai.weilaibao.activity;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -108,25 +107,11 @@ public class SurePayActivity extends BaseActivity {
                 }
                 break;
             case R.id.linearWX:
-//                if (isAppInstalled("com.tencent.mm") == false) {
-//                    ToastUtils.showShort(SurePayActivity.this, "很遗憾，您没有安装微信！");
-//                } else {
-//                    startPay("0");
-//                }
-                Uri uri=Uri.parse("app://hnyst");
-                Intent intent=new Intent(Intent.ACTION_VIEW,uri);
-                startActivity(intent);
-
-//                if(isAppInstalled("com.hnrryst.hnyst")==true){
-//                    Intent intent = new Intent(Intent.ACTION_MAIN);
-//                    intent.addCategory(Intent.CATEGORY_LAUNCHER);
-//                    ComponentName cn = new ComponentName("com.hnrryst.hnyst", "com.hnrryst.hnyst.activity.SplashActivity");
-//                    intent.setComponent(cn);
-//                    startActivity(intent);
-//                }
-
-
-
+                if (isAppInstalled("com.tencent.mm") == false) {
+                    ToastUtils.showShort(SurePayActivity.this, "很遗憾，您没有安装微信！");
+                } else {
+                    startPay("0");
+                }
                 break;
             case R.id.linearBalance:
                 displayDialog();
@@ -172,7 +157,7 @@ public class SurePayActivity extends BaseActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getInt("status") == 1) {
                         JSONObject data = jsonObject.getJSONObject("data");
-                        mTextBanlance.setText("￥" + data.getString("balance"));
+                        mTextBanlance.setText("¥" + data.getString("balance"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

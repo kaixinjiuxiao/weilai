@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,7 +89,7 @@ public class PinGouFragment extends BaseFagment implements PullLoadMoreRecyclerV
         mRecyclerView.setVerticalScrollBarEnabled(true);
         mPullLoadMore.setRefreshing(true);
         mPullLoadMore.setIsLoadMore(false);
-        mPullLoadMore.setLinearLayout();
+        mPullLoadMore.setGridLayout(2);
         mPullLoadMore.setOnPullLoadMoreListener(this);
         mPullLoadMore.setPullLoadMoreCompleted();
         mMZBannerView = (Banner) mView.findViewById(R.id.banber);
@@ -154,6 +155,7 @@ public class PinGouFragment extends BaseFagment implements PullLoadMoreRecyclerV
 
             @Override
             public void onResponse(String response, int id) {
+                Log.e("tag","sajdhsjhd"+response);
                 Goods goods = new Gson().fromJson(response,Goods.class);
                 if(goods.getStatus()==1){
                     if (page == 1) {

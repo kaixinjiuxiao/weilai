@@ -144,11 +144,11 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
         ImageView imgCancel = (ImageView) layout.findViewById(R.id.imgCancel);
         mTotalPrice = (TextView) layout.findViewById(R.id.price);
         Double total = n*(Double.parseDouble(mNewPrice));
-        mTotalPrice.setText("￥"+total);
+        mTotalPrice.setText("¥"+total);
         mDanjia = (TextView) layout.findViewById(R.id.danjia);
-        mDanjia.setText("￥"+mNewPrice+"/件");
+        mDanjia.setText("¥"+mNewPrice+"/件");
         mYuanjia = (TextView) layout.findViewById(R.id.oldPrice);
-        mYuanjia.setText("￥"+mOldPrice);
+        mYuanjia.setText("¥"+mOldPrice);
         TextView reduce = (TextView) layout.findViewById(R.id.reduce);
         mBuyNumber = (TextView) layout.findViewById(R.id.number);
         mBuyNumber.setText(n+"");
@@ -202,13 +202,13 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
             case R.id.add:
                 n++;
                 mBuyNumber.setText(n + "");
-                mTotalPrice.setText("￥"+n*(Double.parseDouble(mNewPrice)));
+                mTotalPrice.setText("¥"+n*(Double.parseDouble(mNewPrice)));
                 break;
             case R.id.reduce:
                 if (n > singleNumber) {
                     n--;
                     mBuyNumber.setText(n + "");
-                    mTotalPrice.setText("￥"+n*(Double.parseDouble(mNewPrice)));
+                    mTotalPrice.setText("¥"+n*(Double.parseDouble(mNewPrice)));
                 }else{
                     ToastUtils.showShort(GroupDetailsActivity.this,"起购量为"+singleNumber+"件");
                 }

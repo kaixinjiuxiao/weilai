@@ -65,7 +65,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         holder.goodsName.setText(span1);
       //  holder.goodsName.setText(mList.get(position).getGname());
 
-        SpannableString span2 = new SpannableString("￥"+mList.get(position).getGteam_price()+"/1件");
+        SpannableString span2 = new SpannableString("¥"+mList.get(position).getGteam_price()+"/1件");
         ForegroundColorSpan bg1 = new ForegroundColorSpan(0XFFe02e24);
         span2.setSpan(bg1,0,span2.toString().indexOf("/"),Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         holder.goodsPrice.setText(span2);

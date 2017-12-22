@@ -335,7 +335,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentBottom="true"
-                                android:text="￥"
+                                android:text="¥"
                                 android:textSize="@dimen/text_small"
                                 />
                             <TextView
@@ -408,7 +408,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="5dp"
                             android:gravity="center"
-                            android:text="合计￥"
+                            android:text="合计¥"
                             android:textSize="@dimen/text_normal"
                             />
                         <TextView
@@ -439,7 +439,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:gravity="center"
-            android:text="合计￥"
+            android:text="合计¥"
             android:textColor="@color/black"
             android:textSize="@dimen/text_large"
             />

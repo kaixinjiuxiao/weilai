@@ -58,6 +58,9 @@ public class MainActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDataSynEvent(FirstEvent event) {
         if (event.getMsg().equals("ok")) {
+            selected();
+            mTxtMy.setSelected(true);
+            mImgMy.setSelected(true);
             mController.showFragment(2);
         }
     }

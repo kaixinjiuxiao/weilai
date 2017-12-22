@@ -105,12 +105,12 @@ public class OrderDetailsActivity extends BaseActivity {
                         }else{
                             mPayState.setText("买家未付款");
                         }
-                        mPayNumber.setText("订单金额（含运费）：￥"+details.getData().getPay_price());
+                        mPayNumber.setText("订单金额（含运费）：¥"+details.getData().getPay_price());
                         mInfo.setText(details.getData().getRealname()+" "+details.getData().getMobile());
                         mAddress.setText(details.getData().getProvince()+details.getData().getCity()+details.getData().getCountry()+details.getData().getAddress());
                         Glide.with(OrderDetailsActivity.this).load(details.getData().getGimg()).into(mImgGoods);
                         mGoodsName.setText(details.getData().getGname());
-                        mGoodsPrice.setText("￥"+details.getData().getGteam_price()+"/件");
+                        mGoodsPrice.setText("¥"+details.getData().getGteam_price()+"/件");
                         mGoodsNumber.setText("x"+details.getData().getPay_num());
                         mGoodsTotalNumber.setText(details.getData().getPay_num());
                         mGoodsTotalPrice.setText(details.getData().getPay_price());
