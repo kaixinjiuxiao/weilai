@@ -18,7 +18,7 @@ import com.wlyilai.weilaibao.fragment.BaseFagment;
  */
 public class UserCenterFragment extends BaseFagment implements View.OnClickListener {
     private View mView;
-    private RelativeLayout info,wallet,consumption,apply,setting,redPackage;
+    private RelativeLayout info,wallet,consumption,apply,setting;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,7 +36,6 @@ public class UserCenterFragment extends BaseFagment implements View.OnClickListe
         consumption = (RelativeLayout)mView.findViewById(R.id.relativeConsu);
         apply = (RelativeLayout)mView.findViewById(R.id.relativeApply);
         setting = (RelativeLayout)mView.findViewById(R.id.relativeSetting);
-        redPackage = (RelativeLayout)mView.findViewById(R.id.relativeRP);
     }
 
     private void initEvent() {
@@ -45,7 +44,6 @@ public class UserCenterFragment extends BaseFagment implements View.OnClickListe
         consumption.setOnClickListener(this);
         apply.setOnClickListener(this);
         setting.setOnClickListener(this);
-        redPackage.setOnClickListener(this);
     }
 
     @Override
@@ -57,9 +55,6 @@ public class UserCenterFragment extends BaseFagment implements View.OnClickListe
                 break;
             case R.id.relativeWallet:
                 intent.setClass(getActivity(),MyWalletActivity.class);
-                break;
-            case R.id.relativeRP:
-                intent.setClass(getActivity(),RedPackageNoteActivity.class);
                 break;
             case R.id.relativeConsu:
                 intent.setClass(getActivity(),ConsumptionActivity.class);

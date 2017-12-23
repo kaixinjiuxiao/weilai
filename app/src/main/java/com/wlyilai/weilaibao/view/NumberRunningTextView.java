@@ -6,7 +6,6 @@ import android.content.res.TypedArray;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.utils.StringUtils;
@@ -63,7 +62,6 @@ public class NumberRunningTextView extends AppCompatTextView {
      */
     public void setContent(String str) {
         //如果是当内容改变的时候才执行滚动动画,判断内容是否有变化
-        Log.e("tag","preStr"+preStr);
         if (runWhenChange){
             if (TextUtils.isEmpty(preStr)){
                 //如果上一次的str为空

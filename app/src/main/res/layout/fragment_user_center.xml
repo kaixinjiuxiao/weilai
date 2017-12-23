@@ -96,42 +96,6 @@
             android:src="@mipmap/icon_right_arrows"
             />
     </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/relativeRP"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="1dp"
-        android:background="@drawable/click_selected"
-        >
-
-        <ImageView
-            android:id="@+id/img6"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@mipmap/ic_launcher"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/img6"
-            android:gravity="center"
-            android:text="红包记录"
-            />
-
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:src="@mipmap/icon_right_arrows"
-            />
-    </RelativeLayout>
-
     <RelativeLayout
         android:id="@+id/relativeApply"
         android:layout_width="match_parent"
