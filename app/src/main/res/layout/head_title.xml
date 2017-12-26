@@ -21,9 +21,12 @@
         android:layout_height="match_parent"
         android:textSize="18sp"
         android:layout_centerInParent="true"
+        android:layout_marginLeft="100dp"
         android:gravity="center"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:textColor="@color/black"
-        />
+         />
     <TextView
         android:id="@+id/txtRight"
         android:layout_width="wrap_content"
