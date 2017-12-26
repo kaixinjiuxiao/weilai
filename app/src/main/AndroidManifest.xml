@@ -27,12 +27,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <!--登录-->
         <activity
             android:name=".activity.LoginActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"
             />
+        <!--完善资料-->
         <activity
             android:name=".activity.RegisterActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -45,93 +47,134 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"
             />
+        <!--店家认证-->
         <activity
             android:name=".activity.ShopAuthenticationActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"
             />
+        <!--团详情-->
         <activity
             android:name=".activity.GroupDetailsActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"
             />
+        <!--我的团-->
         <activity
             android:name=".activity.MyGroupActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"
             />
+        <!--团商品详情-->
         <activity
             android:name=".activity.GroupPurchaseDetailsActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"
             />
+        <!--确认订单-->
         <activity
             android:name=".activity.SureOrderActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"
             />
+        <!--确认支付-->
         <activity
             android:name=".activity.SurePayActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"
             />
+        <!--支付成功-->
         <activity
             android:name=".activity.PaySuccessActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"
             />
+        <!--订单详情-->
         <activity android:name=".activity.OrderDetailsActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateAlwaysHidden"
             />
+        <!--店铺商品-->
         <activity android:name=".activity.ShopGoodsActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateAlwaysHidden"
             />
+        <!--我的钱包-->
         <activity android:name=".activity.MyWalletActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateAlwaysHidden"
             />
+        <!--用户信息-->
         <activity android:name=".activity.UserInfoActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateAlwaysHidden"
             />
+        <!--申请开店-->
         <activity android:name=".activity.ApplyOSActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateAlwaysHidden"
             />
+        <!--充值-->
         <activity android:name=".activity.RechargeActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateAlwaysHidden"
             />
+        <!--换余额-->
+        <activity android:name=".activity.ExChangeActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateAlwaysHidden"
+            />
+        <!--余额详细-->
+        <activity android:name=".activity.BanlanceDetailsActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateAlwaysHidden"
+            />
+        <!--积分详细-->
+        <activity android:name=".activity.IntegerDetailsActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateAlwaysHidden"
+            />
+        <!--提现-->
+        <activity android:name=".activity.WithDrawalsActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateAlwaysHidden"
+            />
+        <!--消费收益-->
         <activity android:name=".activity.ConsumptionActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateAlwaysHidden"
             />
+        <!--设置-->
         <activity android:name=".activity.SettingActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateAlwaysHidden"
             />
+        <!--地址管理-->
         <activity android:name=".activity.AddManagerActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateAlwaysHidden"
             />
+        <!--红包记录-->
         <activity android:name=".activity.RedPackageNoteActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait"

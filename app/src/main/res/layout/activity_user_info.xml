@@ -1,87 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/main_bg"
+              android:orientation="vertical"
     >
-<include layout="@layout/head_title"/>
+
+    <include layout="@layout/head_title"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_marginTop="1dp"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:layout_marginTop="1dp"
         >
+
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:minWidth="100dp"
+            android:layout_weight="1"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
             android:text="采集推荐人"
             />
+
         <TextView
             android:id="@+id/txtRecommond"
-            android:layout_width="0dp"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:minWidth="100dp"
+            android:ellipsize="end"
             android:gravity="center_vertical|right"
-            android:paddingRight="20dp"
+            android:maxLines="1"
+            android:paddingRight="35dp"
             android:text="杨海波"
             />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_marginTop="1dp"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:layout_marginTop="1dp"
         >
+
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:minWidth="100dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="开店推荐人"
+            />
+
+        <TextView
+            android:id="@+id/shopRecommond"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:gravity="center_vertical|right"
+            android:maxLines="1"
+            android:paddingRight="35dp"
+            android:text="杨海波"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
             android:text="用户姓名"
             />
+
         <TextView
             android:id="@+id/userName"
-            android:layout_width="0dp"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:minWidth="100dp"
+            android:ellipsize="end"
             android:gravity="center_vertical|right"
-            android:paddingRight="20dp"
+            android:maxLines="1"
+            android:paddingRight="35dp"
             android:text="张三"
             />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_marginTop="1dp"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:layout_marginTop="1dp"
         >
+
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:minWidth="100dp"
+            android:layout_weight="1"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
             android:text="用户电话"
             />
+
         <TextView
             android:id="@+id/userPhone"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:gravity="center_vertical|right"
+            android:maxLines="1"
+            android:paddingRight="35dp"
+            android:text="15000000000"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearBank"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        >
+
+        <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center_vertical"
             android:minWidth="100dp"
-            android:gravity="center_vertical|right"
-            android:paddingRight="20dp"
-            android:text="15000000000"
+            android:paddingLeft="20dp"
+            android:text="提现银行 支行 卡号"
             />
+
+        <RelativeLayout
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/bank"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/img1"
+                android:ellipsize="end"
+                android:gravity="center_vertical|right"
+                android:maxLines="1"
+                android:text="中国建设银行"
+                android:layout_marginRight="5dp"
+                />
+
+            <ImageView
+                android:id="@+id/img1"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="15dp"
+                android:src="@mipmap/icon_right_arrows"
+                />
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

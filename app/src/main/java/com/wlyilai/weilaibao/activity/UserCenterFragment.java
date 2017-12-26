@@ -60,7 +60,7 @@ public class UserCenterFragment extends BaseFagment implements View.OnClickListe
                 intent.setClass(getActivity(),ConsumptionActivity.class);
                 break;
             case R.id.relativeApply:
-                intent.setClass(getActivity(),ApplyOSActivity.class);
+                intent.setClass(getActivity(),ShopAuthenticationActivity.class);
                 break;
             case R.id.relativeSetting:
                 intent.setClass(getActivity(),SettingActivity.class);

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wlyilai.weilaibao.R;
@@ -28,6 +29,12 @@ public class UserInfoActivity extends BaseActivity {
     TextView mUserName;
     @BindView(R.id.userPhone)
     TextView mUserPhone;
+    @BindView(R.id.shopRecommond)
+    TextView mShopRecommond;
+    @BindView(R.id.bank)
+    TextView mBank;
+    @BindView(R.id.linearBank)
+    LinearLayout mLinearBank;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,8 +49,17 @@ public class UserInfoActivity extends BaseActivity {
         mTxtTitle.setText("用户信息");
     }
 
-    @OnClick(R.id.imgBack)
-    public void onClick() {
-        finish();
+    @OnClick({R.id.imgBack, R.id.linearBank})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.imgBack:
+                finish();
+                break;
+            case R.id.linearBank:
+                break;
+        }
+
     }
+
+
 }

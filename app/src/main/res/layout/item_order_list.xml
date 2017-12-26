@@ -61,6 +61,8 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:text="【VIP价16.99】新疆核桃500"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_large"
                 />

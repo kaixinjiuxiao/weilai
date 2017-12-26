@@ -3,7 +3,6 @@ package com.wlyilai.weilaibao.activity;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,7 +74,7 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
                 mTexChuZhi1.setSelected(true);
                 cash = "20.00";
                 showPoprpWindow();
-                setBackgroundAlpha(0.5f);
+             //   setBackgroundAlpha(0.5f);
                 break;
             case R.id.fifty:
                 selected();
@@ -84,7 +83,7 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
                 mTexChuZhi2.setSelected(true);
                 cash = "50.00";
                 showPoprpWindow();
-                setBackgroundAlpha(0.5f);
+             //setBackgroundAlpha(0.5f);
                 break;
             case R.id.hundred:
                 selected();
@@ -93,14 +92,14 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
                 mTexChuZhi13.setSelected(true);
                 cash = "100.00";
                 showPoprpWindow();
-                setBackgroundAlpha(0.5f);
+               // setBackgroundAlpha(0.5f);
                 break;
             case R.id.imgCancel:
                 popupWindow.dismiss();
-                setBackgroundAlpha(1.0f);
+               setBackgroundAlpha(1.0f);
                 break;
             case R.id.linearALi:
-                Log.e("tag","点击了");
+
                 mImgAli.setVisibility(View.VISIBLE);
                 mImgWx.setVisibility(View.GONE);
                 break;
@@ -133,6 +132,7 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
         popupWindow.setOutsideTouchable(true); // 点击外部时，隐藏掉POP窗口
         setBackgroundAlpha(0.5f);//设置屏幕透明度
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.setAnimationStyle(R.style.popwin_anim_style);
         popupWindow.showAtLocation(RechargeActivity.this.findViewById(R.id.main), Gravity.BOTTOM, 20, 0);
         ImageView imgCancel = (ImageView) layout.findViewById(R.id.imgCancel);
         imgCancel.setOnClickListener(this);
@@ -150,7 +150,7 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onDismiss() {
                 popupWindow.dismiss();
-                setBackgroundAlpha(1.0f);
+              setBackgroundAlpha(1.0f);
             }
         });
     }

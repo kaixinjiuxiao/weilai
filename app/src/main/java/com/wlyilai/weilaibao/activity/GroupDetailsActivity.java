@@ -138,6 +138,7 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
         popupWindow.setOutsideTouchable(true); // 点击外部时，隐藏掉POP窗口
         setBackgroundAlpha(0.5f);//设置屏幕透明度
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.setAnimationStyle(R.style.popwin_anim_style);
         popupWindow.showAtLocation(GroupDetailsActivity.this.findViewById(R.id.main), Gravity.BOTTOM, 20, 0);
         ImageView img = (ImageView) layout.findViewById(R.id.goodsImg);
         Glide.with(GroupDetailsActivity.this).load(mImgUrl).into(img);
@@ -197,7 +198,7 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.rightNow:
                 showPoprpWindow();
-                setBackgroundAlpha(0.5f);
+               // setBackgroundAlpha(0.5f);
                 break;
             case R.id.add:
                 n++;

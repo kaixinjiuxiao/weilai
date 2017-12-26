@@ -1,12 +1,10 @@
 package com.wlyilai.weilaibao.adapter;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,11 +57,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         }else if(mList.get(position).getTrade().equals("3")){
             holder.orderStatus.setText("已收货");
         }
-        SpannableString span1 = new SpannableString(mList.get(position).getGname());
-        StyleSpan style = new StyleSpan(Typeface.BOLD);
-        span1.setSpan(style,0,span1.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        holder.goodsName.setText(span1);
-      //  holder.goodsName.setText(mList.get(position).getGname());
+//        SpannableString span1 = new SpannableString(mList.get(position).getGname());
+//        StyleSpan style = new StyleSpan(Typeface.BOLD);
+//        span1.setSpan(style,0,span1.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+//        holder.goodsName.setText(span1);
+       holder.goodsName.setText(mList.get(position).getGname());
 
         SpannableString span2 = new SpannableString("¥"+mList.get(position).getGteam_price()+"/1件");
         ForegroundColorSpan bg1 = new ForegroundColorSpan(0XFFe02e24);

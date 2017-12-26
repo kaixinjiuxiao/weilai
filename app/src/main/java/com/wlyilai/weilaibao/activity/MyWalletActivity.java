@@ -10,7 +10,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wlyilai.weilaibao.R;
-import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.wlyilai.weilaibao.view.NumberRunningTextView;
 
 import butterknife.BindView;
@@ -75,21 +74,23 @@ public class MyWalletActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.banlanceDetails:
+                startActivity(new Intent(MyWalletActivity.this, BanlanceDetailsActivity.class));
                 break;
             case R.id.redPackDetails:
                 Intent intent = new Intent(MyWalletActivity.this, RedPackageNoteActivity.class);
                 startActivity(intent);
                 break;
             case R.id.integerDetails:
-                ToastUtils.showShort(this,"我惦记了积分详情");
+                startActivity(new Intent(MyWalletActivity.this, IntegerDetailsActivity.class));
                 break;
             case R.id.exchange:
-                ToastUtils.showShort(this,"我点击了换余额");
+                startActivity(new Intent(MyWalletActivity.this, ExChangeActivity.class));
                 break;
             case R.id.recharge:
                 startActivity(new Intent(MyWalletActivity.this, RechargeActivity.class));
                 break;
             case R.id.withDrawals:
+                startActivity(new Intent(MyWalletActivity.this, WithDrawalsActivity.class));
                 break;
         }
     }

@@ -6,12 +6,5 @@
               android:background="@color/main_bg"
     >
 <include layout="@layout/head_title"/>
-    <com.wlyilai.weilaibao.view.PullLoadMoreRecyclerView
-        android:id="@+id/pullLoadMore"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/white"
-        android:layout_marginTop="1dp"
-        />
+
 </LinearLayout>

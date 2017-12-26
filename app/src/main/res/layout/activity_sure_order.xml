@@ -318,7 +318,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
                             android:layout_marginTop="10dp"
-                            android:text="【VIP价16.99】新疆核桃500"
+                            android:maxLines="1"
+                            android:ellipsize="end"
                             android:textColor="@color/black"
                             android:textSize="@dimen/text_large"
                             />
@@ -343,11 +344,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentBottom="true"
-                                android:layout_toRightOf="@+id/jiage"
                                 android:textColor="@color/ping_gou"
-                                android:text="16.99"
+
                                 android:textSize="@dimen/text_small"
-                                />
+                                android:layout_toEndOf="@+id/jiage"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -365,7 +365,6 @@
                                 android:layout_gravity="right"
                                 android:layout_marginRight="10dp"
                                 android:layout_marginTop="5dp"
-                                android:text="x2"
                                 android:textSize="@dimen/text_small"
                                 />
                         </RelativeLayout>
@@ -399,7 +398,6 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             android:gravity="center"
-                            android:text="共2个商品"
                             android:textSize="@dimen/text_normal"
                             />
                         <TextView
@@ -418,7 +416,6 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="5dp"
                             android:gravity="center"
-                            android:text="34.98"
                             android:textColor="@color/ping_gou"
                             android:textSize="20sp"
                             />
@@ -450,7 +447,6 @@
             android:layout_toRightOf="@+id/heji"
             android:layout_marginLeft="10dp"
             android:gravity="center"
-            android:text="19.88"
             android:textColor="@color/ping_gou"
             android:textSize="20sp"
             />

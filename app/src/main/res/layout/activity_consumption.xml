@@ -10,7 +10,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:scrollbars="none"
         >
 
@@ -84,35 +85,36 @@
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:text="@string/explain"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/white"
-                >
-
-                <Button
-                    android:id="@+id/btnCds"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_margin="15dp"
-                    android:background="@drawable/text_bg_color"
-                    android:text="了解数锯宝"
-                    />
-                <Button
-                    android:id="@+id/btnLook"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="30dp"
-                    android:background="@drawable/text_bg_color"
-                    android:text="查看报销收益"
+                    android:textSize="@dimen/text_small"
                     />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:id="@+id/knowCds"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="了解数锯宝"
+            android:textColor="@color/ping_gou"
+            android:gravity="center"
+            android:background="@drawable/click_selected"
+            />
+        <TextView
+            android:id="@+id/lookConsu"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="查看报销收益"
+            android:textColor="@color/white"
+            android:background="@drawable/text_sure_no_corne"
+            android:gravity="center"
+            />
+    </LinearLayout>
 </LinearLayout>
