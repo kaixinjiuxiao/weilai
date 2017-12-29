@@ -35,7 +35,7 @@ import okhttp3.Call;
  * Time:  2017/12/11 0011
  * Describe:
  */
-public class FragmentOrderAll extends BaseFagment implements PullLoadMoreRecyclerView.PullLoadMoreListener {
+public class FragmentOrderWaitFull extends BaseFagment implements PullLoadMoreRecyclerView.PullLoadMoreListener {
     private View mView;
     private OrderAdapter mAdapter;
     private PullLoadMoreRecyclerView mPullLoadMore;
@@ -134,7 +134,7 @@ public class FragmentOrderAll extends BaseFagment implements PullLoadMoreRecycle
                 if (mAdapter != null) {
                     mAdapter.notifyDataSetChanged();
                 }
-                getOrder("0",1);
+                getOrder("-1",1);
                 // mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
             }
         }, 2000);
@@ -146,7 +146,7 @@ public class FragmentOrderAll extends BaseFagment implements PullLoadMoreRecycle
             @Override
             public void run() {
                 page++;
-                getOrder("0",page);
+                getOrder("-1",page);
                 mPullLoadMore.setPullLoadMoreCompleted();
             }
         }, 2000);

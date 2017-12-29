@@ -34,15 +34,15 @@
                     >
 
                     <RelativeLayout
-                        android:layout_width="108dp"
-                        android:layout_height="108dp"
+                        android:layout_width="88dp"
+                        android:layout_height="88dp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/indicator_normal"
                         >
 
                         <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
                             android:layout_centerInParent="true"
                             android:background="@drawable/indicator_normal"
                             android:src="@mipmap/logo"
@@ -52,6 +52,7 @@
 
 
                 <TextView
+                    android:id="@+id/userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -62,6 +63,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/userPhone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -222,11 +224,11 @@
 
             <ImageView
                 android:id="@+id/img4"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
-                android:src="@mipmap/ic_launcher"
+                android:src="@mipmap/icon_user"
                 />
 
             <TextView
@@ -269,7 +271,7 @@
                 android:layout_height="18dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
-                android:src="@mipmap/ic_launcher"
+                android:src="@mipmap/icon_setting"
                 />
 
             <TextView
@@ -310,6 +312,7 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
                 android:text="服务热线：400-885-0271"
+                android:textSize="@dimen/text_small"
                 />
 
             <TextView
@@ -317,7 +320,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:gravity="center_horizontal"
-                android:text="湘ICP备17016834号-1"
+                android:text="湘ICP备17016834号-1,湖南未来已来科技有限公司"
+                android:textSize="@dimen/text_small"
                 />
 
             <TextView
@@ -326,6 +330,8 @@
                 android:layout_marginTop="5dp"
                 android:gravity="center_horizontal"
                 android:text="湖南未来已来科技有限公司"
+                android:textSize="@dimen/text_small"
+                android:visibility="gone"
                 />
 
             <ImageView

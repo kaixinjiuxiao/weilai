@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.utils.Constant;
+import com.wlyilai.weilaibao.utils.PreferenceUtil;
 import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -62,11 +63,13 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        PreferenceUtil.init(this);
         init();
     }
 
     private void init() {
         mTxtTitle.setText("登录");
+        mEdtPhone.setText(PreferenceUtil.getString("phone",null));
     }
 
 
@@ -87,14 +90,27 @@ public class LoginActivity extends BaseActivity {
      * @param phone 手机号
      */
     private void startNext(String phone) {
-        if(!mPhone.equals(mEdtPhone.getText().toString())){
-            ToastUtils.showShort(LoginActivity.this,"手机号码不一致");
-            return;
-        }
-        if (!code.equals(mEdtCode.getText().toString())) {
-            ToastUtils.showShort(LoginActivity.this,"验证码错误");
-            return;
-        }
+//        if(TextUtils.isEmpty(mEdtPhone.getText().toString())){
+//            ToastUtils.showShort(LoginActivity.this,"手机号码不能为空");
+//            return;
+//        }
+//
+//        if(TextUtils.isEmpty(mEdtCode.getText().toString())){
+//            ToastUtils.showShort(LoginActivity.this,"验证码不能为空");
+//            return;
+//        }
+//        if(TextUtils.isEmpty(code)||TextUtils.isEmpty(mPhone)){
+//            ToastUtils.showShort(LoginActivity.this,"请先获取验证码");
+//            return;
+//        }
+//        if(!mPhone.equals(mEdtPhone.getText().toString())){
+//            ToastUtils.showShort(LoginActivity.this,"手机号码不一致");
+//            return;
+//        }
+//        if (!code.equals(mEdtCode.getText().toString())) {
+//            ToastUtils.showShort(LoginActivity.this,"验证码错误");
+//            return;
+//        }
         OkHttpUtils.post().url(Constant.LOGIN)
                 .addParams("mobile", phone).build().execute(new StringCallback() {
             @Override
@@ -108,14 +124,22 @@ public class LoginActivity extends BaseActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getInt("status") == 0) {
                         if (jsonObject.getInt("code") == 2) {
+                            //新用户完善资料
                             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                             intent.putExtra("phone", mEdtPhone.getText().toString());
                             startActivity(intent);
                         } else if (jsonObject.getInt("code") == 3) {
+                            //验证数CDS用户
                             displayDialog();
                         }
                     } else if (jsonObject.getInt("status") == 1) {
-
+                        //正常登陆成功
+                        String code = jsonObject.getString("access_token");
+                       // PreferenceUtil.commitString("token",code);
+                        PreferenceUtil.commitString("phone",mEdtPhone.getText().toString());
+                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                        intent.putExtra("token",code);
+                        startActivity(intent);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -125,7 +149,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void displayDialog() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.myCorDialog);
         View view = LayoutInflater.from(this).inflate(R.layout.layout_verification_name, null);
         builder.setView(view);
         mEdtName = (EditText) view.findViewById(R.id.edtName);
@@ -143,6 +167,7 @@ public class LoginActivity extends BaseActivity {
     /**
      * 验证数钜宝用户
      */
+    // TODO: 2017/12/28 0028   没有实际验证用户
     private void verificationName() {
         if (TextUtils.isEmpty(mEdtName.getText().toString())) {
             ToastUtils.showShort(LoginActivity.this, "请输入姓名");
@@ -164,6 +189,16 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onResponse(String response, int id) {
                 Log.e("tag", "ffgccf" + response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if(jsonObject.getInt("status")==1){
+
+                    }else{
+                        ToastUtils.showShort(LoginActivity.this,jsonObject.getString("msg"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

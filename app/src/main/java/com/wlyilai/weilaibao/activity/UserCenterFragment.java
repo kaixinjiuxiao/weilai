@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.fragment.BaseFagment;
@@ -19,6 +20,7 @@ import com.wlyilai.weilaibao.fragment.BaseFagment;
 public class UserCenterFragment extends BaseFagment implements View.OnClickListener {
     private View mView;
     private RelativeLayout info,wallet,consumption,apply,setting;
+    private TextView phone,name;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -31,6 +33,8 @@ public class UserCenterFragment extends BaseFagment implements View.OnClickListe
     }
 
     private void initView() {
+        name = (TextView)mView.findViewById(R.id.userName);
+        phone = (TextView)mView.findViewById(R.id.phone);
         info = (RelativeLayout)mView.findViewById(R.id.relativeInfo);
         wallet = (RelativeLayout)mView.findViewById(R.id.relativeWallet);
         consumption = (RelativeLayout)mView.findViewById(R.id.relativeConsu);

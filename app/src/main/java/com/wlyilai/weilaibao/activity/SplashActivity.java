@@ -10,8 +10,6 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 
 import com.wlyilai.weilaibao.R;
-import com.wlyilai.weilaibao.utils.DensityUtils;
-import com.wlyilai.weilaibao.utils.ScreenUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -37,10 +35,6 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
         initView();
-       // loadApps();
-        getBanner();
-        Log.e("tag","屏幕宽度===px"+ ScreenUtils.getScreenWidth(this));
-        Log.e("tag","屏幕宽度===dp"+ DensityUtils.pxToDp(this,ScreenUtils.getScreenWidth(this)));
     }
 
 
@@ -59,7 +53,8 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 Intent intent = new Intent();
-                intent.setClass(SplashActivity.this, MainActivity.class);
+                //intent.setClass(SplashActivity.this, MainActivity.class);
+                intent.setClass(SplashActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }

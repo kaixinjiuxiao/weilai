@@ -13,4 +13,5 @@
     <color name="ping_gou">#e02e24</color>
     <color name="line">#d2d2d2</color>
     <color name="lightgray">#F1F2F4</color>
+    <color name="transparent">@android:color/transparent</color>
 </resources>

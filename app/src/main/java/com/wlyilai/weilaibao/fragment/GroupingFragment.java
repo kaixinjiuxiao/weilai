@@ -109,7 +109,7 @@ public class GroupingFragment extends BaseFagment implements PullLoadMoreRecycle
                 .build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-
+                Log.e("tag","信息"+e.toString());
             }
 
             @Override

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Gravity;
@@ -49,6 +50,7 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
     private TextView mYuanjia;
     private TextView mDanjia;
     private TextView mTotalPrice;
+    private int mShengyu;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,13 +82,26 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
         linearShop = (LinearLayout) findViewById(R.id.linearShop);
         linearEnter = (LinearLayout) findViewById(R.id.linearEnter);
         mGoodsId = getIntent().getStringExtra("id");
-        getDetails(mGoodsId);
+        showLoadingDialog();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getDetails(mGoodsId);
+            }
+        },2000);
     }
 
     private void getDetails(String id) {
         OkHttpUtils.post().url(Constant.GOODS_DETAILS)
                 .addParams("id",id).addParams("access_token","02c8b29f1b09833e43a37c770a87db23")
                 .build().execute(new StringCallback() {
+
+            @Override
+            public void onAfter(int id) {
+                super.onAfter(id);
+                dismissLoadingDialog();
+            }
+
             @Override
             public void onError(Call call, Exception e, int id) {
 
@@ -107,13 +122,13 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
                     mShopId = details.getData().getSid();
                     mShopName=details.getData().getGname();
                     mOldPrice= details.getData().getGprice();
-                    goodsPeriods.setText(details.getData().getSid());
+                    goodsPeriods.setText("第"+details.getData().getGsn()+"期");
                     goodsAllNumber.setText(details.getData().getGnum()+"件");
                     goodsSingle.setText(details.getData().getGpay_limit()+"件");
                     n = Integer.parseInt(details.getData().getGpay_limit());
                     singleNumber = Integer.parseInt(details.getData().getGpay_limit());
-                    int shengyu = Integer.parseInt(details.getData().getGnum())-Integer.parseInt(details.getData().getGpay_num());
-                    goodsSurplus.setText("已团"+details.getData().getGpay_num()+"件，还差"+String.valueOf(shengyu)+"件。");
+                    mShengyu = Integer.parseInt(details.getData().getGnum())-Integer.parseInt(details.getData().getGpay_num());
+                    goodsSurplus.setText("已团"+details.getData().getGpay_num()+"件，还差"+String.valueOf(mShengyu)+"件。");
                     goodsProgress.setMax(Integer.parseInt(details.getData().getGnum()));
                     goodsProgress.setSecondaryProgress(Integer.parseInt(details.getData().getGpay_num()));
                     shopAddress.setText(details.getData().getSname());
@@ -202,6 +217,10 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.add:
                 n++;
+                if(n>mShengyu){
+                    ToastUtils.showShort(GroupDetailsActivity.this,"本次购买最多"+mShengyu+"件");
+                    return;
+                }
                 mBuyNumber.setText(n + "");
                 mTotalPrice.setText("¥"+n*(Double.parseDouble(mNewPrice)));
                 break;

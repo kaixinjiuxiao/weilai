@@ -11,7 +11,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
         android:background="@color/ping_gou"
         android:orientation="horizontal"
         >
@@ -39,7 +39,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:text="总余额"
                 android:textColor="@color/white"
@@ -50,7 +50,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="#fe5c32"
+        android:background="#fe837d"
         android:orientation="horizontal"
         >
 
@@ -150,7 +150,7 @@
                     android:textColor="#ffbead"
                     />
 
-                <TextView
+                <com.wlyilai.weilaibao.view.NumberRunningTextView
                     android:id="@+id/totalJF"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -159,6 +159,8 @@
                     android:text="123.00"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_large"
+                    app:minMoney="100.0"
+                    app:textType="money"
                     />
             </LinearLayout>
         </RelativeLayout>

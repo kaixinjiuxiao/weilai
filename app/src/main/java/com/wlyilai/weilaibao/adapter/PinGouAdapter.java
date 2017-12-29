@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.StrikethroughSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +59,6 @@ public class PinGouAdapter extends RecyclerView.Adapter<PinGouAdapter.PinGouView
         ViewGroup.LayoutParams lp = holder.img.getLayoutParams();
         lp.width =needWidth;
         lp.height = needWidth;
-        Log.e("tag","玛德"+needWidth);
         holder.img.setLayoutParams(lp);
         Glide.with(mContext).load(mList.get(position).getGimg()).into(holder.img);
         holder.name.setText(mList.get(position).getGname());

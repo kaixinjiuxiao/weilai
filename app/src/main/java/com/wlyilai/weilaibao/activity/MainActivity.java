@@ -1,6 +1,7 @@
 package com.wlyilai.weilaibao.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,8 +38,14 @@ public class MainActivity extends BaseActivity {
     TextView mTxtMy;
     @BindView(R.id.lineaUser)
     LinearLayout mLineaUser;
+    @BindView(R.id.imgGroup)
+    ImageView mImgGroup;
+    @BindView(R.id.txtGroup)
+    TextView mTxtGroup;
+    @BindView(R.id.linearGroup)
+    LinearLayout mLinearGroup;
     private FragmentController mController;
-
+    public String code ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,19 +56,22 @@ public class MainActivity extends BaseActivity {
     }
 
     private void init() {
+        code = getIntent().getStringExtra("token");
+        Log.e("tag",code);
         mController = FragmentController.getInstance(this, R.id.content, true);
         mController.showFragment(0);
         mTxtPG.setSelected(true);
         mImgPG.setSelected(true);
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDataSynEvent(FirstEvent event) {
         if (event.getMsg().equals("ok")) {
             selected();
-            mTxtMy.setSelected(true);
-            mImgMy.setSelected(true);
-            mController.showFragment(2);
+            mTxtGroup.setSelected(true);
+            mImgGroup.setSelected(true);
+            mController.showFragment(1);
         }
     }
 
@@ -72,7 +82,7 @@ public class MainActivity extends BaseActivity {
         mController.onDestroy();
     }
 
-    @OnClick({R.id.linearMain, R.id.linearOrder, R.id.lineaUser})
+    @OnClick({R.id.linearMain, R.id.linearOrder, R.id.lineaUser,R.id.linearGroup})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.linearMain:
@@ -81,27 +91,39 @@ public class MainActivity extends BaseActivity {
                 mImgPG.setSelected(true);
                 mController.showFragment(0);
                 break;
+            case R.id.linearGroup:
+                selected();
+                mTxtGroup.setSelected(true);
+                mImgGroup.setSelected(true);
+                mController.showFragment(1);
+                break;
             case R.id.linearOrder:
                 selected();
                 mTxtOrder.setSelected(true);
                 mImgOrder.setSelected(true);
-                mController.showFragment(1);
+                mController.showFragment(2);
                 break;
             case R.id.lineaUser:
                 selected();
                 mTxtMy.setSelected(true);
                 mImgMy.setSelected(true);
-                mController.showFragment(2);
+                mController.showFragment(3);
                 break;
         }
     }
 
-    public void selected(){
+    public void selected() {
         mTxtPG.setSelected(false);
         mImgPG.setSelected(false);
+        mTxtGroup.setSelected(false);
+        mImgGroup.setSelected(false);
         mTxtOrder.setSelected(false);
         mImgOrder.setSelected(false);
         mTxtMy.setSelected(false);
         mImgMy.setSelected(false);
+    }
+
+    @OnClick(R.id.linearGroup)
+    public void onClick() {
     }
 }

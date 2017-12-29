@@ -40,13 +40,13 @@ public class FragmentOrder extends BaseFagment {
     private void initView() {
         mTabLayout= (TabLayout)mView.findViewById(R.id.tabLayout);
         mViewpager =(ViewPager) mView.findViewById(R.id.viewpager);
-        mStringList.add("全部");
         mStringList.add("待付款");
+        mStringList.add("待满团");
         mStringList.add("待发货");
         mStringList.add("待收货");
         mStringList.add("已完成");
-        FragmentOrderAll all = new FragmentOrderAll();
         FragmentOrderWaitPay waitPay = new FragmentOrderWaitPay();
+        FragmentOrderWaitFull all = new FragmentOrderWaitFull();
         FragmentOrderWaitSend waitSend = new FragmentOrderWaitSend();
         FragmentOrderWaitReceive waitReceive = new FragmentOrderWaitReceive();
         FragmentOrderSuccess success = new FragmentOrderSuccess();

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+
+    <com.wlyilai.weilaibao.view.MyLoadingIndicatorView
+            android:id="@+id/loading_pb"
+            android:indeterminateOnly="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            app:indicatorColor="@color/ping_gou"
+            app:indicatorName="LineSpinFadeLoaderIndicator"
+            style="@style/MyLoadingIndicatorView.Small"
+            android:visibility="visible" />
+
+</LinearLayout>

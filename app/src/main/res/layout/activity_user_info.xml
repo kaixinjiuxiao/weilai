@@ -4,6 +4,7 @@
               android:layout_height="match_parent"
               android:background="@color/main_bg"
               android:orientation="vertical"
+              android:id="@+id/main"
     >
 
     <include layout="@layout/head_title"/>
@@ -17,27 +18,29 @@
         >
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:minWidth="120dp"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
-            android:text="采集推荐人"
+            android:text="数钜宝推荐人"
             />
 
         <TextView
             android:id="@+id/txtRecommond"
-            android:layout_width="150dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:ellipsize="end"
             android:gravity="center_vertical|right"
             android:maxLines="1"
-            android:paddingRight="35dp"
+            android:paddingRight="20dp"
             android:text="杨海波"
             />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearRecommend"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="1dp"
@@ -46,22 +49,23 @@
         >
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:minWidth="120dp"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
-            android:text="开店推荐人"
+            android:text="麦光宝推荐人"
             />
 
         <TextView
             android:id="@+id/shopRecommond"
-            android:layout_width="150dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:ellipsize="end"
             android:gravity="center_vertical|right"
             android:maxLines="1"
-            android:paddingRight="35dp"
+            android:paddingRight="20dp"
             android:text="杨海波"
             />
     </LinearLayout>
@@ -75,9 +79,9 @@
         >
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:minWidth="120dp"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
             android:text="用户姓名"
@@ -85,12 +89,13 @@
 
         <TextView
             android:id="@+id/userName"
-            android:layout_width="150dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:ellipsize="end"
             android:gravity="center_vertical|right"
             android:maxLines="1"
-            android:paddingRight="35dp"
+            android:paddingRight="20dp"
             android:text="张三"
             />
     </LinearLayout>
@@ -104,9 +109,9 @@
         >
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:minWidth="120dp"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
             android:text="用户电话"
@@ -114,12 +119,13 @@
 
         <TextView
             android:id="@+id/userPhone"
-            android:layout_width="150dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:ellipsize="end"
             android:gravity="center_vertical|right"
             android:maxLines="1"
-            android:paddingRight="35dp"
+            android:paddingRight="20dp"
             android:text="15000000000"
             />
     </LinearLayout>
@@ -134,23 +140,33 @@
         >
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:minWidth="120dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="提现银行"
+            />
+        <TextView
+            android:id="@+id/bank"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:minWidth="100dp"
-            android:paddingLeft="20dp"
-            android:text="提现银行 支行 卡号"
+            android:layout_toLeftOf="@+id/img1"
+            android:ellipsize="end"
+            android:gravity="center_vertical|right"
+            android:maxLines="1"
+            android:text="绑定银行卡"
+            android:layout_marginRight="20dp"
             />
-
         <RelativeLayout
-            android:layout_width="150dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:visibility="gone"
             >
 
             <TextView
-                android:id="@+id/bank"
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
                 android:layout_toLeftOf="@+id/img1"
@@ -172,5 +188,64 @@
                 android:src="@mipmap/icon_right_arrows"
                 />
         </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:minWidth="120dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="卡号"
+            />
+
+        <TextView
+            android:id="@+id/bankCode"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical|right"
+            android:maxLines="1"
+            android:paddingRight="20dp"
+            android:text="15000000000"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearWX"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:minWidth="120dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="微信"
+            />
+
+        <TextView
+            android:id="@+id/wxCode"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical|right"
+            android:maxLines="1"
+            android:paddingRight="20dp"
+            android:text="绑定微信"
+            />
     </LinearLayout>
 </LinearLayout>

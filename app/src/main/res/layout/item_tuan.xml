@@ -21,6 +21,7 @@
         android:layout_gravity="center_horizontal"
         android:scaleType="fitXY"
         android:src="@mipmap/nature"
+        android:padding="5dp"
         />
     </LinearLayout>
     <LinearLayout
@@ -38,7 +39,6 @@
             android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="佛撒酒疯对发动机是广东省将看风景的斯洛伐克警笛声考虑风刀霜剑咖啡萨拉"
             android:textColor="@color/black"
             android:textSize="16sp"
             />
@@ -65,7 +65,6 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="1dp"
                 android:gravity="center"
-                android:text="98.00"
                 android:textColor="@color/ping_gou"
                 android:textSize="20sp"
                 />
@@ -93,7 +92,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="1dp"
                 android:gravity="center_vertical"
-                android:text="22.4"
                 />
 
             <TextView
@@ -132,15 +130,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="7dp"
         android:background="@color/white"
         >
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="center_vertical"
-            android:background="@color/main_bg"
-            />
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:background="@color/main_bg"-->
+            <!--/>-->
     </LinearLayout>
 </LinearLayout>

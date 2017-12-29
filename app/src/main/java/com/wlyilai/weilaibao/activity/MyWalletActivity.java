@@ -35,7 +35,7 @@ public class MyWalletActivity extends BaseActivity {
     @BindView(R.id.totalCZ)
     NumberRunningTextView mTotalCZ;
     @BindView(R.id.totalJF)
-    TextView mTotalJF;
+    NumberRunningTextView mTotalJF;
     @BindView(R.id.banlanceDetails)
     RelativeLayout mBanlanceDetails;
     @BindView(R.id.redPackDetails)
@@ -64,6 +64,10 @@ public class MyWalletActivity extends BaseActivity {
         mTxtTitle.setText("我的钱包");
         mExchange.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         mExchange.setTextColor(getResources().getColor(R.color.ping_gou));
+        mTotalYE.setContent("10000");
+        mTotalXF.setContent("10000");
+        mTotalCZ.setContent("10000");
+        mTotalJF.setContent("10000");
     }
 
 

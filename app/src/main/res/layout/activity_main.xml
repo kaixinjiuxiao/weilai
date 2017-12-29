@@ -44,6 +44,32 @@
                 />
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/linearGroup"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:id="@+id/imgGroup"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/pin_selected"
+                />
+            <TextView
+                android:id="@+id/txtGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:text="我的团"
+                android:textColor="@drawable/text_color_selector"
+                android:textSize="12sp"
+                />
+        </LinearLayout>
+        <LinearLayout
             android:id="@+id/linearOrder"
             android:layout_width="0dp"
             android:layout_height="match_parent"
