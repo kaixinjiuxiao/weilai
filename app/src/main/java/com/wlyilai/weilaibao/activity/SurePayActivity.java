@@ -25,7 +25,7 @@ import com.wlyilai.weilaibao.entry.PayResult;
 import com.wlyilai.weilaibao.entry.SureOrder;
 import com.wlyilai.weilaibao.utils.AliPayResults;
 import com.wlyilai.weilaibao.utils.Constant;
-import com.wlyilai.weilaibao.utils.PreferenceUtil;
+import com.wlyilai.weilaibao.utils.NetWorkState;
 import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -70,7 +70,7 @@ public class SurePayActivity extends BaseActivity {
     LinearLayout mLinearWX;
     private PopupWindow popupWindow;
     private AlertDialog mDialog;
-    private String orderCode;
+    private String orderCode,mToken;
     private IWXAPI iwxapi;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,16 +81,28 @@ public class SurePayActivity extends BaseActivity {
     }
 
     private void init() {
-        PreferenceUtil.init(SurePayActivity.this);
+        mToken =getIntent().getStringExtra("token");
+
         mImgBack.setVisibility(View.VISIBLE);
         mTxtTitle.setText("收银台");
         Bundle bunder = getIntent().getBundleExtra("sure");
-        SureOrder order = (SureOrder) bunder.getSerializable("order");
-        mOrderCode.setText(order.getData().getOsn());
-        orderCode = order.getData().getOsn();
+        if(bunder!=null) {
+            SureOrder order = (SureOrder) bunder.getSerializable("order");
+            mOrderCode.setText(order.getData().getOsn());
+            mOrderPrice.setText("¥ "+order.getData().getTotal_price());
+            orderCode = order.getData().getOsn();
+        }else{
+            orderCode = getIntent().getStringExtra("osn");
+            mOrderCode.setText(orderCode);
+            mOrderPrice.setText(getIntent().getStringExtra("money"));
+        }
         iwxapi = WXAPIFactory.createWXAPI(SurePayActivity.this, WX_APP_ID_ONE, true);
         iwxapi.registerApp(WX_APP_ID_ONE);
-        getBanlance();
+        if(NetWorkState.isNetWorkAvailabe(SurePayActivity.this)){
+            getBanlance();
+        }else{
+            ToastUtils.showShort(this,"当前网络不可用，请检查网络连接");
+        }
     }
 
     @OnClick({R.id.imgBack, R.id.linearALi, R.id.linearBalance, R.id.linearWX})
@@ -120,7 +132,7 @@ public class SurePayActivity extends BaseActivity {
     }
 
     private void displayDialog() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(SurePayActivity.this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(SurePayActivity.this,R.style.myCorDialog);
         View view = LayoutInflater.from(SurePayActivity.this).inflate(R.layout.layout_sure_pay, null);
         builder.setView(view);
         TextView sure = (TextView) view.findViewById(R.id.sure);
@@ -144,7 +156,7 @@ public class SurePayActivity extends BaseActivity {
 
     private void getBanlance() {
         OkHttpUtils.post().url(Constant.USER_INFO)
-                .addParams("access_token", "02c8b29f1b09833e43a37c770a87db23")
+                .addParams("access_token", mToken)
                 .build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
@@ -158,6 +170,8 @@ public class SurePayActivity extends BaseActivity {
                     if (jsonObject.getInt("status") == 1) {
                         JSONObject data = jsonObject.getJSONObject("data");
                         mTextBanlance.setText("¥" + data.getString("balance"));
+                    }else{
+                        ToastUtils.showShort(SurePayActivity.this,jsonObject.getString("msg"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -169,8 +183,12 @@ public class SurePayActivity extends BaseActivity {
 
 
     private void startPay(final String type) {
+        if(!NetWorkState.isNetWorkAvailabe(SurePayActivity.this)){
+            ToastUtils.showShort(this,"当前网络不可用，请检查网络连接");
+            return;
+        }
         Map<String, String> parmas = new HashMap<>();
-        parmas.put("access_token", "02c8b29f1b09833e43a37c770a87db23");
+        parmas.put("access_token", mToken);
         parmas.put("osn", orderCode);
         parmas.put("out_trade_type", type);
         parmas.put("pay_source", "APP");
@@ -208,6 +226,7 @@ public class SurePayActivity extends BaseActivity {
                             PayResult result = new Gson().fromJson(response, PayResult.class);
                             Intent intent = new Intent(SurePayActivity.this, PaySuccessActivity.class);
                             intent.putExtra("order", result.getData().getOsn());
+                            intent.putExtra("token",mToken);
                             startActivity(intent);
                         }
                     } else {
@@ -254,6 +273,7 @@ public class SurePayActivity extends BaseActivity {
                         ToastUtils.showShort(SurePayActivity.this, "支付成功");
                         Intent intent = new Intent(SurePayActivity.this,PaySuccessActivity.class);
                         intent.putExtra("order",orderCode);
+                        intent.putExtra("token",mToken);
                         startActivity(intent);
                     } else {
                         ToastUtils.showShort(SurePayActivity.this, "支付失败");

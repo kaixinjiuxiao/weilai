@@ -1,7 +1,6 @@
 package com.wlyilai.weilaibao.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -9,6 +8,7 @@ import android.widget.TextView;
 
 import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.entry.FirstEvent;
+import com.wlyilai.weilaibao.utils.ActivityManager;
 import com.wlyilai.weilaibao.utils.FragmentController;
 
 import org.greenrobot.eventbus.EventBus;
@@ -45,7 +45,6 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.linearGroup)
     LinearLayout mLinearGroup;
     private FragmentController mController;
-    public String code ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +55,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void init() {
-        code = getIntent().getStringExtra("token");
-        Log.e("tag",code);
+        ActivityManager.getInstance().addActivity(this);
         mController = FragmentController.getInstance(this, R.id.content, true);
         mController.showFragment(0);
         mTxtPG.setSelected(true);
@@ -121,9 +119,5 @@ public class MainActivity extends BaseActivity {
         mImgOrder.setSelected(false);
         mTxtMy.setSelected(false);
         mImgMy.setSelected(false);
-    }
-
-    @OnClick(R.id.linearGroup)
-    public void onClick() {
     }
 }

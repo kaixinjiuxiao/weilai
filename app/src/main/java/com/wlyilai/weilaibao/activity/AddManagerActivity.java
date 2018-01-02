@@ -3,6 +3,7 @@ package com.wlyilai.weilaibao.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,7 +17,11 @@ import com.google.gson.Gson;
 import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.adapter.PCAreaAdapter;
 import com.wlyilai.weilaibao.entry.ProvinceCityArea;
+import com.wlyilai.weilaibao.utils.ActivityManager;
 import com.wlyilai.weilaibao.utils.Constant;
+import com.wlyilai.weilaibao.utils.NetWorkState;
+import com.wlyilai.weilaibao.utils.PreferenceUtil;
+import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -65,7 +70,7 @@ public class AddManagerActivity extends BaseActivity {
     private List<ProvinceCityArea.DataBean> mListArea;
     private PCAreaAdapter mSpinnerAdapter;
     private String province, city, area;
-    private String addressId;
+    private String addressId,mToken;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,13 +81,29 @@ public class AddManagerActivity extends BaseActivity {
     }
 
     private void init() {
+        PreferenceUtil.init(AddManagerActivity.this);
+        String code = PreferenceUtil.getString("token",null);
+        if(TextUtils.isEmpty(code)){
+            PreferenceUtil.removeAll();
+            ActivityManager.getInstance().finishAllActivity();
+            Intent intent = new Intent(AddManagerActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }else{
+            mToken=code;
+        }
         mImgBack.setVisibility(View.VISIBLE);
         mTxtTitle.setText("添加收货地址");
-        getCity(0, mSpnCountry, 0);
+        if(NetWorkState.isNetWorkAvailabe(this)){
+            getCity(0, mSpnCountry, 0);
+        }else{
+            ToastUtils.showShort(this,"请检查网络链接");
+        }
 //        mAdapter = new MyAddressAdapter(this, mList);
 //        mAddress.setAdapter(mAdapter);
       //  getAddress();
     }
+
 
     private void initEvent() {
 //        mAdapter.setDeleteListener(new MyAddressAdapter.OnDeleteListener() {
@@ -207,6 +228,22 @@ public class AddManagerActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.sureAdd:
+                if(TextUtils.isEmpty(mEdtPhone.getText().toString())){
+                   ToastUtils.showShort(this,"手机号码不能为空");
+                    return;
+                }
+                if(TextUtils.isEmpty(mEdtName.getText().toString())){
+                    ToastUtils.showShort(this,"姓名不能为空");
+                    return;
+                }
+                if(province.equals("请选择")||city.equals("请选择")||area.equals("请选择")){
+                    ToastUtils.showShort(this,"请选择省市区");
+                    return;
+                }
+                if(TextUtils.isEmpty(mEdtAddress.getText().toString())){
+                    ToastUtils.showShort(this,"地址不能为空");
+                    return;
+                }
                 addAddress();
                 break;
         }
@@ -217,7 +254,7 @@ public class AddManagerActivity extends BaseActivity {
      */
     private void addAddress() {
         final Map<String, String> parmas = new HashMap<>();
-        parmas.put("access_token", "02c8b29f1b09833e43a37c770a87db23");
+        parmas.put("access_token", mToken);
         parmas.put("mobile", mEdtPhone.getText().toString());
         parmas.put("realname", mEdtName.getText().toString());
         parmas.put("province", province);

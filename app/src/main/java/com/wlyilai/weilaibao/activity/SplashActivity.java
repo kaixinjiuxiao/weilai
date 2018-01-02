@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 
 import com.wlyilai.weilaibao.R;
+import com.wlyilai.weilaibao.utils.PreferenceUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -39,6 +41,7 @@ public class SplashActivity extends BaseActivity {
 
 
     private void initView() {
+        PreferenceUtil.init(this);
         AlphaAnimation animation = new AlphaAnimation(1.0f, 0.0f);
         animation.setDuration(2000);
         animation.setFillAfter(true);
@@ -53,8 +56,11 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 Intent intent = new Intent();
-                //intent.setClass(SplashActivity.this, MainActivity.class);
-                intent.setClass(SplashActivity.this, LoginActivity.class);
+                if(!TextUtils.isEmpty(PreferenceUtil.getString("token",null))){
+                    intent.setClass(SplashActivity.this, MainActivity.class);
+                }else{
+                    intent.setClass(SplashActivity.this, LoginActivity.class);
+                }
                 startActivity(intent);
                 finish();
             }

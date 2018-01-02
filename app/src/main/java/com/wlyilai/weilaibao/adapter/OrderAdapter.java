@@ -26,10 +26,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     private Context mContext;
     private List<Order.DataBean> mList;
     private OnLookDetailsListener mLookDetailsListener;
+    private OnReyPayLinstener mReyPayLinstener;
     public interface OnLookDetailsListener {
         void lookDetails(int position);
     }
-
+    public interface OnReyPayLinstener{
+        void reyPay(int position);
+    }
     public OrderAdapter(Context context, List<Order.DataBean> list) {
         mContext = context;
         mList = list;
@@ -38,6 +41,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     public void setLookDetailsListener(OnLookDetailsListener lookDetailsListener) {
         mLookDetailsListener = lookDetailsListener;
     }
+
+    public void setReyPayLinstener(OnReyPayLinstener reyPayLinstener) {
+        mReyPayLinstener = reyPayLinstener;
+    }
+
     @Override
     public OrderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.item_order_list, parent, false);
@@ -50,6 +58,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         holder.orderCode.setText("订单号："+mList.get(position).getOsn());
         if(mList.get(position).getTrade().equals("0")){
             holder.orderStatus.setText("待付款");
+            holder.details.setText("去付款");
         }else if(mList.get(position).getTrade().equals("1")){
             holder.orderStatus.setText("待发货");
         }else if(mList.get(position).getTrade().equals("2")){
@@ -82,7 +91,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         holder.details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mLookDetailsListener.lookDetails(position);
+                if(mList.get(position).getTrade().equals("0")){
+                    mReyPayLinstener.reyPay(position);
+                }else{
+                    mLookDetailsListener.lookDetails(position);
+                }
             }
         });
     }

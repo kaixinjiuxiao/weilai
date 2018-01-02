@@ -67,6 +67,7 @@ public class OrderDetailsActivity extends BaseActivity {
     @BindView(R.id.txtOperation)
     TextView mTxtOperation;
     private String mOSN;
+    private String mToken;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +82,7 @@ public class OrderDetailsActivity extends BaseActivity {
         mTxtTitle.setText("订单详情");
         mPayState.getPaint().setFakeBoldText(true);
         mOSN = getIntent().getStringExtra("osn");
+        mToken = getIntent().getStringExtra("token");
     }
 
     private void getData() {
@@ -100,10 +102,12 @@ public class OrderDetailsActivity extends BaseActivity {
                     JSONObject json = new JSONObject(response);
                     if(json.getInt("status")==1){
                         OrderDetails details = new Gson().fromJson(response,OrderDetails.class);
-                        if(!details.getData().getTrade().equals("0")){
-                            mPayState.setText("买家已付款");
-                        }else{
-                            mPayState.setText("买家未付款");
+                        if(details.getData().getTrade().equals("1")){
+                            mPayState.setText("待发货");
+                        }else if(details.getData().getTrade().equals("3")){
+                            mPayState.setText("已收货");
+                        }else if(details.getData().getTrade().equals("2")){
+                            mPayState.setText("待收货");
                         }
                         mPayNumber.setText("订单金额（含运费）：¥"+details.getData().getPay_price());
                         mInfo.setText(details.getData().getRealname()+" "+details.getData().getMobile());

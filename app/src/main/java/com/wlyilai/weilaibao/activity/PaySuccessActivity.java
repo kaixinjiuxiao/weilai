@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.utils.Constant;
+import com.wlyilai.weilaibao.utils.NetWorkState;
 import com.wlyilai.weilaibao.utils.PreferenceUtil;
 import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -40,7 +41,7 @@ public class PaySuccessActivity extends BaseActivity {
     TextView mMode;
     @BindView(R.id.numberin)
     TextView mNumberin;
-    private String mOrderCode;
+    private String mOrderCode,mToken;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,9 +56,18 @@ public class PaySuccessActivity extends BaseActivity {
         mTxtTitle.setText("交易详情");
         mOrderCode =getIntent().getStringExtra("order");
         if(TextUtils.isEmpty(mOrderCode)){
-            PreferenceUtil.getString("order","null");
+            mOrderCode=  PreferenceUtil.getString("order","null");
         }
-         getData(mOrderCode);
+        mToken = getIntent().getStringExtra("token");
+        if(TextUtils.isEmpty(mToken)){
+            mToken = PreferenceUtil.getString("token",null);
+        }
+        if(NetWorkState.isNetWorkAvailabe(PaySuccessActivity.this)){
+
+            getData(mOrderCode);
+        }else{
+            ToastUtils.showShort(PaySuccessActivity.this,"当前网络不可用，请检查网络连接");
+        }
     }
 
     @OnClick(R.id.imgBack)
@@ -67,7 +77,7 @@ public class PaySuccessActivity extends BaseActivity {
 
     private void getData(String orderCode){
         OkHttpUtils.post().url(Constant.ORDER_SUCCESS)
-                .addParams("access_token", "02c8b29f1b09833e43a37c770a87db23")
+                .addParams("access_token", mToken)
                 .addParams("osn",orderCode)
                 .build().execute(new StringCallback() {
             @Override

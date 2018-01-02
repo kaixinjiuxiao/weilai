@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +13,11 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.activity.GroupPurchaseDetailsActivity;
+import com.wlyilai.weilaibao.activity.LoginActivity;
 import com.wlyilai.weilaibao.adapter.GroupingAdapter;
 import com.wlyilai.weilaibao.entry.MyGroup;
 import com.wlyilai.weilaibao.utils.Constant;
+import com.wlyilai.weilaibao.utils.PreferenceUtil;
 import com.wlyilai.weilaibao.view.PullLoadMoreRecyclerView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -39,7 +42,7 @@ public class GroupErrorFragment extends BaseFagment implements PullLoadMoreRecyc
     private RecyclerView mRecyclerView;
     private int page = 1;
     private List<MyGroup.DataBean> mList = new ArrayList<>();
-
+    private String mToken;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (mView == null) {
@@ -59,6 +62,15 @@ public class GroupErrorFragment extends BaseFagment implements PullLoadMoreRecyc
         mPullLoadMore.setRefreshing(true);
         mPullLoadMore.setLinearLayout();
         mPullLoadMore.setOnPullLoadMoreListener(this);
+        String code = PreferenceUtil.getString("token",null);
+        if(TextUtils.isEmpty(code)){
+            PreferenceUtil.removeAll();
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+        }else{
+            mToken=code;
+        }
         mAdapter = new GroupingAdapter(getActivity(), mList);
     }
 
@@ -104,7 +116,7 @@ public class GroupErrorFragment extends BaseFagment implements PullLoadMoreRecyc
 
     private void getData(String state, final int page) {
         OkHttpUtils.post().url(Constant.MY_GROUP).
-                addParams("access_token", "02c8b29f1b09833e43a37c770a87db23")
+                addParams("access_token", mToken)
                 .addParams("state", state)
                 .addParams("page", String.valueOf(page))
                 .build().execute(new StringCallback() {

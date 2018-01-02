@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +14,12 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.wlyilai.weilaibao.R;
+import com.wlyilai.weilaibao.activity.LoginActivity;
 import com.wlyilai.weilaibao.activity.OrderDetailsActivity;
 import com.wlyilai.weilaibao.adapter.OrderAdapter;
 import com.wlyilai.weilaibao.entry.Order;
 import com.wlyilai.weilaibao.utils.Constant;
+import com.wlyilai.weilaibao.utils.PreferenceUtil;
 import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.wlyilai.weilaibao.view.PullLoadMoreRecyclerView;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -43,6 +46,7 @@ public class FragmentOrderWaitFull extends BaseFagment implements PullLoadMoreRe
     private List<Order.DataBean> mList = new ArrayList<>();
     private int page = 1;
     private TextView mTxt;
+    private String mToken;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,8 +67,15 @@ public class FragmentOrderWaitFull extends BaseFagment implements PullLoadMoreRe
         mPullLoadMore.setLinearLayout();
         mPullLoadMore.setOnPullLoadMoreListener(this);
         mPullLoadMore.setPullLoadMoreCompleted();
-        getOrder("-1",page);
         mAdapter = new OrderAdapter(getActivity(), mList);
+        mToken = PreferenceUtil.getString("token", null);
+        if(TextUtils.isEmpty(mToken)){
+            PreferenceUtil.removeAll();
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+        }
+        getOrder("-1",page);
     }
 
     private void initEvent() {
@@ -73,6 +84,7 @@ public class FragmentOrderWaitFull extends BaseFagment implements PullLoadMoreRe
             public void lookDetails(int position) {
                 Intent intent = new Intent(getActivity(),OrderDetailsActivity.class);
                 intent.putExtra("osn",mList.get(position).getOsn());
+                intent.putExtra("token",mToken);
                 startActivity(intent);
             }
         });
@@ -80,7 +92,7 @@ public class FragmentOrderWaitFull extends BaseFagment implements PullLoadMoreRe
 
     private void getOrder(String state, final int page) {
         OkHttpUtils.post().url(Constant.MY_ORDER)
-                .addParams("access_token", "02c8b29f1b09833e43a37c770a87db23")
+                .addParams("access_token", mToken)
                 .addParams("state", state)
                 .addParams("page", String.valueOf(page)).build().execute(new StringCallback() {
             @Override

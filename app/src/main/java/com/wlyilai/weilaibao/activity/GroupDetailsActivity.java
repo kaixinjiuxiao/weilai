@@ -24,6 +24,7 @@ import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.entry.GoodsDetails;
 import com.wlyilai.weilaibao.entry.SureBuy;
 import com.wlyilai.weilaibao.utils.Constant;
+import com.wlyilai.weilaibao.utils.NetWorkState;
 import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -46,7 +47,7 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
     private LinearLayout linearKefu, linearShop, linearEnter;
     private TextView mBuyNumber;
     private int n, singleNumber;
-    private String mGoodsId,mOldPrice,mNewPrice,mImgUrl,mShopId,mShopName;
+    private String mGoodsId,mOldPrice,mNewPrice,mImgUrl,mShopId,mShopName,mToken;
     private TextView mYuanjia;
     private TextView mDanjia;
     private TextView mTotalPrice;
@@ -61,6 +62,7 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initView() {
+        mToken = getIntent().getStringExtra("token");
         mBack = (ImageView) findViewById(R.id.imgBack);
         mBack.setVisibility(View.VISIBLE);
         mShare = (ImageView) findViewById(R.id.imgMore);
@@ -83,17 +85,21 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
         linearEnter = (LinearLayout) findViewById(R.id.linearEnter);
         mGoodsId = getIntent().getStringExtra("id");
         showLoadingDialog();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getDetails(mGoodsId);
-            }
-        },2000);
+        if(NetWorkState.isNetWorkAvailabe(this)){
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    getDetails(mGoodsId);
+                }
+            },2000);
+        }else{
+            ToastUtils.showShort(this,"当前网络不可用，请检查网络连接");
+        }
     }
 
     private void getDetails(String id) {
         OkHttpUtils.post().url(Constant.GOODS_DETAILS)
-                .addParams("id",id).addParams("access_token","02c8b29f1b09833e43a37c770a87db23")
+                .addParams("id",id).addParams("access_token",mToken)
                 .build().execute(new StringCallback() {
 
             @Override
@@ -110,28 +116,38 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onResponse(String response, int id) {
                 Log.e("tag","团"+response);
-                GoodsDetails details = new Gson().fromJson(response,GoodsDetails.class);
-                if(details.getStatus()==1){
-                    Glide.with(GroupDetailsActivity.this).load(details.getData().getGimg()).into(mGoodsImg);
-                    mImgUrl = details.getData().getGimg();
-                    goodName.setText(details.getData().getGname());
-                    newPrice.setText(details.getData().getGteam_price());
-                    mNewPrice = details.getData().getGteam_price();
-                    oldPrice.setText(details.getData().getGprice());
-                    oldPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);
-                    mShopId = details.getData().getSid();
-                    mShopName=details.getData().getGname();
-                    mOldPrice= details.getData().getGprice();
-                    goodsPeriods.setText("第"+details.getData().getGsn()+"期");
-                    goodsAllNumber.setText(details.getData().getGnum()+"件");
-                    goodsSingle.setText(details.getData().getGpay_limit()+"件");
-                    n = Integer.parseInt(details.getData().getGpay_limit());
-                    singleNumber = Integer.parseInt(details.getData().getGpay_limit());
-                    mShengyu = Integer.parseInt(details.getData().getGnum())-Integer.parseInt(details.getData().getGpay_num());
-                    goodsSurplus.setText("已团"+details.getData().getGpay_num()+"件，还差"+String.valueOf(mShengyu)+"件。");
-                    goodsProgress.setMax(Integer.parseInt(details.getData().getGnum()));
-                    goodsProgress.setSecondaryProgress(Integer.parseInt(details.getData().getGpay_num()));
-                    shopAddress.setText(details.getData().getSname());
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.getInt("status")==1){
+                        GoodsDetails details = new Gson().fromJson(response,GoodsDetails.class);
+                        Glide.with(GroupDetailsActivity.this).load(details.getData().getGimg()).into(mGoodsImg);
+                        mImgUrl = details.getData().getGimg();
+                        goodName.setText(details.getData().getGname());
+                        newPrice.setText(details.getData().getGteam_price());
+                        mNewPrice = details.getData().getGteam_price();
+                        oldPrice.setText(details.getData().getGprice());
+                        oldPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);
+                        mShopId = details.getData().getSid();
+                        mShopName=details.getData().getGname();
+                        mOldPrice= details.getData().getGprice();
+                        goodsPeriods.setText("第"+details.getData().getGsn()+"期");
+                        goodsAllNumber.setText(details.getData().getGnum()+"件");
+                        goodsSingle.setText(details.getData().getGpay_limit()+"件");
+                        n = Integer.parseInt(details.getData().getGpay_limit());
+                        singleNumber = Integer.parseInt(details.getData().getGpay_limit());
+                        mShengyu = Integer.parseInt(details.getData().getGnum())-Integer.parseInt(details.getData().getGpay_num());
+                        goodsSurplus.setText("已团"+details.getData().getGpay_num()+"件，还差"+String.valueOf(mShengyu)+"件。");
+                        goodsProgress.setMax(Integer.parseInt(details.getData().getGnum()));
+                        goodsProgress.setSecondaryProgress(Integer.parseInt(details.getData().getGpay_num()));
+                        shopAddress.setText(details.getData().getSname());
+                    }else{
+                        ToastUtils.showShort(GroupDetailsActivity.this,jsonObject.getString("msg"));
+                        if(jsonObject.getInt("code")==11075){
+
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -238,8 +254,12 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
                 setBackgroundAlpha(1.0f);
                 break;
             case R.id.btnSure:
-                buyGoods();
-                popupWindow.dismiss();
+                if(NetWorkState.isNetWorkAvailabe(this)){
+                    buyGoods();
+                    popupWindow.dismiss();
+                }else{
+                    ToastUtils.showShort(this,"当前网络不可用，请检测网络连接");
+                }
                 break;
             case R.id.share_qq:
                 //shareToQQ();
@@ -283,7 +303,7 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
 
     private void buyGoods() {
         OkHttpUtils.post().url(Constant.BUY_GOODS)
-                .addParams("access_token","02c8b29f1b09833e43a37c770a87db23")
+                .addParams("access_token",mToken)
                 .addParams("id",mGoodsId)
                 .addParams("buy_num",mBuyNumber.getText().toString())
                 .build().execute(new StringCallback() {
@@ -294,7 +314,6 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
 
             @Override
             public void onResponse(String response, int id) {
-                Log.e("tag","购买"+response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if(jsonObject.getInt("status")==1){
@@ -303,6 +322,7 @@ public class GroupDetailsActivity extends BaseActivity implements View.OnClickLi
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("data",data);
                         intent.putExtra("goods",bundle);
+                        intent.putExtra("token",mToken);
                         startActivity(intent);
                     }else if(jsonObject.getInt("status")==0){
                         ToastUtils.showShort(GroupDetailsActivity.this,jsonObject.getString("msg"));

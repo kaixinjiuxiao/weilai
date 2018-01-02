@@ -1,5 +1,6 @@
 package com.wlyilai.weilaibao.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wlyilai.weilaibao.R;
+import com.wlyilai.weilaibao.utils.ActivityManager;
+import com.wlyilai.weilaibao.utils.PreferenceUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +43,7 @@ public class SettingActivity extends BaseActivity {
     }
 
     private void init() {
+        PreferenceUtil.init(this);
         mImgBack.setVisibility(View.VISIBLE);
     }
 
@@ -52,6 +56,11 @@ public class SettingActivity extends BaseActivity {
             case R.id.relativeVersion:
                 break;
             case R.id.btnLoginOut:
+                PreferenceUtil.removeAll();
+                ActivityManager.getInstance().finishAllActivity();
+                Intent intent = new Intent(this,LoginActivity.class);
+                startActivity(intent);
+                finish();
                 break;
         }
     }

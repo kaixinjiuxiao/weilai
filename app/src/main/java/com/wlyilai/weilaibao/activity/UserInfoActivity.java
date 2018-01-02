@@ -3,10 +3,12 @@ package com.wlyilai.weilaibao.activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,11 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.wlyilai.weilaibao.R;
+import com.wlyilai.weilaibao.utils.ToastUtils;
 
 /**
  * @author: captain
@@ -24,10 +30,12 @@ import com.wlyilai.weilaibao.R;
  * Describe:
  */
 public class UserInfoActivity extends BaseActivity implements View.OnClickListener {
+    private static final String WX_APPID="wx27d2fb7168caf7e0";
     private ImageView mImgBack;
     private TextView mTxtTitle,mTxtRecommond,mUserName,mUserPhone,mShopRecommond,mBank,mBankCode,mWxCode,mBankName;
     private LinearLayout mLinearBank,mLinearWX,mLinearRecommend;
     private PopupWindow popupWindow;
+    private IWXAPI mWxApi;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +59,8 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         mLinearBank= (LinearLayout)findViewById(R.id.linearBank);
         mLinearWX= (LinearLayout)findViewById(R.id.linearWX);
         mLinearRecommend= (LinearLayout)findViewById(R.id.linearRecommend);
+        mWxApi = WXAPIFactory.createWXAPI(this, WX_APPID, true);
+        mWxApi.registerApp(WX_APPID);
     }
 
     private void initEvent() {
@@ -70,6 +80,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 showPoprpWindow();
                 break;
             case R.id.linearWX:
+                Log.e("tag","没执行吗？");
                 loginByWX();
                 break;
             case R.id.chooiceBank:
@@ -100,6 +111,14 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
      * 微信登陆
      */
     private void loginByWX() {
+        if (isAppInstalled("com.tencent.mm") == false) {
+            ToastUtils.showShort(UserInfoActivity.this, "很遗憾，您没有安装微信客户端！");
+            return;
+        }
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "diandi_wx_login";
+        mWxApi.sendReq(req);
     }
 
     private void showPoprpWindow() {
@@ -129,6 +148,16 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         lp.alpha = bgAlpha;
         UserInfoActivity.this.getWindow().setAttributes(lp);
     }
-
+    private boolean isAppInstalled(String uri) {
+        PackageManager pm = UserInfoActivity.this.getPackageManager();
+        boolean installed = false;
+        try {
+            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+            installed = true;
+        } catch (PackageManager.NameNotFoundException e) {
+            installed = false;
+        }
+        return installed;
+    }
 
 }

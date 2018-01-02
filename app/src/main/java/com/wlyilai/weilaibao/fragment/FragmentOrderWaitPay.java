@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +14,12 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.wlyilai.weilaibao.R;
-import com.wlyilai.weilaibao.activity.OrderDetailsActivity;
+import com.wlyilai.weilaibao.activity.LoginActivity;
+import com.wlyilai.weilaibao.activity.SurePayActivity;
 import com.wlyilai.weilaibao.adapter.OrderAdapter;
 import com.wlyilai.weilaibao.entry.Order;
 import com.wlyilai.weilaibao.utils.Constant;
+import com.wlyilai.weilaibao.utils.PreferenceUtil;
 import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.wlyilai.weilaibao.view.PullLoadMoreRecyclerView;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -43,7 +46,7 @@ public class FragmentOrderWaitPay extends BaseFagment implements PullLoadMoreRec
     private RecyclerView mRecyclerView;
     private List<Order.DataBean> mList = new ArrayList<>();
     private int page = 1;
-
+    private String mToken;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,6 +59,7 @@ public class FragmentOrderWaitPay extends BaseFagment implements PullLoadMoreRec
     }
 
     private void initView() {
+        PreferenceUtil.init(getActivity());
         mPullLoadMore = (PullLoadMoreRecyclerView) mView.findViewById(R.id.pullLoadMore);
         mRecyclerView = mPullLoadMore.getRecyclerView();
         mRecyclerView.setVerticalScrollBarEnabled(true);
@@ -64,15 +68,32 @@ public class FragmentOrderWaitPay extends BaseFagment implements PullLoadMoreRec
         mPullLoadMore.setOnPullLoadMoreListener(this);
         mPullLoadMore.setPullLoadMoreCompleted();
         mAdapter = new OrderAdapter(getActivity(), mList);
+        mToken = PreferenceUtil.getString("token", null);
+        if(TextUtils.isEmpty(mToken)){
+            PreferenceUtil.removeAll();
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+        }
         getOrder(type, 1);
     }
 
     private void initEvent() {
-        mAdapter.setLookDetailsListener(new OrderAdapter.OnLookDetailsListener() {
+//        mAdapter.setLookDetailsListener(new OrderAdapter.OnLookDetailsListener() {
+//            @Override
+//            public void lookDetails(int position) {
+//                Intent intent = new Intent(getActivity(),OrderDetailsActivity.class);
+//                intent.putExtra("osn",mList.get(position).getOsn());
+//                startActivity(intent);
+//            }
+//        });
+        mAdapter.setReyPayLinstener(new OrderAdapter.OnReyPayLinstener() {
             @Override
-            public void lookDetails(int position) {
-                Intent intent = new Intent(getActivity(),OrderDetailsActivity.class);
+            public void reyPay(int position) {
+                Intent intent = new Intent(getActivity(),SurePayActivity.class);
                 intent.putExtra("osn",mList.get(position).getOsn());
+                intent.putExtra("money",mList.get(position).getTotal_price());
+                intent.putExtra("token",mToken);
                 startActivity(intent);
             }
         });
@@ -80,7 +101,7 @@ public class FragmentOrderWaitPay extends BaseFagment implements PullLoadMoreRec
 
     private void getOrder(String state, final int page) {
         OkHttpUtils.post().url(Constant.MY_ORDER)
-                .addParams("access_token", "02c8b29f1b09833e43a37c770a87db23")
+                .addParams("access_token", mToken)
                 .addParams("state", state)
                 .addParams("page", String.valueOf(page)).build().execute(new StringCallback() {
             @Override

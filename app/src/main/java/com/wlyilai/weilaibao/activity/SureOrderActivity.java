@@ -22,6 +22,7 @@ import com.wlyilai.weilaibao.entry.ReceivingAddress;
 import com.wlyilai.weilaibao.entry.SureBuy;
 import com.wlyilai.weilaibao.entry.SureOrder;
 import com.wlyilai.weilaibao.utils.Constant;
+import com.wlyilai.weilaibao.utils.NetWorkState;
 import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.wlyilai.weilaibao.view.ListViewForScrollView;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -97,7 +98,7 @@ public class SureOrderActivity extends BaseActivity {
 //    private List<ProvinceCityArea.DataBean> mListArea;
 //    private PCAreaAdapter mSpinnerAdapter;
 //    private String province, city, area;
-    private String addressId,goodsId,goodNumber;
+    private String addressId,goodsId,goodNumber,mToken;
     private SureBuy mSureBuy;
 
     @Override
@@ -110,6 +111,7 @@ public class SureOrderActivity extends BaseActivity {
     }
 
     private void init() {
+        mToken = getIntent().getStringExtra("token");
         mImgBack.setVisibility(View.VISIBLE);
         mTxtTitle.setText("确认订单");
         Bundle bundle = getIntent().getBundleExtra("goods");
@@ -128,7 +130,11 @@ public class SureOrderActivity extends BaseActivity {
 
         mAdapter = new MyAddressAdapter(this, mList);
         mAddress.setAdapter(mAdapter);
-        getAddress();
+        if(NetWorkState.isNetWorkAvailabe(this)){
+            getAddress();
+        }else{
+            ToastUtils.showShort(this,"当前网络不可用，请检查网络连接");
+        }
      //   getCity(0, mSpnCountry, 0);
     }
 
@@ -191,7 +197,7 @@ public class SureOrderActivity extends BaseActivity {
      */
     private void getAddress() {
         OkHttpUtils.post().url(Constant.GET_ADDRESS)
-                .addParams("access_token", "02c8b29f1b09833e43a37c770a87db23")
+                .addParams("access_token", mToken)
                 .build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
@@ -200,13 +206,20 @@ public class SureOrderActivity extends BaseActivity {
 
             @Override
             public void onResponse(String response, int id) {
-                ReceivingAddress address = new Gson().fromJson(response, ReceivingAddress.class);
-                if (address.getStatus() == 1) {
-                    mList.clear();
-                    for (int i = 0; i < address.getData().getAddress().size(); i++) {
-                        mList.add(address.getData().getAddress().get(i));
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if(jsonObject.getInt("status")==1){
+                        ReceivingAddress address = new Gson().fromJson(response, ReceivingAddress.class);
+                        mList.clear();
+                        for (int i = 0; i < address.getData().getAddress().size(); i++) {
+                            mList.add(address.getData().getAddress().get(i));
+                        }
+                        mAdapter.notifyDataSetChanged();
+                    }else{
+                        ToastUtils.showShort(SureOrderActivity.this,jsonObject.getString("msg"));
                     }
-                    mAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -261,9 +274,12 @@ public class SureOrderActivity extends BaseActivity {
                // mLinearAdd.setVisibility(View.GONE);
                 break;
             case R.id.commitOrder:
-                commitOrder();
-//                Intent intent = new Intent(this, SurePayActivity.class);
-//                startActivity(intent);
+                if(NetWorkState.isNetWorkAvailabe(SureOrderActivity.this)){
+
+                    commitOrder();
+                }else{
+                    ToastUtils.showShort(this,"当前网络不可用，请检查网络连接");
+                }
                 break;
         }
     }
@@ -277,7 +293,7 @@ public class SureOrderActivity extends BaseActivity {
             return;
         }
          Map<String, String> parmas = new HashMap<>();
-        parmas.put("access_token", "02c8b29f1b09833e43a37c770a87db23");
+        parmas.put("access_token", mToken);
         parmas.put("aid", addressId);
         parmas.put("id", goodsId);
         parmas.put("buy_num", goodNumber);
@@ -298,6 +314,7 @@ public class SureOrderActivity extends BaseActivity {
                         bundle.putSerializable("order",order);
                         Intent intent  =new Intent(SureOrderActivity.this,SurePayActivity.class);
                         intent.putExtra("sure",bundle);
+                        intent.putExtra("token",mToken);
                         startActivity(intent);
                    }else if(jsonObject.getInt("status")==0){
                         ToastUtils.showShort(SureOrderActivity.this,jsonObject.getString("msg"));

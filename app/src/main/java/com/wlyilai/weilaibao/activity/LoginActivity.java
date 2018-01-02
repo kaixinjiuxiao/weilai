@@ -15,7 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wlyilai.weilaibao.R;
+import com.wlyilai.weilaibao.utils.ActivityManager;
 import com.wlyilai.weilaibao.utils.Constant;
+import com.wlyilai.weilaibao.utils.NetWorkState;
 import com.wlyilai.weilaibao.utils.PreferenceUtil;
 import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -63,11 +65,12 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        PreferenceUtil.init(this);
         init();
     }
 
     private void init() {
+        PreferenceUtil.init(this);
+      //  ActivityManager.getInstance().addActivity(this);
         mTxtTitle.setText("登录");
         mEdtPhone.setText(PreferenceUtil.getString("phone",null));
     }
@@ -77,10 +80,18 @@ public class LoginActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.getCode:
-                getVerificationCode();
+                if(NetWorkState.isNetWorkAvailabe(LoginActivity.this)){
+                    getVerificationCode();
+                }else{
+                    ToastUtils.showShort(LoginActivity.this,"当前网络不可用，请检测网络连接");
+                }
                 break;
             case R.id.btnNext:
-                startNext(mEdtPhone.getText().toString());
+                if(NetWorkState.isNetWorkAvailabe(LoginActivity.this)){
+                    startNext(mEdtPhone.getText().toString());
+                }else{
+                    ToastUtils.showShort(LoginActivity.this,"当前网络不可用，请检测网络连接");
+                }
                 break;
         }
     }
@@ -125,6 +136,7 @@ public class LoginActivity extends BaseActivity {
                     if (jsonObject.getInt("status") == 0) {
                         if (jsonObject.getInt("code") == 2) {
                             //新用户完善资料
+                            ActivityManager.getInstance().addActivity(LoginActivity.this);
                             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                             intent.putExtra("phone", mEdtPhone.getText().toString());
                             startActivity(intent);
@@ -135,11 +147,10 @@ public class LoginActivity extends BaseActivity {
                     } else if (jsonObject.getInt("status") == 1) {
                         //正常登陆成功
                         String code = jsonObject.getString("access_token");
-                       // PreferenceUtil.commitString("token",code);
-                        PreferenceUtil.commitString("phone",mEdtPhone.getText().toString());
+                        PreferenceUtil.commitString("token",code);
                         Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                        intent.putExtra("token",code);
                         startActivity(intent);
+                        finish();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

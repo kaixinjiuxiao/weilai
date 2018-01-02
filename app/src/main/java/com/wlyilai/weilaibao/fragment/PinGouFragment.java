@@ -102,7 +102,6 @@ public class PinGouFragment extends BaseFagment implements PullLoadMoreRecyclerV
         mPullLoadMore.setPullLoadMoreCompleted();
         mMZBannerView = (Banner) mView.findViewById(R.id.banber);
         mAdapter = new PinGouAdapter(getActivity(), mList);
-        PreferenceUtil.removeAll();
         mToken = PreferenceUtil.getString("token", null);
         if(TextUtils.isEmpty(mToken)){
             PreferenceUtil.removeAll();
@@ -110,7 +109,6 @@ public class PinGouFragment extends BaseFagment implements PullLoadMoreRecyclerV
             startActivity(intent);
             getActivity().finish();
         }
-        Log.e("tag", "PinGouFragment==" + mToken);
         getBanner(mToken);
         getGoods(page);
     }
@@ -131,6 +129,7 @@ public class PinGouFragment extends BaseFagment implements PullLoadMoreRecyclerV
                 // displayDialog();
                 Intent intent = new Intent(getActivity(), GroupDetailsActivity.class);
                 intent.putExtra("id", mList.get(position).getId());
+                intent.putExtra("token",mToken);
                 startActivity(intent);
             }
         });
@@ -210,6 +209,7 @@ public class PinGouFragment extends BaseFagment implements PullLoadMoreRecyclerV
 
             @Override
             public void onResponse(String response, int id) {
+                Log.e("tag","数据呢"+response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getInt("status") == 1) {
@@ -278,8 +278,6 @@ public class PinGouFragment extends BaseFagment implements PullLoadMoreRecyclerV
                 break;
             case R.id.myTuan:
                 EventBus.getDefault().post(new FirstEvent("ok"));
-//                Intent intent = new Intent(getActivity(),MyGroupActivity.class);
-//                startActivity(intent);
                 break;
             case R.id.allGoods:
                 Intent intent2 = new Intent(getActivity(), ClassificationActivity.class);

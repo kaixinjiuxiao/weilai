@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,11 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.activity.GroupPurchaseDetailsActivity;
+import com.wlyilai.weilaibao.activity.LoginActivity;
 import com.wlyilai.weilaibao.adapter.GroupingAdapter;
 import com.wlyilai.weilaibao.entry.MyGroup;
+import com.wlyilai.weilaibao.utils.Constant;
+import com.wlyilai.weilaibao.utils.PreferenceUtil;
 import com.wlyilai.weilaibao.view.PullLoadMoreRecyclerView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -38,7 +42,7 @@ public class GroupingFragment extends BaseFagment implements PullLoadMoreRecycle
     private RecyclerView mRecyclerView;
     private int page = 1;
     private List<MyGroup.DataBean> mList = new ArrayList<>();
-
+    private String mToken;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (mView == null) {
@@ -52,12 +56,22 @@ public class GroupingFragment extends BaseFagment implements PullLoadMoreRecycle
     }
 
     private void initView() {
+        PreferenceUtil.init(getActivity());
         mPullLoadMore = (PullLoadMoreRecyclerView) mView.findViewById(R.id.pullLoadMore);
         mRecyclerView = mPullLoadMore.getRecyclerView();
         mRecyclerView.setVerticalScrollBarEnabled(true);
         mPullLoadMore.setRefreshing(true);
         mPullLoadMore.setLinearLayout();
         mPullLoadMore.setOnPullLoadMoreListener(this);
+        String code = PreferenceUtil.getString("token",null);
+        if(TextUtils.isEmpty(code)){
+            PreferenceUtil.removeAll();
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+        }else{
+            mToken=code;
+        }
         mAdapter = new GroupingAdapter(getActivity(), mList);
     }
 
@@ -102,8 +116,8 @@ public class GroupingFragment extends BaseFagment implements PullLoadMoreRecycle
     }
 
     private void getData(String state, final int page) {
-        OkHttpUtils.post().url("http://test.mgbh.wlylai.com/AppApi/get_group_order").
-                addParams("access_token", "02c8b29f1b09833e43a37c770a87db23")
+        OkHttpUtils.post().url(Constant.MY_GROUP).
+                addParams("access_token", mToken)
                 .addParams("state", state)
                 .addParams("page", String.valueOf(page))
                 .build().execute(new StringCallback() {

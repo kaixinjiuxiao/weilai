@@ -1,5 +1,6 @@
 package com.wlyilai.weilaibao.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -20,10 +21,15 @@ import com.google.gson.Gson;
 import com.wlyilai.weilaibao.R;
 import com.wlyilai.weilaibao.adapter.PCAreaAdapter;
 import com.wlyilai.weilaibao.entry.ProvinceCityArea;
+import com.wlyilai.weilaibao.utils.ActivityManager;
 import com.wlyilai.weilaibao.utils.Constant;
+import com.wlyilai.weilaibao.utils.PreferenceUtil;
 import com.wlyilai.weilaibao.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,6 +89,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void init() {
+        PreferenceUtil.init(this);
         mImgBack.setVisibility(View.VISIBLE);
         mTxtTitle.setText("完善资料");
         String phone = getIntent().getStringExtra("phone");
@@ -174,8 +181,6 @@ public class RegisterActivity extends BaseActivity {
                 showAggrement();
                 break;
             case R.id.btnCommit:
-                //  startActivity(new Intent(this,MainActivity.class));
-                Log.e("tag", "省份" + province + "城市" + city + "区" + area);
                 register();
                 break;
         }
@@ -225,6 +230,20 @@ public class RegisterActivity extends BaseActivity {
             public void onResponse(String response, int id) {
                 Log.e("tag","注册信息"+response);
                 //{"status":1,"msg":"198","access_token":"02c8b29f1b09833e43a37c770a87db23"}注册成功
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if(jsonObject.getInt("status")==1){
+                        PreferenceUtil.commitString("token",jsonObject.getString("access_token"));
+                        ActivityManager.getInstance().finishAllActivity();
+                        Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }else{
+                        ToastUtils.showShort(RegisterActivity.this,jsonObject.getString("msg"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

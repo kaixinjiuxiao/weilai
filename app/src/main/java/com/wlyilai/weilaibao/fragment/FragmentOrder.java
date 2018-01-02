@@ -50,12 +50,11 @@ public class FragmentOrder extends BaseFagment {
         FragmentOrderWaitSend waitSend = new FragmentOrderWaitSend();
         FragmentOrderWaitReceive waitReceive = new FragmentOrderWaitReceive();
         FragmentOrderSuccess success = new FragmentOrderSuccess();
-        mlist.add(all);
         mlist.add(waitPay);
+        mlist.add(all);
         mlist.add(waitSend);
         mlist.add(waitReceive);
         mlist.add(success);
-
     }
 
     private void initData() {
@@ -63,6 +62,6 @@ public class FragmentOrder extends BaseFagment {
         mViewpager.setAdapter(mAdapter);
         //   mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mTabLayout.setupWithViewPager(mViewpager);
-        mViewpager.setCurrentItem(0);
+        mViewpager.setCurrentItem(1);
     }
 }

@@ -91,4 +91,10 @@ public class WithDrawalsActivity extends BaseActivity {
         mImgBank.setSelected(false);
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mController.onDestroy();
+    }
 }

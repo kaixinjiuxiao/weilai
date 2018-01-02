@@ -56,7 +56,7 @@
                 android:layout_height="20dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:src="@drawable/pin_selected"
+                android:src="@drawable/tuan_selected"
                 />
             <TextView
                 android:id="@+id/txtGroup"
